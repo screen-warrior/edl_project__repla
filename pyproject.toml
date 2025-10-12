@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "edl-pipeline"
+version = "0.1.0"
+description = "Enterprise-grade EDL pipeline with validation and augmentation"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{ include = "pipeline" }, { include = "models" }, { include = "utils" }]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<4.0"
+pydantic = "^2.8"
+aiohttp = "^3.9"
+pyyaml = "^6.0"
+
+[tool.poetry.scripts]
+edl-pipeline = "pipeline.cli:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

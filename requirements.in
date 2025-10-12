@@ -1,0 +1,9 @@
+aiohttp
+click
+idna
+loguru
+pydantic
+pyyaml
+requests
+ujson
+pip-tools>=7.4,<8.0
