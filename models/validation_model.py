@@ -13,57 +13,19 @@ Responsibilities:
 from __future__ import annotations
 
 from typing import Optional, List, Dict, Any, Tuple
-from enum import Enum
 import ipaddress
 import re
 from urllib.parse import urlsplit
 
 import idna
-from pydantic import BaseModel, Field
 
+from models.schemas import (
+    EntryType,
+    IngestedEntry,
+    ValidationErrorDetail,
+    ValidatedEntry,
+)
 from utils.logger import get_logger, log_metric, log_stage
-
-
-# ----------------------------------------------------------------------
-# Enums & Models
-# ----------------------------------------------------------------------
-class EntryType(str, Enum):
-    IPV4 = "ipv4"
-    IPV6 = "ipv6"
-    IPV4_WITH_PORT = "ipv4_with_port"
-    IPV6_WITH_PORT = "ipv6_with_port"
-    CIDR = "cidr"
-    IP_RANGE = "ip_range"
-    FQDN = "fqdn"
-    URL = "url"
-    UNKNOWN = "unknown"
-
-
-class IngestedEntry(BaseModel):
-    source: str = Field(..., description="Name of the feed this entry came from")
-    entry: str = Field(..., description="Raw string entry fetched from the source")
-
-
-class ValidationErrorDetail(BaseModel):
-    code: str = Field(..., description="Stable machine-readable error code")
-    message: str = Field(..., description="Human-readable error message")
-    hint: Optional[str] = Field(None, description="Optional remediation hint")
-
-
-class ValidatedEntry(BaseModel):
-    source: Optional[str] = Field(None, description="Source feed name or URL")
-    original: str = Field(..., description="Original raw entry string")
-    entry_type: EntryType = Field(default=EntryType.UNKNOWN, description="Detected type of entry")
-    error: Optional[ValidationErrorDetail] = Field(None, description="If invalid, structured error")
-
-    # In validation-only mode, we keep the original exactly as-is.
-    normalized: str = Field(..., description="Always equal to original; no normalization here")
-
-    meta: Dict[str, Any] = Field(default_factory=dict, description="Parsed metadata (host, port, scheme, etc.)")
-
-    @property
-    def valid(self) -> bool:
-        return self.error is None
 
 
 # ----------------------------------------------------------------------
@@ -147,6 +109,20 @@ def _split_host_port(text: str) -> Tuple[str, Optional[str], Optional[Validation
         return host, port, None
 
     return s, None, None
+
+
+def _merge_meta(base: Dict[str, Any], extra: Dict[str, Any], comment: Optional[str]) -> Dict[str, Any]:
+    """
+    Merge ingestion metadata with validation-specific metadata while
+    preserving (or clearing) the comment as appropriate.
+    """
+    combined = dict(base)
+    combined.update(extra)
+    if comment is not None:
+        combined["comment"] = comment
+    else:
+        combined.pop("comment", None)
+    return combined
 
 
 def _validate_fqdn_labels_idna_per_label(base: str) -> bool:
@@ -245,60 +221,99 @@ class EDLValidator:
             return results
 
     def validate_entry(self, ingested: IngestedEntry) -> ValidatedEntry:
+        base_meta = dict(ingested.metadata)
+        if ingested.line_number is not None:
+            base_meta.setdefault("line_number", ingested.line_number)
+
+        original_value = base_meta.get("raw", ingested.entry)
         raw = ingested.entry.strip()
-        body, comment = _strip_inline_comment(raw)
+        body, comment_inline = _strip_inline_comment(raw)
+        comment = base_meta.get("comment") or comment_inline
+
         if not body:
-            return self._invalid(ingested, "empty", "Empty line", None)
+            return self._invalid(ingested, "empty", "Empty line", None, comment)
 
         # --- URL ---
         if "://" in body:
             sp = urlsplit(body)
-            if sp.scheme.lower() not in ("http", "https"):
-                return self._invalid(ingested, "url_scheme", "Unsupported URL scheme", "Only http/https are allowed")
+            scheme = sp.scheme.lower()
+            if scheme not in ("http", "https"):
+                return self._invalid(
+                    ingested,
+                    "url_scheme",
+                    "Unsupported URL scheme",
+                    "Only http/https are allowed",
+                    comment,
+                )
             if not sp.netloc:
-                return self._invalid(ingested, "url_netloc", "URL missing host", None)
+                return self._invalid(ingested, "url_netloc", "URL missing host", None, comment)
 
             host = sp.hostname
             if not host:
-                return self._invalid(ingested, "url_host", "URL host cannot be parsed", None)
+                return self._invalid(ingested, "url_host", "URL host cannot be parsed", None, comment)
 
             if not (_try_ipv4(host) or _try_ipv6(host)):
                 ok, err, _, _ = _validate_fqdn(host)
                 if not ok:
-                    return self._invalid(ingested, err.code, err.message, err.hint)
+                    return self._invalid(ingested, err.code, err.message, err.hint, comment)
 
             try:
                 port = sp.port
             except ValueError:
-                return self._invalid(ingested, "url_port", "Invalid URL port", "Port must be between 1 and 65535")
+                return self._invalid(
+                    ingested,
+                    "url_port",
+                    "Invalid URL port",
+                    "Port must be between 1 and 65535",
+                    comment,
+                )
 
             if port is not None and not (1 <= int(port) <= 65535):
-                return self._invalid(ingested, "url_port", "Invalid URL port", "Port 1-65535")
+                return self._invalid(ingested, "url_port", "Invalid URL port", "Port 1-65535", comment)
 
+            meta = _merge_meta(
+                base_meta,
+                {
+                    "kind": "url",
+                    "scheme": scheme,
+                    "host": host,
+                    "port": port,
+                    "path": sp.path,
+                    "query": sp.query,
+                    "fragment": sp.fragment,
+                },
+                comment,
+            )
             return ValidatedEntry(
-                source=ingested.source, original=ingested.entry,
-                entry_type=EntryType.URL, error=None,
-                normalized=ingested.entry,
-                meta={
-                    "kind": "url", "scheme": sp.scheme.lower(), "host": host,
-                    "port": port, "path": sp.path, "query": sp.query,
-                    "fragment": sp.fragment, "comment": comment
-                }
+                source=ingested.source,
+                original=original_value,
+                entry_type=EntryType.URL,
+                error=None,
+                normalized=body,
+                meta=meta,
             )
 
         # --- CIDR ---
         if "/" in body:
             try:
                 net = ipaddress.ip_network(body, strict=False)
-                return ValidatedEntry(
-                    source=ingested.source, original=ingested.entry,
-                    entry_type=EntryType.CIDR, error=None,
-                    normalized=ingested.entry,
-                    meta={
-                        "kind": "cidr", "version": net.version,
+                meta = _merge_meta(
+                    base_meta,
+                    {
+                        "kind": "cidr",
+                        "version": net.version,
                         "network": str(net.network_address),
-                        "prefixlen": net.prefixlen, "comment": comment
-                    }
+                        "prefixlen": net.prefixlen,
+                    },
+                    comment,
+                )
+                return ValidatedEntry(
+                    source=ingested.source,
+                    original=original_value,
+                    entry_type=EntryType.CIDR,
+                    error=None,
+                    normalized=body,
+                    meta=meta,
                 )
             except ValueError:
                 if _POTENTIAL_CIDR_RE.match(body):
@@ -306,7 +321,8 @@ class EDLValidator:
                         ingested,
                         "cidr_invalid",
                         "Invalid CIDR notation",
-                        "Ensure address and prefix length are correct (e.g., 192.0.2.0/24)"
+                        "Ensure address and prefix length are correct (e.g., 192.0.2.0/24)",
+                        comment,
                     )
 
         # --- IP Range ---
@@ -317,14 +333,26 @@ class EDLValidator:
                 try:
                     ip_l, ip_r = ipaddress.ip_address(left), ipaddress.ip_address(right)
                     if ip_l.version != ip_r.version:
-                        return self._invalid(ingested, "range_mixed_versions", "IP range mixes IPv4 and IPv6", None)
+                        return self._invalid(ingested, "range_mixed_versions", "IP range mixes IPv4 and IPv6", None, comment)
                     if int(ip_l) > int(ip_r):
-                        return self._invalid(ingested, "range_order", "IP range start is greater than end", None)
+                        return self._invalid(ingested, "range_order", "IP range start is greater than end", None, comment)
+                    meta = _merge_meta(
+                        base_meta,
+                        {
+                            "kind": "ip_range",
+                            "version": ip_l.version,
+                            "start": left,
+                            "end": right,
+                        },
+                        comment,
+                    )
                     return ValidatedEntry(
-                        source=ingested.source, original=ingested.entry,
-                        entry_type=EntryType.IP_RANGE, error=None,
-                        normalized=ingested.entry,
-                        meta={"kind": "ip_range", "version": ip_l.version, "start": left, "end": right, "comment": comment}
+                        source=ingested.source,
+                        original=original_value,
+                        entry_type=EntryType.IP_RANGE,
+                        error=None,
+                        normalized=body,
+                        meta=meta,
                     )
                 except ValueError:
                     pass
@@ -336,33 +364,57 @@ class EDLValidator:
 
         if _try_ipv4(host):
             if port:
-                return ValidatedEntry(
-                    source=ingested.source, original=ingested.entry,
-                    entry_type=EntryType.IPV4_WITH_PORT, error=None,
-                    normalized=ingested.entry,
-                    meta={"kind": "ipv4_with_port", "host": host, "port": int(port), "comment": comment}
+                meta = _merge_meta(
+                    base_meta,
+                    {"kind": "ipv4_with_port", "host": host, "port": int(port)},
+                    comment,
                 )
+                return ValidatedEntry(
+                    source=ingested.source,
+                    original=original_value,
+                    entry_type=EntryType.IPV4_WITH_PORT,
+                    error=None,
+                    normalized=body,
+                    meta=meta,
+                )
+            meta = _merge_meta(base_meta, {"kind": "ipv4"}, comment)
             return ValidatedEntry(
-                source=ingested.source, original=ingested.entry,
-                entry_type=EntryType.IPV4, error=None,
-                normalized=ingested.entry,
-                meta={"kind": "ipv4", "comment": comment}
+                source=ingested.source,
+                original=original_value,
+                entry_type=EntryType.IPV4,
+                error=None,
+                normalized=body,
+                meta=meta,
             )
 
         if _try_ipv6(host):
             if port:
+                meta = _merge_meta(
+                    base_meta,
+                    {"kind": "ipv6_with_port", "host": host, "port": int(port)},
+                    comment,
+                )
                 return ValidatedEntry(
-                    source=ingested.source, original=ingested.entry,
-                    entry_type=EntryType.IPV6_WITH_PORT, error=None,
-                    normalized=ingested.entry,
-                    meta={"kind": "ipv6_with_port", "host": host, "port": int(port), "comment": comment}
+                    source=ingested.source,
+                    original=original_value,
+                    entry_type=EntryType.IPV6_WITH_PORT,
+                    error=None,
+                    normalized=body,
+                    meta=meta,
                 )
             zone = host.split("%", 1)[1] if "%" in host else None
+            meta = _merge_meta(
+                base_meta,
+                {"kind": "ipv6", "zone": zone},
+                comment,
+            )
             return ValidatedEntry(
-                source=ingested.source, original=ingested.entry,
-                entry_type=EntryType.IPV6, error=None,
-                normalized=ingested.entry,
-                meta={"kind": "ipv6", "zone": zone, "comment": comment}
+                source=ingested.source,
+                original=original_value,
+                entry_type=EntryType.IPV6,
+                error=None,
+                normalized=body,
+                meta=meta,
             )
 
         if _FOUR_PART_NUMERIC_RE.match(host) or _IPV4_ISH_RE.match(host):
@@ -370,34 +422,55 @@ class EDLValidator:
                 ingested,
                 "ip_invalid",
                 "Invalid IPv4 address",
-                "IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)"
+                "IPv4 must have 4 octets 0-255 (e.g., 203.0.113.10)",
+                comment,
             )
 
         ok, fqdn_err, cleaned_host, trailing_slash = _validate_fqdn(host)
         if not ok:
-            return self._invalid(ingested, fqdn_err.code, fqdn_err.message, fqdn_err.hint)
+            return self._invalid(ingested, fqdn_err.code, fqdn_err.message, fqdn_err.hint, comment)
 
-        return ValidatedEntry(
-            source=ingested.source, original=ingested.entry,
-            entry_type=EntryType.FQDN, error=None,
-            normalized=ingested.entry,
-            meta={
+        meta = _merge_meta(
+            base_meta,
+            {
                 "kind": "fqdn",
                 "host": cleaned_host,
                 "port": int(port) if port else None,
                 "trailing_slash": trailing_slash,
-                "comment": comment
-            }
+            },
+            comment,
+        )
+        return ValidatedEntry(
+            source=ingested.source,
+            original=original_value,
+            entry_type=EntryType.FQDN,
+            error=None,
+            normalized=body,
+            meta=meta,
         )
 
-    def _invalid(self, ingested: IngestedEntry, code: str, message: str, hint: Optional[str]) -> ValidatedEntry:
+    def _invalid(
+        self,
+        ingested: IngestedEntry,
+        code: str,
+        message: str,
+        hint: Optional[str],
+        comment: Optional[str] = None,
+    ) -> ValidatedEntry:
         self.logger.warning(
             "Invalid entry detected | entry=%s | code=%s | message=%s | hint=%s",
             ingested.entry, code, message, hint
         )
+        base_meta = dict(ingested.metadata)
+        if comment is not None:
+            base_meta["comment"] = comment
+        if ingested.line_number is not None:
+            base_meta.setdefault("line_number", ingested.line_number)
+        original_value = base_meta.get("raw", ingested.entry)
         return ValidatedEntry(
-            source=ingested.source, original=ingested.entry,
+            source=ingested.source, original=original_value,
             entry_type=EntryType.UNKNOWN,
             error=ValidationErrorDetail(code=code, message=message, hint=hint),
-            normalized=ingested.entry, meta={}
+            normalized=ingested.entry,
+            meta=base_meta,
         )

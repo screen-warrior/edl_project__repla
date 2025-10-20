@@ -1,37 +1,76 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-EDL Fetcher
+EDL Fetcher (Enterprise, Pydantic-Driven)
 
 - Downloads raw EDLs from configured sources
-- Runs requests concurrently with aiohttp
-- Logs fetch activity to logs/fetcher.log
+- Supports both remote URLs and local files
+- Returns raw `FetchedEntry` objects ready for ingestion
+- Logs all fetch activity to logs/fetcher.log
 """
 
 import asyncio
 import aiohttp
-from typing import List, Dict
+import logging
+from logging.handlers import TimedRotatingFileHandler
+from pathlib import Path
+from typing import Dict, List
 
-from models.pydantic_models import IngestedEntry
-from utils.logger import get_logger, log_metric, log_stage
+from models.schemas import FetchedEntry
+from utils.logger import log_metric
 
 
 # ----------------------------------------------------------------------
-# Fetcher
+# Logging Setup
+# ----------------------------------------------------------------------
+def setup_module_logger(name: str, log_level: str, log_file: str) -> logging.Logger:
+    """
+    Create a logger with console + file handler (rotated daily).
+    """
+    log_dir = Path("logs")
+    log_dir.mkdir(parents=True, exist_ok=True)
+    log_path = log_dir / log_file
+
+    logger = logging.getLogger(name)
+    logger.setLevel(getattr(logging, log_level.upper(), logging.INFO))
+
+    # Console
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
+    ch.setFormatter(logging.Formatter(
+        "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
+    ))
+
+    # File
+    fh = TimedRotatingFileHandler(log_path, when="midnight", backupCount=7, encoding="utf-8")
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(logging.Formatter(
+        "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
+    ))
+
+    if not logger.handlers:
+        logger.addHandler(ch)
+        logger.addHandler(fh)
+
+    return logger
+
+
+# ----------------------------------------------------------------------
+# Fetcher Class
 # ----------------------------------------------------------------------
 class EDLFetcher:
     """
-    Fetch-only component.
-    Supports both URLs and local text files.
-    Returns a flat list of IngestedEntry objects.
+    Fetch raw entries from configured sources (URLs and files).
+    Returns raw `FetchedEntry` instances ready for ingestion.
     """
 
     def __init__(self, sources: List[Dict[str, str]], timeout: int = 15, log_level: str = "INFO"):
         self.sources = sources
         self.timeout = aiohttp.ClientTimeout(total=timeout)
-        self.logger = get_logger("fetcher", log_level, "fetcher.log")
+        self.logger = setup_module_logger("fetcher", log_level, "fetcher.log")
 
-    async def _fetch_url(self, session: aiohttp.ClientSession, name: str, url: str) -> List[IngestedEntry]:
+    async def _fetch_url(self, session: aiohttp.ClientSession, name: str, url: str) -> List[FetchedEntry]:
+        """Fetch raw entries from a URL."""
         try:
             self.logger.debug("Fetching URL: %s -> %s", name, url)
             async with session.get(url) as resp:
@@ -39,29 +78,54 @@ class EDLFetcher:
                     self.logger.warning("%s returned HTTP %s", name, resp.status)
                     return []
                 text = await resp.text()
-                lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
-                self.logger.info("Fetched %d lines from %s", len(lines), name)
-                log_metric(self.logger, "lines_fetched", len(lines), stage="fetch", extra={"source": name})
-                return [IngestedEntry(source=name, entry=ln) for ln in lines]
+                lines = text.splitlines()
+                entries = [
+                    FetchedEntry(
+                        source=name,
+                        raw=line,
+                        line_number=index,
+                        metadata={"source_type": "url", "url": url},
+                    )
+                    for index, line in enumerate(lines, start=1)
+                ]
+                non_empty = sum(1 for e in entries if e.raw.strip())
+                self.logger.info("Fetched %d lines (%d non-empty) from %s", len(entries), non_empty, name)
+                log_metric(self.logger, "entries_fetched_total", len(entries), stage="fetch", source=name)
+                return entries
         except Exception as e:
-            self.logger.error("Failed to fetch URL %s: %s", name, e, exc_info=True)
+            self.logger.error("Failed to fetch URL %s: %s", name, e)
             return []
 
-    def _fetch_file(self, name: str, path: str) -> List[IngestedEntry]:
+    def _fetch_file(self, name: str, path: str) -> List[FetchedEntry]:
+        """Read raw entries from a local file."""
         try:
             self.logger.debug("Reading file: %s -> %s", name, path)
             with open(path, "r", encoding="utf-8") as f:
-                lines = [ln.strip() for ln in f if ln.strip()]
-            self.logger.info("Read %d lines from file %s", len(lines), path)
-            log_metric(self.logger, "lines_fetched", len(lines), stage="fetch", extra={"source": name})
-            return [IngestedEntry(source=name, entry=ln) for ln in lines]
+                lines = f.readlines()
+            entries = [
+                FetchedEntry(
+                    source=name,
+                    raw=line.rstrip("\r\n"),
+                    line_number=index,
+                    metadata={"source_type": "file", "path": path},
+                )
+                for index, line in enumerate(lines, start=1)
+            ]
+            non_empty = sum(1 for e in entries if e.raw.strip())
+            self.logger.info("Read %d lines (%d non-empty) from file %s", len(entries), non_empty, path)
+            log_metric(self.logger, "entries_fetched_total", len(entries), stage="fetch", source=name)
+            return entries
         except Exception as e:
-            self.logger.error("Failed to read file %s: %s", path, e, exc_info=True)
+            self.logger.error("Failed to read file %s: %s", path, e)
             return []
 
-    async def run(self) -> List[IngestedEntry]:
+    async def run(self) -> List[FetchedEntry]:
+        """
+        Run fetch for all sources (URL + file).
+        Returns flat list of FetchedEntry instances.
+        """
         self.logger.info("Starting fetch for %d sources", len(self.sources))
-        ingested: List[IngestedEntry] = []
+        results: List[FetchedEntry] = []
 
         async with aiohttp.ClientSession(timeout=self.timeout) as session:
             tasks = []
@@ -73,16 +137,17 @@ class EDLFetcher:
                 if src_type == "url":
                     tasks.append(self._fetch_url(session, name, location))
                 elif src_type == "file":
-                    ingested.extend(self._fetch_file(name, location))
+                    results.extend(self._fetch_file(name, location))
                 else:
                     self.logger.warning("Unknown source type for %s: %s", name, src_type)
 
             if tasks:
-                with log_stage(self.logger, "url_fetch_batch"):
-                    results = await asyncio.gather(*tasks, return_exceptions=False)
-                    for res in results:
-                        ingested.extend(res)
+                url_results = await asyncio.gather(*tasks, return_exceptions=False)
+                for batch in url_results:
+                    results.extend(batch)
 
-        self.logger.info("Completed fetch. Total entries: %d", len(ingested))
-        log_metric(self.logger, "entries_fetched_total", len(ingested), stage="fetch")
-        return ingested
+        non_empty_total = sum(1 for entry in results if entry.raw.strip())
+        log_metric(self.logger, "entries_fetched_total", len(results), stage="fetch", source="__aggregate__")
+        log_metric(self.logger, "entries_fetched_non_empty", non_empty_total, stage="fetch", source="__aggregate__")
+        self.logger.info("Completed fetch. Total entries: %d (non-empty=%d)", len(results), non_empty_total)
+        return results

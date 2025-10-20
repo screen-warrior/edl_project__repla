@@ -1,0 +1,8 @@
+2025-10-15 09:57:17,379 | INFO | tmp | run_id=58083d39-6f67-41a5-910d-ee1566879f5f | config_loader.py:65 | Loaded config file: config\sources.yaml
+2025-10-15 09:57:17,409 | INFO | tmp | run_id=58083d39-6f67-41a5-910d-ee1566879f5f | engine_1.py:28 | Loaded 24 sources from config/sources.yaml
+2025-10-15 10:00:23,798 | INFO | tmp | run_id=24af4b03-3dbf-4af4-b62f-1809bdf147b6 | config_loader.py:65 | Loaded config file: config\sources.yaml
+2025-10-15 10:00:23,813 | INFO | tmp | run_id=24af4b03-3dbf-4af4-b62f-1809bdf147b6 | engine_1.py:28 | Loaded 24 sources from config/sources.yaml
+2025-10-15 10:01:10,695 | INFO | tmp | run_id=50ef5dda-d72e-4827-8317-33c9d51a2db6 | config_loader.py:65 | Loaded config file: config\sources.yaml
+2025-10-15 10:01:10,695 | INFO | tmp | run_id=50ef5dda-d72e-4827-8317-33c9d51a2db6 | engine_1.py:28 | Loaded 24 sources from config/sources.yaml
+2025-10-15 10:01:19,347 | INFO | tmp | run_id=6463af10-4171-4e15-9953-af0ef51cfda9 | config_loader.py:65 | Loaded config file: config\sources.yaml
+2025-10-15 10:01:19,347 | INFO | tmp | run_id=6463af10-4171-4e15-9953-af0ef51cfda9 | engine_1.py:28 | Loaded 24 sources from config/sources.yaml

@@ -18,7 +18,7 @@ from urllib.parse import urlsplit, urlunsplit
 from pydantic import BaseModel, Field
 from typing import Any, Dict, List, Optional
 
-from models.validation_model import ValidatedEntry, EntryType
+from models.schemas import ValidatedEntry, EntryType
 from utils.logger import get_logger, log_stage, log_metric
 
 

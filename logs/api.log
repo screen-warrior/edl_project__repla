@@ -1,0 +1,8 @@
+2025-10-19 22:15:14,871 | INFO | api.app | run_id=6900b25b-9205-4bba-817d-f555bf83b4ad | main.py:60 | Queued pipeline job da04f85b-0cb0-4530-badb-9cad00645484 | mode=validate persist_to_db=True
+2025-10-19 22:15:14,935 | INFO | api.job | run_id=da04f85b-0cb0-4530-badb-9cad00645484 | config_loader.py:65 | Loaded config file: config\sources.yaml
+2025-10-19 22:15:14,936 | INFO | api.job | run_id=da04f85b-0cb0-4530-badb-9cad00645484 | engine_1.py:28 | Loaded 24 sources from config/sources.yaml
+2025-10-19 22:15:16,173 | INFO | api.job | run_id=da04f85b-0cb0-4530-badb-9cad00645484 | main.py:132 | Pipeline job da04f85b-0cb0-4530-badb-9cad00645484 finished | run_id=8eeec7f7-0b83-4375-85c3-593048a7d519
+2025-10-19 22:26:31,690 | INFO | api.app | run_id=39bb9549-a127-49a6-a03d-c3f9146e8062 | main.py:60 | Queued pipeline job fb7ee38b-f55e-4567-b813-f8fe6e4d1a3a | mode=validate persist_to_db=True
+2025-10-19 22:26:31,734 | INFO | api.job | run_id=fb7ee38b-f55e-4567-b813-f8fe6e4d1a3a | config_loader.py:65 | Loaded config file: config\sources.yaml
+2025-10-19 22:26:31,739 | INFO | api.job | run_id=fb7ee38b-f55e-4567-b813-f8fe6e4d1a3a | engine_1.py:28 | Loaded 24 sources from config/sources.yaml
+2025-10-19 22:26:32,808 | INFO | api.job | run_id=fb7ee38b-f55e-4567-b813-f8fe6e4d1a3a | main.py:132 | Pipeline job fb7ee38b-f55e-4567-b813-f8fe6e4d1a3a finished | run_id=06eaa790-ceda-43dd-a912-cf1438b82e7d

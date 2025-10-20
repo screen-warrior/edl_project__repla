@@ -1,27 +1,16 @@
-2025-10-09 08:55:11,119 | INFO | cli | run_id=cec0fce6-1d84-4ff2-a0e7-63b4f27c64c5 | config_loader.py:65 | Loaded config file: config\sources.yaml
-2025-10-09 08:55:11,123 | INFO | cli | run_id=cec0fce6-1d84-4ff2-a0e7-63b4f27c64c5 | engine_1.py:26 | Loaded 24 sources from config/sources.yaml
-2025-10-09 08:55:11,124 | INFO | cli | run_id=cec0fce6-1d84-4ff2-a0e7-63b4f27c64c5 | config_loader.py:65 | Loaded config file: config\augmentor_config.yaml
-2025-10-09 08:55:11,125 | INFO | cli | run_id=cec0fce6-1d84-4ff2-a0e7-63b4f27c64c5 | engine_1.py:32 | Loaded augmentor configuration from config/augmentor_config.yaml
-2025-10-09 08:55:11,256 | INFO | cli | run_id=cec0fce6-1d84-4ff2-a0e7-63b4f27c64c5 | logger.py:136 | Stage 'pipeline_total' completed in 0.13s
-2025-10-09 08:55:28,978 | INFO | cli | run_id=d54d3d77-624d-4a80-9717-6754c45153ce | config_loader.py:65 | Loaded config file: config\sources.yaml
-2025-10-09 08:55:28,978 | INFO | cli | run_id=d54d3d77-624d-4a80-9717-6754c45153ce | engine_1.py:26 | Loaded 24 sources from config/sources.yaml
-2025-10-09 08:55:28,981 | INFO | cli | run_id=d54d3d77-624d-4a80-9717-6754c45153ce | config_loader.py:65 | Loaded config file: config\augmentor_config.yaml
-2025-10-09 08:55:28,981 | INFO | cli | run_id=d54d3d77-624d-4a80-9717-6754c45153ce | engine_1.py:32 | Loaded augmentor configuration from config/augmentor_config.yaml
-2025-10-09 08:55:29,026 | INFO | cli | run_id=d54d3d77-624d-4a80-9717-6754c45153ce | logger.py:136 | Stage 'pipeline_total' completed in 0.04s
-2025-10-09 10:01:59,730 | INFO | cli | run_id=948d0921-dbb1-4701-82c7-a6cd4e5c69cf | config_loader.py:65 | Loaded config file: config\sources.yaml
-2025-10-09 10:01:59,731 | INFO | cli | run_id=948d0921-dbb1-4701-82c7-a6cd4e5c69cf | engine_1.py:26 | Loaded 24 sources from config/sources.yaml
-2025-10-09 10:01:59,750 | INFO | cli | run_id=948d0921-dbb1-4701-82c7-a6cd4e5c69cf | config_loader.py:65 | Loaded config file: config\augmentor_config.yaml
-2025-10-09 10:01:59,750 | INFO | cli | run_id=948d0921-dbb1-4701-82c7-a6cd4e5c69cf | engine_1.py:32 | Loaded augmentor configuration from config/augmentor_config.yaml
-2025-10-09 10:02:00,254 | INFO | cli | run_id=948d0921-dbb1-4701-82c7-a6cd4e5c69cf | logger.py:136 | Stage 'pipeline_total' completed in 0.50s
-2025-10-09 12:15:04,078 | INFO | cli | run_id=acadda88-cbbb-4879-b27b-4790a4046439 | config_loader.py:65 | Loaded config file: config\sources.yaml
-2025-10-09 12:15:04,078 | INFO | cli | run_id=acadda88-cbbb-4879-b27b-4790a4046439 | engine_1.py:26 | Loaded 24 sources from config/sources.yaml
-2025-10-09 12:15:04,474 | INFO | cli | run_id=acadda88-cbbb-4879-b27b-4790a4046439 | logger.py:136 | Stage 'pipeline_total' completed in 0.40s
-2025-10-09 12:42:24,643 | INFO | cli | run_id=1fba8677-29a9-40e5-acca-519862bbd23c | config_loader.py:65 | Loaded config file: config\sources.yaml
-2025-10-09 12:42:24,643 | INFO | cli | run_id=1fba8677-29a9-40e5-acca-519862bbd23c | engine_1.py:26 | Loaded 24 sources from config/sources.yaml
-2025-10-09 12:42:25,063 | INFO | cli | run_id=1fba8677-29a9-40e5-acca-519862bbd23c | logger.py:136 | Stage 'pipeline_total' completed in 0.42s
-2025-10-09 15:27:53,399 | INFO | cli | run_id=7d936400-f019-4723-a4ae-8e3bd2da7a43 | config_loader.py:65 | Loaded config file: config\sources.yaml
-2025-10-09 15:27:53,400 | INFO | cli | run_id=7d936400-f019-4723-a4ae-8e3bd2da7a43 | engine_1.py:26 | Loaded 24 sources from config/sources.yaml
-2025-10-09 15:27:53,801 | INFO | cli | run_id=7d936400-f019-4723-a4ae-8e3bd2da7a43 | logger.py:136 | Stage 'pipeline_total' completed in 0.40s
-2025-10-09 15:28:13,618 | INFO | cli | run_id=44f30c6e-17ae-4dd3-82b0-63e3ab28161b | config_loader.py:65 | Loaded config file: config\sources.yaml
-2025-10-09 15:28:13,619 | INFO | cli | run_id=44f30c6e-17ae-4dd3-82b0-63e3ab28161b | engine_1.py:26 | Loaded 24 sources from config/sources.yaml
-2025-10-09 15:28:13,866 | INFO | cli | run_id=44f30c6e-17ae-4dd3-82b0-63e3ab28161b | logger.py:136 | Stage 'pipeline_total' completed in 0.25s
+2025-10-19 19:06:01,446 | INFO | cli | run_id=2b4dd72d-c74f-4359-887c-b2402611b1f1 | cli.py:38 | CLI invocation | mode=validate persist_db=True output=test_output_data/validated_output.json interval_minutes=0.00
+2025-10-19 19:06:01,454 | INFO | cli | run_id=2b4dd72d-c74f-4359-887c-b2402611b1f1 | config_loader.py:65 | Loaded config file: config\sources.yaml
+2025-10-19 19:06:01,455 | INFO | cli | run_id=2b4dd72d-c74f-4359-887c-b2402611b1f1 | engine_1.py:28 | Loaded 24 sources from config/sources.yaml
+2025-10-19 19:06:01,839 | INFO | cli | run_id=2b4dd72d-c74f-4359-887c-b2402611b1f1 | logger.py:136 | Stage 'pipeline_total' completed in 0.38s
+2025-10-19 19:07:12,027 | INFO | cli | run_id=35f54da1-694a-4180-ab7a-605f9cfb1739 | cli.py:38 | CLI invocation | mode=validate persist_db=True output=test_output_data/validated_output.json interval_minutes=0.00
+2025-10-19 19:07:12,031 | INFO | cli | run_id=35f54da1-694a-4180-ab7a-605f9cfb1739 | config_loader.py:65 | Loaded config file: config\sources.yaml
+2025-10-19 19:07:12,031 | INFO | cli | run_id=35f54da1-694a-4180-ab7a-605f9cfb1739 | engine_1.py:28 | Loaded 24 sources from config/sources.yaml
+2025-10-19 19:07:12,257 | INFO | cli | run_id=35f54da1-694a-4180-ab7a-605f9cfb1739 | logger.py:136 | Stage 'pipeline_total' completed in 0.23s
+2025-10-19 19:10:20,857 | INFO | cli | run_id=9b61b268-c50d-443e-a626-280e89c95dbd | cli.py:38 | CLI invocation | mode=validate persist_db=True output=test_output_data/validated_output.json interval_minutes=0.00
+2025-10-19 19:10:20,857 | INFO | cli | run_id=9b61b268-c50d-443e-a626-280e89c95dbd | config_loader.py:65 | Loaded config file: config\sources.yaml
+2025-10-19 19:10:20,857 | INFO | cli | run_id=9b61b268-c50d-443e-a626-280e89c95dbd | engine_1.py:28 | Loaded 24 sources from config/sources.yaml
+2025-10-19 19:10:21,580 | INFO | cli | run_id=9b61b268-c50d-443e-a626-280e89c95dbd | logger.py:136 | Stage 'pipeline_total' completed in 0.72s
+2025-10-19 19:13:11,491 | INFO | cli | run_id=d2b2911b-d385-491a-bd49-d038b8b65b31 | cli.py:38 | CLI invocation | mode=validate persist_db=True output=test_output_data/validated_output.json interval_minutes=0.00
+2025-10-19 19:13:11,494 | INFO | cli | run_id=d2b2911b-d385-491a-bd49-d038b8b65b31 | config_loader.py:65 | Loaded config file: config\sources.yaml
+2025-10-19 19:13:11,494 | INFO | cli | run_id=d2b2911b-d385-491a-bd49-d038b8b65b31 | engine_1.py:28 | Loaded 24 sources from config/sources.yaml
+2025-10-19 19:13:12,149 | INFO | cli | run_id=d2b2911b-d385-491a-bd49-d038b8b65b31 | logger.py:136 | Stage 'pipeline_total' completed in 0.65s

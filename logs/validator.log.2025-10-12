@@ -1,0 +1,983 @@
+2025-10-09 08:55:11,224 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 08:55:11,225 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 08:55:11,226 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 08:55:11,226 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 08:55:11,226 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 08:55:11,227 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 08:55:11,227 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 08:55:11,227 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 08:55:11,227 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 08:55:11,228 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 08:55:11,228 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 08:55:11,228 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 08:55:11,228 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 08:55:11,228 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 08:55:11,249 | INFO | validator | Validation complete: 39 total (25 valid, 14 invalid), breakdown={'ipv4': 10, 'unknown': 14, 'ipv6': 6, 'cidr': 8, 'fqdn': 1}
+2025-10-09 08:55:11,250 | INFO | validator | METRIC | validation_total=39 stage=validate
+2025-10-09 08:55:11,250 | INFO | validator | METRIC | validation_valid=25 stage=validate
+2025-10-09 08:55:11,250 | INFO | validator | METRIC | validation_invalid=14 stage=validate
+2025-10-09 08:55:11,250 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-09 08:55:29,016 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 08:55:29,016 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 08:55:29,016 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 08:55:29,017 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 08:55:29,017 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 08:55:29,017 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 08:55:29,017 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 08:55:29,017 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 08:55:29,017 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 08:55:29,017 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 08:55:29,017 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 08:55:29,018 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 08:55:29,018 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 08:55:29,018 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 08:55:29,019 | INFO | validator | Validation complete: 39 total (25 valid, 14 invalid), breakdown={'ipv4': 10, 'unknown': 14, 'ipv6': 6, 'cidr': 8, 'fqdn': 1}
+2025-10-09 08:55:29,019 | INFO | validator | METRIC | validation_total=39 stage=validate
+2025-10-09 08:55:29,019 | INFO | validator | METRIC | validation_valid=25 stage=validate
+2025-10-09 08:55:29,019 | INFO | validator | METRIC | validation_invalid=14 stage=validate
+2025-10-09 08:55:29,019 | INFO | validator | Stage 'validate_batch' completed in 0.00s
+2025-10-09 10:02:00,185 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 10:02:00,186 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 10:02:00,186 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 10:02:00,186 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 10:02:00,186 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 10:02:00,187 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 10:02:00,187 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 10:02:00,187 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 10:02:00,187 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 10:02:00,188 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 10:02:00,188 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 10:02:00,188 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 10:02:00,188 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 10:02:00,189 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 10:02:00,208 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 10:02:00,209 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 10:02:00,218 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-09 10:02:00,218 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-09 10:02:00,218 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-09 10:02:00,218 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-09 10:02:00,218 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-09 12:15:04,445 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 12:15:04,446 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 12:15:04,446 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 12:15:04,446 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 12:15:04,447 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 12:15:04,447 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 12:15:04,447 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 12:15:04,448 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 12:15:04,448 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 12:15:04,448 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 12:15:04,448 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 12:15:04,448 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 12:15:04,449 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 12:15:04,449 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 12:15:04,451 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 12:15:04,451 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 12:15:04,460 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-09 12:15:04,460 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-09 12:15:04,460 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-09 12:15:04,460 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-09 12:15:04,460 | INFO | validator | Stage 'validate_batch' completed in 0.02s
+2025-10-09 12:42:25,030 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 12:42:25,032 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 12:42:25,032 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 12:42:25,032 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 12:42:25,032 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 12:42:25,033 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 12:42:25,033 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 12:42:25,034 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 12:42:25,034 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 12:42:25,034 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 12:42:25,034 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 12:42:25,034 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 12:42:25,034 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 12:42:25,034 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 12:42:25,036 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 12:42:25,036 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 12:42:25,050 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-09 12:42:25,050 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-09 12:42:25,050 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-09 12:42:25,050 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-09 12:42:25,050 | INFO | validator | Stage 'validate_batch' completed in 0.02s
+2025-10-09 15:27:53,773 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 15:27:53,773 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 15:27:53,774 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 15:27:53,774 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 15:27:53,774 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 15:27:53,775 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 15:27:53,775 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 15:27:53,776 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 15:27:53,776 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 15:27:53,776 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 15:27:53,777 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 15:27:53,777 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 15:27:53,777 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 15:27:53,777 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 15:27:53,779 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 15:27:53,780 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 15:27:53,787 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-09 15:27:53,788 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-09 15:27:53,788 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-09 15:27:53,788 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-09 15:27:53,788 | INFO | validator | Stage 'validate_batch' completed in 0.02s
+2025-10-09 15:28:13,839 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 15:28:13,839 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 15:28:13,840 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 15:28:13,840 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 15:28:13,840 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-09 15:28:13,840 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 15:28:13,841 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 15:28:13,841 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 15:28:13,841 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-09 15:28:13,841 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 15:28:13,841 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 15:28:13,841 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 15:28:13,842 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-09 15:28:13,842 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 15:28:13,843 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 15:28:13,844 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-09 15:28:13,851 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-09 15:28:13,852 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-09 15:28:13,852 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-09 15:28:13,852 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-09 15:28:13,852 | INFO | validator | Stage 'validate_batch' completed in 0.01s
+2025-10-12 12:54:39,641 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 12:54:39,641 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 12:54:39,642 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 12:54:39,642 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 12:54:39,642 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 12:54:39,643 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 12:54:39,643 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 12:54:39,643 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 12:54:39,644 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 12:54:39,644 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 12:54:39,644 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 12:54:39,644 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 12:54:39,644 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 12:54:39,644 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 12:54:39,647 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 12:54:39,648 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 12:54:39,656 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 12:54:39,656 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 12:54:39,657 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 12:54:39,657 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 12:54:39,657 | INFO | validator | Stage 'validate_batch' completed in 0.02s
+2025-10-12 16:54:57,894 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 16:54:57,896 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 16:54:57,896 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 16:54:57,898 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 16:54:57,898 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 16:54:57,899 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 16:54:57,900 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 16:54:57,901 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 16:54:57,902 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 16:54:57,902 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 16:54:57,903 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 16:54:57,903 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 16:54:57,904 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 16:54:57,904 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 16:54:57,907 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 16:54:57,908 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 16:54:57,924 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 16:54:57,924 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 16:54:57,924 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 16:54:57,925 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 16:54:57,925 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 18:21:45,548 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:21:45,549 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:21:45,550 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:21:45,550 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:21:45,551 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:21:45,552 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:21:45,552 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:21:45,553 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:21:45,553 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:21:45,554 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 18:21:45,555 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 18:21:45,556 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:21:45,556 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 18:21:45,557 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:21:45,564 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:21:45,565 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:21:45,586 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 18:21:45,587 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 18:21:45,587 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 18:21:45,587 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 18:21:45,588 | INFO | validator | Stage 'validate_batch' completed in 0.04s
+2025-10-12 18:22:09,683 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:22:09,684 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:22:09,685 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:22:09,686 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:22:09,686 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:22:09,688 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:22:09,688 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:22:09,688 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:22:09,689 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:22:09,690 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 18:22:09,691 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 18:22:09,691 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:22:09,691 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 18:22:09,692 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:22:09,695 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:22:09,696 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:22:09,714 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 18:22:09,715 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 18:22:09,715 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 18:22:09,716 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 18:22:09,716 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 18:24:19,943 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:24:19,946 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:24:19,946 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:24:19,947 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:24:19,948 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:24:19,948 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:24:19,950 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:24:19,950 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:24:19,951 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:24:19,952 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 18:24:19,953 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 18:24:19,953 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:24:19,953 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 18:24:19,955 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:24:19,959 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:24:19,960 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:24:19,978 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 18:24:19,979 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 18:24:19,979 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 18:24:19,979 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 18:24:19,980 | INFO | validator | Stage 'validate_batch' completed in 0.04s
+2025-10-12 18:24:35,991 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:24:35,992 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:24:35,993 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:24:35,993 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:24:35,995 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:24:35,995 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:24:35,996 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:24:35,997 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:24:35,997 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:24:35,998 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 18:24:35,998 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 18:24:35,999 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:24:35,999 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 18:24:35,999 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:24:36,003 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:24:36,003 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:24:36,022 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 18:24:36,022 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 18:24:36,023 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 18:24:36,023 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 18:24:36,024 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 18:24:56,126 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:24:56,127 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:24:56,128 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:24:56,129 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:24:56,129 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 18:24:56,130 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:24:56,131 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:24:56,132 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:24:56,133 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 18:24:56,133 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 18:24:56,134 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 18:24:56,135 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:24:56,135 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 18:24:56,136 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:24:56,139 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:24:56,140 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 18:24:56,155 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 18:24:56,155 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 18:24:56,155 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 18:24:56,156 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 18:24:56,156 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 19:31:02,918 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:31:02,919 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:31:02,919 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:31:02,920 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:31:02,920 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:31:02,921 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:31:02,922 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:31:02,923 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:31:02,924 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:31:02,925 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:31:02,925 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:31:02,926 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:31:02,927 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:31:02,927 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:31:02,931 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:31:02,933 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:31:02,951 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 19:31:02,952 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 19:31:02,952 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 19:31:02,952 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 19:31:02,953 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 19:32:05,981 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:32:05,982 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:32:05,982 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:32:05,983 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:32:05,983 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:32:05,983 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:32:05,984 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:32:05,984 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:32:05,984 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:32:05,987 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:32:05,987 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:32:05,988 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:32:05,988 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:32:05,988 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:32:05,994 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:32:05,994 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:32:06,011 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 19:32:06,011 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 19:32:06,013 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 19:32:06,013 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 19:32:06,014 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 19:42:17,614 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:42:17,615 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:42:17,615 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:42:17,616 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:42:17,617 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:42:17,617 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:42:17,618 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:42:17,618 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:42:17,619 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:42:17,620 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:42:17,621 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:42:17,622 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:42:17,622 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:42:17,623 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:42:17,627 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:42:17,628 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:42:17,643 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 19:42:17,643 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 19:42:17,643 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 19:42:17,644 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 19:42:17,644 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 19:43:14,778 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:43:14,779 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:43:14,781 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:43:14,782 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:43:14,783 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:43:14,784 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:43:14,784 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:43:14,785 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:43:14,785 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:43:14,786 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:43:14,787 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:43:14,787 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:43:14,788 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:43:14,788 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:43:14,793 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:43:14,794 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:43:14,810 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 19:43:14,811 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 19:43:14,811 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 19:43:14,812 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 19:43:14,813 | INFO | validator | Stage 'validate_batch' completed in 0.04s
+2025-10-12 19:43:52,030 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:43:52,031 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:43:52,031 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:43:52,032 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:43:52,033 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:43:52,033 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:43:52,034 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:43:52,035 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:43:52,035 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:43:52,037 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:43:52,038 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:43:52,039 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:43:52,040 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:43:52,041 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:43:52,048 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:43:52,049 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:43:52,074 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 19:43:52,075 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 19:43:52,075 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 19:43:52,075 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 19:43:52,075 | INFO | validator | Stage 'validate_batch' completed in 0.05s
+2025-10-12 19:45:20,051 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:45:20,051 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:45:20,053 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:45:20,053 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:45:20,054 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:45:20,054 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:45:20,055 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:45:20,055 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:45:20,056 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:45:20,057 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:45:20,057 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:45:20,057 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:45:20,059 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:45:20,059 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:45:20,064 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:45:20,066 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:45:20,083 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 19:45:20,083 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 19:45:20,084 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 19:45:20,084 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 19:45:20,084 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 19:45:53,905 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:45:53,906 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:45:53,906 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:45:53,906 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:45:53,907 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:45:53,907 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:45:53,908 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:45:53,908 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:45:53,908 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:45:53,908 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:45:53,909 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:45:53,909 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:45:53,910 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:45:53,910 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:45:53,913 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:45:53,914 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:45:53,932 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 19:45:53,932 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 19:45:53,933 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 19:45:53,933 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 19:45:53,933 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 19:50:43,449 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:50:43,450 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:50:43,451 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:50:43,451 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:50:43,452 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:50:43,453 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:50:43,453 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:50:43,454 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:50:43,455 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:50:43,456 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:50:43,456 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:50:43,457 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:50:43,457 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:50:43,459 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:50:43,463 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:50:43,464 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:50:43,481 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 19:50:43,481 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 19:50:43,482 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 19:50:43,482 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 19:50:43,482 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 19:51:05,561 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:51:05,562 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:51:05,563 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:51:05,563 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:51:05,565 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 19:51:05,566 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:51:05,567 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:51:05,568 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:51:05,568 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 19:51:05,569 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:51:05,570 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:51:05,571 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:51:05,572 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 19:51:05,572 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:51:05,576 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:51:05,577 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 19:51:05,595 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 19:51:05,597 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 19:51:05,597 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 19:51:05,597 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 19:51:05,597 | INFO | validator | Stage 'validate_batch' completed in 0.04s
+2025-10-12 20:07:34,288 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:07:34,289 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:07:34,289 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:07:34,290 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:07:34,291 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:07:34,292 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:07:34,293 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:07:34,293 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:07:34,294 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:07:34,295 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:07:34,296 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:07:34,296 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:07:34,298 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:07:34,298 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:07:34,302 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:07:34,303 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:07:34,322 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 20:07:34,323 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 20:07:34,323 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 20:07:34,323 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 20:07:34,324 | INFO | validator | Stage 'validate_batch' completed in 0.04s
+2025-10-12 20:08:05,960 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:08:05,960 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:08:05,962 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:08:05,962 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:08:05,963 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:08:05,963 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:08:05,963 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:08:05,965 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:08:05,965 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:08:05,966 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:08:05,966 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:08:05,966 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:08:05,967 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:08:05,968 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:08:05,972 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:08:05,973 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:08:05,992 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 20:08:05,993 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 20:08:05,994 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 20:08:05,994 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 20:08:05,995 | INFO | validator | Stage 'validate_batch' completed in 0.04s
+2025-10-12 20:08:36,694 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:08:36,694 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:08:36,695 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:08:36,695 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:08:36,697 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:08:36,698 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:08:36,699 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:08:36,700 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:08:36,701 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:08:36,701 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:08:36,703 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:08:36,703 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:08:36,704 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:08:36,705 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:08:36,709 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:08:36,710 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:08:36,727 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 20:08:36,728 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 20:08:36,728 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 20:08:36,728 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 20:08:36,728 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 20:09:18,990 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:09:18,991 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:09:18,991 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:09:18,992 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:09:18,993 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:09:18,993 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:09:18,995 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:09:18,996 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:09:18,996 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:09:18,997 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:09:18,998 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:09:18,998 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:09:18,999 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:09:19,000 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:09:19,004 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:09:19,007 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:09:19,025 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 20:09:19,026 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 20:09:19,026 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 20:09:19,026 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 20:09:19,027 | INFO | validator | Stage 'validate_batch' completed in 0.04s
+2025-10-12 20:17:44,979 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:17:44,980 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:17:44,981 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:17:44,981 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:17:44,982 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:17:44,983 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:17:44,983 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:17:44,984 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:17:44,984 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:17:44,985 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:17:44,986 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:17:44,986 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:17:44,987 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:17:44,988 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:17:44,992 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:17:44,994 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:17:45,010 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 20:17:45,011 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 20:17:45,011 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 20:17:45,012 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 20:17:45,012 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 20:36:34,828 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:36:34,829 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:36:34,829 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:36:34,830 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:36:34,830 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:36:34,831 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:36:34,831 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:36:34,831 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:36:34,832 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:36:34,833 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:36:34,833 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:36:34,834 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:36:34,834 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:36:34,835 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:36:34,840 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:36:34,843 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:36:34,859 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 20:36:34,860 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 20:36:34,860 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 20:36:34,860 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 20:36:34,861 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 20:40:55,780 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:40:55,780 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:40:55,782 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:40:55,782 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:40:55,782 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:40:55,784 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:40:55,785 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:40:55,785 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:40:55,785 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:40:55,786 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:40:55,787 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:40:55,787 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:40:55,788 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:40:55,788 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:40:55,792 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:40:55,794 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:40:55,811 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 20:40:55,811 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 20:40:55,812 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 20:40:55,812 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 20:40:55,812 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 20:41:33,923 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:41:33,924 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:41:33,924 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:41:33,925 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:41:33,926 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:41:33,927 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:41:33,927 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:41:33,928 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:41:33,928 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:41:33,930 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:41:33,930 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:41:33,931 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:41:33,932 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:41:33,932 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:41:33,938 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:41:33,939 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:41:33,958 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 20:41:33,959 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 20:41:33,959 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 20:41:33,960 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 20:41:33,960 | INFO | validator | Stage 'validate_batch' completed in 0.04s
+2025-10-12 20:47:24,758 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:47:24,759 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:47:24,760 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:47:24,761 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:47:24,761 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:47:24,762 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:47:24,763 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:47:24,763 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:47:24,764 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:47:24,765 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:47:24,765 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:47:24,766 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:47:24,766 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:47:24,767 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:47:24,773 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:47:24,775 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:47:24,792 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 20:47:24,792 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 20:47:24,792 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 20:47:24,793 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 20:47:24,793 | INFO | validator | Stage 'validate_batch' completed in 0.04s
+2025-10-12 20:48:04,622 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:48:04,624 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:48:04,624 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:48:04,625 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:48:04,626 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:48:04,626 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:48:04,627 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:48:04,628 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:48:04,629 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:48:04,630 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:48:04,631 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:48:04,631 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:48:04,632 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:48:04,633 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:48:04,638 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:48:04,639 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:48:04,657 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 20:48:04,658 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 20:48:04,659 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 20:48:04,659 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 20:48:04,660 | INFO | validator | Stage 'validate_batch' completed in 0.04s
+2025-10-12 20:49:33,130 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:49:33,131 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:49:33,131 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:49:33,132 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:49:33,132 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:49:33,133 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:49:33,134 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:49:33,135 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:49:33,135 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:49:33,136 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:49:33,137 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:49:33,137 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:49:33,138 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:49:33,138 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:49:33,146 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:49:33,146 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:49:33,167 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 20:49:33,168 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 20:49:33,168 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 20:49:33,169 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 20:49:33,169 | INFO | validator | Stage 'validate_batch' completed in 0.04s
+2025-10-12 20:49:47,199 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:49:47,199 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:49:47,199 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:49:47,200 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:49:47,200 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:49:47,200 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:49:47,201 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:49:47,201 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:49:47,201 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:49:47,202 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:49:47,202 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:49:47,203 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:49:47,203 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:49:47,203 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:49:47,207 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:49:47,209 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:49:47,229 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 20:49:47,230 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 20:49:47,230 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 20:49:47,232 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 20:49:47,232 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 20:52:46,668 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:52:46,670 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:52:46,670 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:52:46,671 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:52:46,672 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:52:46,673 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:52:46,674 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:52:46,674 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:52:46,674 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:52:46,675 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:52:46,675 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:52:46,676 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:52:46,677 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:52:46,678 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:52:46,682 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:52:46,684 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:52:46,702 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 20:52:46,703 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 20:52:46,704 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 20:52:46,704 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 20:52:46,705 | INFO | validator | Stage 'validate_batch' completed in 0.04s
+2025-10-12 20:56:30,625 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:56:30,626 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:56:30,627 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:56:30,628 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:56:30,628 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 20:56:30,628 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:56:30,629 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:56:30,629 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:56:30,630 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 20:56:30,630 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:56:30,631 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:56:30,631 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:56:30,633 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 20:56:30,633 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:56:30,637 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:56:30,639 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 20:56:30,658 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 20:56:30,659 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 20:56:30,660 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 20:56:30,660 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 20:56:30,660 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 21:45:01,923 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:45:01,926 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:45:01,926 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:45:01,927 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:45:01,927 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:45:01,928 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:45:01,929 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:45:01,930 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:45:01,930 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:45:01,932 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 21:45:01,933 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 21:45:01,933 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:45:01,933 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 21:45:01,934 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:45:01,938 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:45:01,940 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:45:01,958 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 21:45:01,958 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 21:45:01,959 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 21:45:01,959 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 21:45:01,959 | INFO | validator | Stage 'validate_batch' completed in 0.04s
+2025-10-12 21:47:34,207 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:47:34,208 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:47:34,209 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:47:34,209 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:47:34,210 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:47:34,211 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:47:34,211 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:47:34,212 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:47:34,214 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:47:34,214 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 21:47:34,215 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 21:47:34,216 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:47:34,216 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 21:47:34,217 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:47:34,220 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:47:34,220 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:47:34,237 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 21:47:34,238 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 21:47:34,238 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 21:47:34,239 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 21:47:34,240 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 21:47:52,586 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:47:52,596 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:47:52,597 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:47:52,598 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:47:52,598 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:47:52,599 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:47:52,599 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:47:52,601 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:47:52,601 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:47:52,602 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 21:47:52,603 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 21:47:52,603 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:47:52,604 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 21:47:52,604 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:47:52,608 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:47:52,609 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:47:52,626 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 21:47:52,627 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 21:47:52,628 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 21:47:52,629 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 21:47:52,629 | INFO | validator | Stage 'validate_batch' completed in 0.04s
+2025-10-12 21:55:00,251 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:55:00,253 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:55:00,254 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:55:00,255 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:55:00,255 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:55:00,255 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:55:00,257 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:55:00,257 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:55:00,257 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:55:00,258 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 21:55:00,258 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 21:55:00,260 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:55:00,260 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 21:55:00,261 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:55:00,267 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:55:00,268 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:55:00,284 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 21:55:00,285 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 21:55:00,285 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 21:55:00,285 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 21:55:00,287 | INFO | validator | Stage 'validate_batch' completed in 0.04s
+2025-10-12 21:56:31,290 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:56:31,290 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:56:31,292 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:56:31,292 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:56:31,292 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 21:56:31,293 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:56:31,293 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:56:31,293 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:56:31,293 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 21:56:31,294 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 21:56:31,294 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 21:56:31,294 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:56:31,294 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 21:56:31,295 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:56:31,298 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:56:31,299 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 21:56:31,316 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 21:56:31,317 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 21:56:31,317 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 21:56:31,317 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 21:56:31,318 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 22:41:23,623 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:41:23,624 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:41:23,624 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:41:23,625 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:41:23,625 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:41:23,626 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 22:41:23,626 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 22:41:23,627 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 22:41:23,627 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 22:41:23,628 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 22:41:23,629 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 22:41:23,629 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 22:41:23,630 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 22:41:23,630 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 22:41:23,634 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 22:41:23,636 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 22:41:23,653 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 22:41:23,654 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 22:41:23,654 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 22:41:23,654 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 22:41:23,655 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 22:48:05,135 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:48:05,137 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:48:05,137 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:48:05,137 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:48:05,138 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:48:05,138 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 22:48:05,139 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 22:48:05,139 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 22:48:05,139 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 22:48:05,140 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 22:48:05,141 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 22:48:05,141 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 22:48:05,142 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 22:48:05,142 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 22:48:05,147 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 22:48:05,147 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 22:48:05,167 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 22:48:05,168 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 22:48:05,168 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 22:48:05,169 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 22:48:05,169 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 22:50:56,900 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:50:56,901 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:50:56,901 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:50:56,902 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:50:56,902 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:50:56,902 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 22:50:56,902 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 22:50:56,902 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 22:50:56,902 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 22:50:56,902 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 22:50:56,902 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 22:50:56,902 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 22:50:56,903 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 22:50:56,903 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 22:50:56,907 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 22:50:56,907 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 22:50:56,923 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 22:50:56,923 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 22:50:56,923 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 22:50:56,923 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 22:50:56,923 | INFO | validator | Stage 'validate_batch' completed in 0.02s
+2025-10-12 22:54:03,955 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:54:03,956 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:54:03,956 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:54:03,956 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:54:03,956 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 22:54:03,957 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 22:54:03,957 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 22:54:03,957 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 22:54:03,957 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 22:54:03,957 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 22:54:03,958 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 22:54:03,958 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 22:54:03,958 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 22:54:03,958 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 22:54:03,961 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 22:54:03,962 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 22:54:03,979 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 22:54:03,979 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 22:54:03,980 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 22:54:03,980 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 22:54:03,980 | INFO | validator | Stage 'validate_batch' completed in 0.03s
+2025-10-12 23:03:59,938 | WARNING | validator | Invalid entry detected | entry=300.10.10.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 23:03:59,939 | WARNING | validator | Invalid entry detected | entry=256.256.256.256 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 23:03:59,940 | WARNING | validator | Invalid entry detected | entry=192.168.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 23:03:59,941 | WARNING | validator | Invalid entry detected | entry=10.0.0.999 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 23:03:59,941 | WARNING | validator | Invalid entry detected | entry=172.16.0.0.1 | code=ip_invalid | message=Invalid IPv4 address | hint=IPv4 must have 4 octets 0–255 (e.g., 203.0.113.10)
+2025-10-12 23:03:59,942 | WARNING | validator | Invalid entry detected | entry=2001:db8::12345 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 23:03:59,942 | WARNING | validator | Invalid entry detected | entry=1234:5678:90ab:cdef:ghij::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 23:03:59,943 | WARNING | validator | Invalid entry detected | entry=2001:::1 | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 23:03:59,943 | WARNING | validator | Invalid entry detected | entry=abcd | code=fqdn_idna | message=Invalid Unicode/Punycode FQDN | hint=Check Unicode characters, hyphens, and label lengths
+2025-10-12 23:03:59,943 | WARNING | validator | Invalid entry detected | entry=34.157.240.0.0/21 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 23:03:59,944 | WARNING | validator | Invalid entry detected | entry=192.168.0.1/33 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 23:03:59,944 | WARNING | validator | Invalid entry detected | entry=10.0.0.0/-1 | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 23:03:59,944 | WARNING | validator | Invalid entry detected | entry=2001:db8::/129 | code=cidr_invalid | message=Invalid CIDR notation | hint=Ensure address and prefix length are correct (e.g., 192.0.2.0/24)
+2025-10-12 23:03:59,945 | WARNING | validator | Invalid entry detected | entry=8.8.8.8/foobar | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 23:03:59,950 | WARNING | validator | Invalid entry detected | entry=captive.apple.com/hotspot-detect.html/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 23:03:59,951 | WARNING | validator | Invalid entry detected | entry=msftncsi.com/ncsi.txt/ | code=fqdn_path | message=FQDN contains a path but no scheme | hint=Use http(s):// if this is a URL, or remove the path for a plain FQDN
+2025-10-12 23:03:59,968 | INFO | validator | Validation complete: 1066 total (1050 valid, 16 invalid), breakdown={'ipv4': 10, 'unknown': 16, 'ipv6': 6, 'cidr': 808, 'fqdn': 226}
+2025-10-12 23:03:59,969 | INFO | validator | METRIC | validation_total=1066 stage=validate
+2025-10-12 23:03:59,969 | INFO | validator | METRIC | validation_valid=1050 stage=validate
+2025-10-12 23:03:59,970 | INFO | validator | METRIC | validation_invalid=16 stage=validate
+2025-10-12 23:03:59,970 | INFO | validator | Stage 'validate_batch' completed in 0.03s
