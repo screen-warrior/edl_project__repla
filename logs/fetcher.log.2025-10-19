@@ -1,0 +1,266 @@
+2025-10-19 19:06:01,468 | INFO | fetcher | Starting fetch for 24 sources
+2025-10-19 19:06:01,471 | INFO | fetcher | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-19 19:06:01,471 | INFO | fetcher | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-19 19:06:01,479 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,479 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,479 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,479 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,480 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,480 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,480 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,480 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,480 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,480 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,480 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,480 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,480 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,480 | ERROR | fetcher | Failed to fetch URL webex/all/url: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,480 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,481 | ERROR | fetcher | Failed to fetch URL github/actions/url: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,481 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,481 | ERROR | fetcher | Failed to fetch URL m365/china/exchange/all/url: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,481 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,481 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,481 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,481 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,482 | ERROR | fetcher | Failed to fetch URL m365/china/any/all/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:06:01,482 | INFO | fetcher | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-19 19:06:01,482 | INFO | fetcher | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-19 19:06:01,482 | INFO | fetcher | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-19 19:07:12,034 | INFO | fetcher | Starting fetch for 24 sources
+2025-10-19 19:07:12,034 | INFO | fetcher | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-19 19:07:12,034 | INFO | fetcher | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-19 19:07:12,045 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,045 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,046 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,046 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,046 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,046 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,046 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,046 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,047 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,047 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,047 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,047 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,047 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,047 | ERROR | fetcher | Failed to fetch URL webex/all/url: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,047 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,048 | ERROR | fetcher | Failed to fetch URL github/actions/url: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,048 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,048 | ERROR | fetcher | Failed to fetch URL m365/china/exchange/all/url: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,048 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,048 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,048 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,048 | ERROR | fetcher | Failed to fetch URL https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,048 | ERROR | fetcher | Failed to fetch URL m365/china/any/all/ipv4: Cannot connect to host saasedl.paloaltonetworks.com:443 ssl:default [getaddrinfo failed]
+2025-10-19 19:07:12,049 | INFO | fetcher | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-19 19:07:12,049 | INFO | fetcher | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-19 19:07:12,049 | INFO | fetcher | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-19 19:10:20,857 | INFO | fetcher | Starting fetch for 24 sources
+2025-10-19 19:10:20,857 | INFO | fetcher | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-19 19:10:20,857 | INFO | fetcher | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-19 19:10:20,959 | INFO | fetcher | Fetched 28 lines (28 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
+2025-10-19 19:10:20,959 | INFO | fetcher | METRIC | entries_fetched_total=28 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
+2025-10-19 19:10:20,960 | INFO | fetcher | Fetched 8 lines (8 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
+2025-10-19 19:10:20,960 | INFO | fetcher | METRIC | entries_fetched_total=8 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
+2025-10-19 19:10:20,965 | INFO | fetcher | Fetched 66 lines (66 non-empty) from webex/all/url
+2025-10-19 19:10:20,965 | INFO | fetcher | METRIC | entries_fetched_total=66 stage=fetch source=webex/all/url
+2025-10-19 19:10:20,965 | INFO | fetcher | Fetched 56 lines (56 non-empty) from m365/china/any/all/ipv4
+2025-10-19 19:10:20,965 | INFO | fetcher | METRIC | entries_fetched_total=56 stage=fetch source=m365/china/any/all/ipv4
+2025-10-19 19:10:21,021 | INFO | fetcher | Fetched 57 lines (57 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
+2025-10-19 19:10:21,021 | INFO | fetcher | METRIC | entries_fetched_total=57 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
+2025-10-19 19:10:21,021 | INFO | fetcher | Fetched 26 lines (26 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
+2025-10-19 19:10:21,021 | INFO | fetcher | METRIC | entries_fetched_total=26 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
+2025-10-19 19:10:21,021 | INFO | fetcher | Fetched 5 lines (5 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
+2025-10-19 19:10:21,021 | INFO | fetcher | METRIC | entries_fetched_total=5 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
+2025-10-19 19:10:21,032 | INFO | fetcher | Fetched 92 lines (92 non-empty) from github/actions/url
+2025-10-19 19:10:21,032 | INFO | fetcher | METRIC | entries_fetched_total=92 stage=fetch source=github/actions/url
+2025-10-19 19:10:21,032 | INFO | fetcher | Fetched 12 lines (12 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
+2025-10-19 19:10:21,032 | INFO | fetcher | METRIC | entries_fetched_total=12 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
+2025-10-19 19:10:21,032 | INFO | fetcher | Fetched 71 lines (71 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
+2025-10-19 19:10:21,032 | INFO | fetcher | METRIC | entries_fetched_total=71 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
+2025-10-19 19:10:21,032 | INFO | fetcher | Fetched 62 lines (62 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
+2025-10-19 19:10:21,032 | INFO | fetcher | METRIC | entries_fetched_total=62 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
+2025-10-19 19:10:21,032 | INFO | fetcher | Fetched 2 lines (2 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
+2025-10-19 19:10:21,032 | INFO | fetcher | METRIC | entries_fetched_total=2 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
+2025-10-19 19:10:21,032 | INFO | fetcher | Fetched 2 lines (2 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
+2025-10-19 19:10:21,032 | INFO | fetcher | METRIC | entries_fetched_total=2 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
+2025-10-19 19:10:21,049 | INFO | fetcher | Fetched 135 lines (135 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
+2025-10-19 19:10:21,049 | INFO | fetcher | METRIC | entries_fetched_total=135 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
+2025-10-19 19:10:21,066 | INFO | fetcher | Fetched 57 lines (57 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
+2025-10-19 19:10:21,066 | INFO | fetcher | METRIC | entries_fetched_total=57 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
+2025-10-19 19:10:21,066 | INFO | fetcher | Fetched 30 lines (30 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-19 19:10:21,066 | INFO | fetcher | METRIC | entries_fetched_total=30 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-19 19:10:21,066 | INFO | fetcher | Fetched 30 lines (30 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-19 19:10:21,066 | INFO | fetcher | METRIC | entries_fetched_total=30 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-19 19:10:21,075 | INFO | fetcher | Fetched 48 lines (48 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
+2025-10-19 19:10:21,075 | INFO | fetcher | METRIC | entries_fetched_total=48 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
+2025-10-19 19:10:21,082 | INFO | fetcher | Fetched 69 lines (69 non-empty) from m365/china/exchange/all/url
+2025-10-19 19:10:21,082 | INFO | fetcher | METRIC | entries_fetched_total=69 stage=fetch source=m365/china/exchange/all/url
+2025-10-19 19:10:21,082 | INFO | fetcher | Fetched 91 lines (91 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
+2025-10-19 19:10:21,082 | INFO | fetcher | METRIC | entries_fetched_total=91 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
+2025-10-19 19:10:21,100 | INFO | fetcher | Fetched 12 lines (12 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
+2025-10-19 19:10:21,100 | INFO | fetcher | METRIC | entries_fetched_total=12 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
+2025-10-19 19:10:21,100 | INFO | fetcher | Fetched 40 lines (40 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
+2025-10-19 19:10:21,100 | INFO | fetcher | METRIC | entries_fetched_total=40 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
+2025-10-19 19:10:21,100 | INFO | fetcher | Fetched 34 lines (34 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
+2025-10-19 19:10:21,100 | INFO | fetcher | METRIC | entries_fetched_total=34 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
+2025-10-19 19:10:21,100 | INFO | fetcher | METRIC | entries_fetched_total=1073 stage=fetch source=__aggregate__
+2025-10-19 19:10:21,100 | INFO | fetcher | METRIC | entries_fetched_non_empty=1072 stage=fetch source=__aggregate__
+2025-10-19 19:10:21,100 | INFO | fetcher | Completed fetch. Total entries: 1073 (non-empty=1072)
+2025-10-19 19:13:11,498 | INFO | fetcher | Starting fetch for 24 sources
+2025-10-19 19:13:11,498 | INFO | fetcher | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-19 19:13:11,499 | INFO | fetcher | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-19 19:13:11,576 | INFO | fetcher | Fetched 56 lines (56 non-empty) from m365/china/any/all/ipv4
+2025-10-19 19:13:11,577 | INFO | fetcher | METRIC | entries_fetched_total=56 stage=fetch source=m365/china/any/all/ipv4
+2025-10-19 19:13:11,578 | INFO | fetcher | Fetched 69 lines (69 non-empty) from m365/china/exchange/all/url
+2025-10-19 19:13:11,579 | INFO | fetcher | METRIC | entries_fetched_total=69 stage=fetch source=m365/china/exchange/all/url
+2025-10-19 19:13:11,579 | INFO | fetcher | Fetched 34 lines (34 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
+2025-10-19 19:13:11,579 | INFO | fetcher | METRIC | entries_fetched_total=34 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
+2025-10-19 19:13:11,580 | INFO | fetcher | Fetched 28 lines (28 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
+2025-10-19 19:13:11,580 | INFO | fetcher | METRIC | entries_fetched_total=28 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
+2025-10-19 19:13:11,582 | INFO | fetcher | Fetched 26 lines (26 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
+2025-10-19 19:13:11,582 | INFO | fetcher | METRIC | entries_fetched_total=26 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
+2025-10-19 19:13:11,586 | INFO | fetcher | Fetched 71 lines (71 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
+2025-10-19 19:13:11,586 | INFO | fetcher | METRIC | entries_fetched_total=71 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
+2025-10-19 19:13:11,586 | INFO | fetcher | Fetched 2 lines (2 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
+2025-10-19 19:13:11,586 | INFO | fetcher | METRIC | entries_fetched_total=2 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
+2025-10-19 19:13:11,586 | INFO | fetcher | Fetched 57 lines (57 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
+2025-10-19 19:13:11,587 | INFO | fetcher | METRIC | entries_fetched_total=57 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
+2025-10-19 19:13:11,587 | INFO | fetcher | Fetched 66 lines (66 non-empty) from webex/all/url
+2025-10-19 19:13:11,587 | INFO | fetcher | METRIC | entries_fetched_total=66 stage=fetch source=webex/all/url
+2025-10-19 19:13:11,589 | INFO | fetcher | Fetched 12 lines (12 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
+2025-10-19 19:13:11,589 | INFO | fetcher | METRIC | entries_fetched_total=12 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
+2025-10-19 19:13:11,589 | INFO | fetcher | Fetched 2 lines (2 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
+2025-10-19 19:13:11,589 | INFO | fetcher | METRIC | entries_fetched_total=2 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
+2025-10-19 19:13:11,590 | INFO | fetcher | Fetched 92 lines (92 non-empty) from github/actions/url
+2025-10-19 19:13:11,590 | INFO | fetcher | METRIC | entries_fetched_total=92 stage=fetch source=github/actions/url
+2025-10-19 19:13:11,591 | INFO | fetcher | Fetched 48 lines (48 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
+2025-10-19 19:13:11,591 | INFO | fetcher | METRIC | entries_fetched_total=48 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
+2025-10-19 19:13:11,591 | INFO | fetcher | Fetched 91 lines (91 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
+2025-10-19 19:13:11,591 | INFO | fetcher | METRIC | entries_fetched_total=91 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
+2025-10-19 19:13:11,592 | INFO | fetcher | Fetched 8 lines (8 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
+2025-10-19 19:13:11,592 | INFO | fetcher | METRIC | entries_fetched_total=8 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
+2025-10-19 19:13:11,592 | INFO | fetcher | Fetched 12 lines (12 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
+2025-10-19 19:13:11,592 | INFO | fetcher | METRIC | entries_fetched_total=12 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
+2025-10-19 19:13:11,593 | INFO | fetcher | Fetched 40 lines (40 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
+2025-10-19 19:13:11,593 | INFO | fetcher | METRIC | entries_fetched_total=40 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
+2025-10-19 19:13:11,638 | INFO | fetcher | Fetched 57 lines (57 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
+2025-10-19 19:13:11,639 | INFO | fetcher | METRIC | entries_fetched_total=57 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
+2025-10-19 19:13:11,639 | INFO | fetcher | Fetched 30 lines (30 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-19 19:13:11,639 | INFO | fetcher | METRIC | entries_fetched_total=30 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-19 19:13:11,640 | INFO | fetcher | Fetched 30 lines (30 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-19 19:13:11,640 | INFO | fetcher | METRIC | entries_fetched_total=30 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-19 19:13:11,649 | INFO | fetcher | Fetched 62 lines (62 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
+2025-10-19 19:13:11,649 | INFO | fetcher | METRIC | entries_fetched_total=62 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
+2025-10-19 19:13:11,663 | INFO | fetcher | Fetched 5 lines (5 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
+2025-10-19 19:13:11,663 | INFO | fetcher | METRIC | entries_fetched_total=5 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
+2025-10-19 19:13:11,694 | INFO | fetcher | Fetched 135 lines (135 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
+2025-10-19 19:13:11,694 | INFO | fetcher | METRIC | entries_fetched_total=135 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
+2025-10-19 19:13:11,698 | INFO | fetcher | METRIC | entries_fetched_total=1073 stage=fetch source=__aggregate__
+2025-10-19 19:13:11,698 | INFO | fetcher | METRIC | entries_fetched_non_empty=1072 stage=fetch source=__aggregate__
+2025-10-19 19:13:11,698 | INFO | fetcher | Completed fetch. Total entries: 1073 (non-empty=1072)
+2025-10-19 22:15:14,950 | INFO | fetcher | Starting fetch for 24 sources
+2025-10-19 22:15:14,952 | INFO | fetcher | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-19 22:15:14,954 | INFO | fetcher | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-19 22:15:15,239 | INFO | fetcher | Fetched 34 lines (34 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
+2025-10-19 22:15:15,239 | INFO | fetcher | METRIC | entries_fetched_total=34 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
+2025-10-19 22:15:15,280 | INFO | fetcher | Fetched 2 lines (2 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
+2025-10-19 22:15:15,280 | INFO | fetcher | METRIC | entries_fetched_total=2 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
+2025-10-19 22:15:15,329 | INFO | fetcher | Fetched 91 lines (91 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
+2025-10-19 22:15:15,329 | INFO | fetcher | METRIC | entries_fetched_total=91 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
+2025-10-19 22:15:15,381 | INFO | fetcher | Fetched 40 lines (40 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
+2025-10-19 22:15:15,385 | INFO | fetcher | METRIC | entries_fetched_total=40 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
+2025-10-19 22:15:15,385 | INFO | fetcher | Fetched 57 lines (57 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
+2025-10-19 22:15:15,388 | INFO | fetcher | METRIC | entries_fetched_total=57 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
+2025-10-19 22:15:15,390 | INFO | fetcher | Fetched 66 lines (66 non-empty) from webex/all/url
+2025-10-19 22:15:15,390 | INFO | fetcher | METRIC | entries_fetched_total=66 stage=fetch source=webex/all/url
+2025-10-19 22:15:15,394 | INFO | fetcher | Fetched 12 lines (12 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
+2025-10-19 22:15:15,396 | INFO | fetcher | METRIC | entries_fetched_total=12 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
+2025-10-19 22:15:15,396 | INFO | fetcher | Fetched 5 lines (5 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
+2025-10-19 22:15:15,396 | INFO | fetcher | METRIC | entries_fetched_total=5 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
+2025-10-19 22:15:15,398 | INFO | fetcher | Fetched 71 lines (71 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
+2025-10-19 22:15:15,398 | INFO | fetcher | METRIC | entries_fetched_total=71 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
+2025-10-19 22:15:15,401 | INFO | fetcher | Fetched 28 lines (28 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
+2025-10-19 22:15:15,401 | INFO | fetcher | METRIC | entries_fetched_total=28 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
+2025-10-19 22:15:15,401 | INFO | fetcher | Fetched 92 lines (92 non-empty) from github/actions/url
+2025-10-19 22:15:15,401 | INFO | fetcher | METRIC | entries_fetched_total=92 stage=fetch source=github/actions/url
+2025-10-19 22:15:15,401 | INFO | fetcher | Fetched 135 lines (135 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
+2025-10-19 22:15:15,401 | INFO | fetcher | METRIC | entries_fetched_total=135 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
+2025-10-19 22:15:15,407 | INFO | fetcher | Fetched 48 lines (48 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
+2025-10-19 22:15:15,407 | INFO | fetcher | METRIC | entries_fetched_total=48 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
+2025-10-19 22:15:15,407 | INFO | fetcher | Fetched 62 lines (62 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
+2025-10-19 22:15:15,407 | INFO | fetcher | METRIC | entries_fetched_total=62 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
+2025-10-19 22:15:15,407 | INFO | fetcher | Fetched 8 lines (8 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
+2025-10-19 22:15:15,407 | INFO | fetcher | METRIC | entries_fetched_total=8 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
+2025-10-19 22:15:15,411 | INFO | fetcher | Fetched 30 lines (30 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-19 22:15:15,411 | INFO | fetcher | METRIC | entries_fetched_total=30 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-19 22:15:15,411 | INFO | fetcher | Fetched 57 lines (57 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
+2025-10-19 22:15:15,415 | INFO | fetcher | METRIC | entries_fetched_total=57 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
+2025-10-19 22:15:15,415 | INFO | fetcher | Fetched 56 lines (56 non-empty) from m365/china/any/all/ipv4
+2025-10-19 22:15:15,415 | INFO | fetcher | METRIC | entries_fetched_total=56 stage=fetch source=m365/china/any/all/ipv4
+2025-10-19 22:15:15,415 | INFO | fetcher | Fetched 30 lines (30 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-19 22:15:15,419 | INFO | fetcher | METRIC | entries_fetched_total=30 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-19 22:15:15,421 | INFO | fetcher | Fetched 12 lines (12 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
+2025-10-19 22:15:15,421 | INFO | fetcher | METRIC | entries_fetched_total=12 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
+2025-10-19 22:15:15,474 | INFO | fetcher | Fetched 2 lines (2 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
+2025-10-19 22:15:15,474 | INFO | fetcher | METRIC | entries_fetched_total=2 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
+2025-10-19 22:15:15,487 | INFO | fetcher | Fetched 69 lines (69 non-empty) from m365/china/exchange/all/url
+2025-10-19 22:15:15,487 | INFO | fetcher | METRIC | entries_fetched_total=69 stage=fetch source=m365/china/exchange/all/url
+2025-10-19 22:15:15,541 | INFO | fetcher | Fetched 26 lines (26 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
+2025-10-19 22:15:15,541 | INFO | fetcher | METRIC | entries_fetched_total=26 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
+2025-10-19 22:15:15,555 | INFO | fetcher | METRIC | entries_fetched_total=1073 stage=fetch source=__aggregate__
+2025-10-19 22:15:15,555 | INFO | fetcher | METRIC | entries_fetched_non_empty=1072 stage=fetch source=__aggregate__
+2025-10-19 22:15:15,555 | INFO | fetcher | Completed fetch. Total entries: 1073 (non-empty=1072)
+2025-10-19 22:26:31,747 | INFO | fetcher | Starting fetch for 24 sources
+2025-10-19 22:26:31,747 | INFO | fetcher | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-19 22:26:31,754 | INFO | fetcher | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-19 22:26:31,958 | INFO | fetcher | Fetched 69 lines (69 non-empty) from m365/china/exchange/all/url
+2025-10-19 22:26:31,958 | INFO | fetcher | METRIC | entries_fetched_total=69 stage=fetch source=m365/china/exchange/all/url
+2025-10-19 22:26:31,964 | INFO | fetcher | Fetched 34 lines (34 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
+2025-10-19 22:26:31,964 | INFO | fetcher | METRIC | entries_fetched_total=34 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
+2025-10-19 22:26:31,964 | INFO | fetcher | Fetched 2 lines (2 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
+2025-10-19 22:26:31,964 | INFO | fetcher | METRIC | entries_fetched_total=2 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
+2025-10-19 22:26:31,973 | INFO | fetcher | Fetched 5 lines (5 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
+2025-10-19 22:26:31,973 | INFO | fetcher | METRIC | entries_fetched_total=5 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
+2025-10-19 22:26:31,973 | INFO | fetcher | Fetched 91 lines (91 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
+2025-10-19 22:26:31,973 | INFO | fetcher | METRIC | entries_fetched_total=91 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
+2025-10-19 22:26:31,973 | INFO | fetcher | Fetched 30 lines (30 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-19 22:26:31,973 | INFO | fetcher | METRIC | entries_fetched_total=30 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-19 22:26:31,973 | INFO | fetcher | Fetched 66 lines (66 non-empty) from webex/all/url
+2025-10-19 22:26:31,981 | INFO | fetcher | METRIC | entries_fetched_total=66 stage=fetch source=webex/all/url
+2025-10-19 22:26:31,981 | INFO | fetcher | Fetched 62 lines (62 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
+2025-10-19 22:26:31,981 | INFO | fetcher | METRIC | entries_fetched_total=62 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
+2025-10-19 22:26:31,981 | INFO | fetcher | Fetched 12 lines (12 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
+2025-10-19 22:26:31,981 | INFO | fetcher | METRIC | entries_fetched_total=12 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
+2025-10-19 22:26:31,981 | INFO | fetcher | Fetched 8 lines (8 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
+2025-10-19 22:26:31,990 | INFO | fetcher | METRIC | entries_fetched_total=8 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
+2025-10-19 22:26:31,990 | INFO | fetcher | Fetched 30 lines (30 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-19 22:26:31,990 | INFO | fetcher | METRIC | entries_fetched_total=30 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-19 22:26:31,990 | INFO | fetcher | Fetched 26 lines (26 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
+2025-10-19 22:26:31,990 | INFO | fetcher | METRIC | entries_fetched_total=26 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
+2025-10-19 22:26:31,990 | INFO | fetcher | Fetched 40 lines (40 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
+2025-10-19 22:26:31,990 | INFO | fetcher | METRIC | entries_fetched_total=40 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
+2025-10-19 22:26:31,997 | INFO | fetcher | Fetched 135 lines (135 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
+2025-10-19 22:26:31,997 | INFO | fetcher | METRIC | entries_fetched_total=135 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
+2025-10-19 22:26:31,997 | INFO | fetcher | Fetched 48 lines (48 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
+2025-10-19 22:26:31,999 | INFO | fetcher | METRIC | entries_fetched_total=48 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
+2025-10-19 22:26:31,999 | INFO | fetcher | Fetched 71 lines (71 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
+2025-10-19 22:26:31,999 | INFO | fetcher | METRIC | entries_fetched_total=71 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
+2025-10-19 22:26:31,999 | INFO | fetcher | Fetched 28 lines (28 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
+2025-10-19 22:26:31,999 | INFO | fetcher | METRIC | entries_fetched_total=28 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
+2025-10-19 22:26:31,999 | INFO | fetcher | Fetched 12 lines (12 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
+2025-10-19 22:26:31,999 | INFO | fetcher | METRIC | entries_fetched_total=12 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
+2025-10-19 22:26:31,999 | INFO | fetcher | Fetched 56 lines (56 non-empty) from m365/china/any/all/ipv4
+2025-10-19 22:26:31,999 | INFO | fetcher | METRIC | entries_fetched_total=56 stage=fetch source=m365/china/any/all/ipv4
+2025-10-19 22:26:31,999 | INFO | fetcher | Fetched 2 lines (2 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
+2025-10-19 22:26:31,999 | INFO | fetcher | METRIC | entries_fetched_total=2 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
+2025-10-19 22:26:32,005 | INFO | fetcher | Fetched 57 lines (57 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
+2025-10-19 22:26:32,005 | INFO | fetcher | METRIC | entries_fetched_total=57 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
+2025-10-19 22:26:32,025 | INFO | fetcher | Fetched 92 lines (92 non-empty) from github/actions/url
+2025-10-19 22:26:32,025 | INFO | fetcher | METRIC | entries_fetched_total=92 stage=fetch source=github/actions/url
+2025-10-19 22:26:32,112 | INFO | fetcher | Fetched 57 lines (57 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
+2025-10-19 22:26:32,115 | INFO | fetcher | METRIC | entries_fetched_total=57 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
+2025-10-19 22:26:32,124 | INFO | fetcher | METRIC | entries_fetched_total=1073 stage=fetch source=__aggregate__
+2025-10-19 22:26:32,124 | INFO | fetcher | METRIC | entries_fetched_non_empty=1072 stage=fetch source=__aggregate__
+2025-10-19 22:26:32,124 | INFO | fetcher | Completed fetch. Total entries: 1073 (non-empty=1072)

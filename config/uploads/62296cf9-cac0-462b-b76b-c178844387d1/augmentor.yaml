@@ -1,0 +1,50 @@
+# augmentor_config.yaml
+# Toggles for which augmentations to apply, per EDL type.
+# Each key has its own pipeline; "enabled: true" will activate that step.
+
+url_augmenter:
+  strip_query_fragments:
+    enabled: false
+  enforce_https:
+    enabled: false
+  enforce_http:
+    enabled: false
+  remove_port:
+    enabled: false
+  remove_specific_port:
+    enabled: false
+    ports: [8080, 8443]
+  handle_idna:
+    enabled: false
+  normalize_slashes:
+    enabled: false
+
+fqdn_augmenter:
+  remove_port:
+    enabled: false
+  remove_specific_port:
+    enabled: false
+    ports: [25, 443]
+  wildcard_normalization:
+    enabled: false
+  convert_unicode:
+    enabled: false
+
+ipv4_augmenter:
+  remove_port:
+    enabled: false
+  remove_exact_port:
+    enabled: false
+    port: 8080
+
+ipv6_augmenter:
+  remove_port:
+    enabled: false
+  remove_exact_port:
+    enabled: false
+    port: 443
+
+cidr_augmenter:
+  # CIDR augmentations are simpler — often just analysis / normalization
+  normalize:
+    enabled: true

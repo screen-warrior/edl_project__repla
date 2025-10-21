@@ -7,6 +7,17 @@ from typing import Any, Dict, List, Literal, Optional
 from pydantic import BaseModel, Field, model_validator
 
 
+class APIKeySettings(BaseModel):
+    header_name: str = Field(
+        "X-API-Key",
+        description="HTTP header that must carry the shared API key.",
+    )
+    env_var: str = Field(
+        "EDL_API_KEY",
+        description="Environment variable holding the shared API key value.",
+    )
+
+
 class SourceConfig(BaseModel):
     """Inline representation of a single feed definition."""
 
@@ -36,6 +47,10 @@ class RunRequest(BaseModel):
     Mirrors CLI arguments while supporting inline source and augmentor payloads.
     """
 
+    profile_id: Optional[str] = Field(
+        None,
+        description="Identifier of a stored configuration profile to reuse.",
+    )
     sources_path: Optional[str] = Field(
         None, description="Filesystem path to sources.yaml."
     )
@@ -69,10 +84,10 @@ class RunRequest(BaseModel):
 
     @model_validator(mode="after")
     def validate_sources_and_mode(self) -> RunRequest:
-        if not self.sources and not self.sources_path:
+        if not self.profile_id and not self.sources and not self.sources_path:
             raise ValueError("Either 'sources' or 'sources_path' must be provided.")
         if self.mode == "augment" and not (
-            self.augmentor_config or self.augmentor_config_path
+            self.augmentor_config or self.augmentor_config_path or self.profile_id
         ):
             raise ValueError(
                 "Augmentor configuration must be provided (inline or path) when mode='augment'."
@@ -93,12 +108,16 @@ class RunSubmissionResponse(BaseModel):
     persist_to_db: bool = Field(
         ..., description="Whether the job was instructed to persist results."
     )
+    profile_id: Optional[str] = Field(
+        None, description="Configuration profile associated with the run, if any."
+    )
     detail: str = Field(..., description="Human readable acknowledgement message.")
 
 
 class PipelineRunSummary(BaseModel):
     run_id: str = Field(..., description="Database primary key for the pipeline run.")
     mode: str = Field(..., description="Pipeline mode that was executed.")
+    profile_id: Optional[str] = Field(None, description="Configuration profile used for the run, if any.")
     started_at: datetime = Field(..., description="Timestamp when the run started.")
     completed_at: Optional[datetime] = Field(
         None, description="Timestamp when the run finished."
@@ -113,6 +132,27 @@ class PipelineRunSummary(BaseModel):
     )
 
 
+
+
+class ConfigProfileSummary(BaseModel):
+    id: str = Field(..., description="Identifier of the configuration profile.")
+    name: Optional[str] = Field(None, description="Human-friendly profile name.")
+    description: Optional[str] = Field(None, description="Optional profile description.")
+    refresh_interval_minutes: Optional[float] = Field(
+        None, description="Scheduled refresh interval in minutes."
+    )
+    last_refreshed_at: Optional[datetime] = Field(
+        None, description="Last time the profile was refreshed."
+    )
+    next_run_at: Optional[datetime] = Field(
+        None, description="Next scheduled refresh time if applicable."
+    )
+    default_mode: str = Field(..., description="Default pipeline mode for this profile.")
+    default_output_path: str = Field(..., description="Default output path used when running this profile.")
+    default_timeout: int = Field(..., description="Default fetch timeout in seconds.")
+    default_log_level: str = Field(..., description="Default log level when executing this profile.")
+    default_persist_to_db: bool = Field(..., description="Whether runs for this profile persist to the database by default.")
+
 class JobStatusResponse(BaseModel):
     job_id: str = Field(..., description="Identifier of the requested job.")
     status: JobStatus = Field(..., description="Current execution state.")
@@ -120,6 +160,9 @@ class JobStatusResponse(BaseModel):
     updated_at: datetime = Field(..., description="Last update timestamp.")
     persist_to_db: bool = Field(
         ..., description="Whether the job persisted into the database."
+    )
+    profile_id: Optional[str] = Field(
+        None, description="Configuration profile associated with the job, if any."
     )
     run_id: Optional[str] = Field(
         None, description="Database run identifier (when persistence is enabled)."

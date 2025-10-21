@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-EDL Fetcher (Enterprise, Pydantic-Driven)
+EDL Ingestor (Enterprise, Pydantic-Driven)
 
 - Downloads raw EDLs from configured sources
 - Supports both remote URLs and local files
 - Returns raw `FetchedEntry` objects ready for ingestion
-- Logs all fetch activity to logs/fetcher.log
+- Logs all ingestion fetch activity to logs/ingestor.log
 """
 
 import asyncio
@@ -56,9 +56,9 @@ def setup_module_logger(name: str, log_level: str, log_file: str) -> logging.Log
 
 
 # ----------------------------------------------------------------------
-# Fetcher Class
+# Ingestor Class
 # ----------------------------------------------------------------------
-class EDLFetcher:
+class EDLIngestor:
     """
     Fetch raw entries from configured sources (URLs and files).
     Returns raw `FetchedEntry` instances ready for ingestion.
@@ -67,7 +67,7 @@ class EDLFetcher:
     def __init__(self, sources: List[Dict[str, str]], timeout: int = 15, log_level: str = "INFO"):
         self.sources = sources
         self.timeout = aiohttp.ClientTimeout(total=timeout)
-        self.logger = setup_module_logger("fetcher", log_level, "fetcher.log")
+        self.logger = setup_module_logger("ingestor", log_level, "ingestor.log")
 
     async def _fetch_url(self, session: aiohttp.ClientSession, name: str, url: str) -> List[FetchedEntry]:
         """Fetch raw entries from a URL."""

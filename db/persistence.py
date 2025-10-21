@@ -27,6 +27,7 @@ def persist_pipeline_results(
     ingested: Sequence[IngestedEntry],
     validated: Sequence[ValidatedEntry],
     augmented: Optional[Sequence[AugmentedEntry]] = None,
+    profile_id: Optional[str] = None,
     run_metadata: Optional[Dict[str, Any]] = None,
 ) -> str:
     """
@@ -52,14 +53,17 @@ def persist_pipeline_results(
         "entry_type_counts": dict(type_breakdown),
         "validation_error_counts": dict(error_breakdown),
     }
+    if profile_id:
+        metadata_snapshot.setdefault("config_profile_id", profile_id)
     if run_metadata:
         metadata_snapshot.update(run_metadata)
 
     source_lookup = {src.get("name"): src for src in sources if src.get("name")}
 
     logger.info(
-        "DB persistence request | mode=%s fetched=%d ingested=%d validated=%d invalid=%d augmented=%d",
+        "DB persistence request | mode=%s profile=%s fetched=%d ingested=%d validated=%d invalid=%d augmented=%d",
         mode,
+        profile_id,
         len(fetched),
         len(ingested),
         len(validated),
@@ -70,6 +74,7 @@ def persist_pipeline_results(
     with session_scope() as session:
         run = PipelineRun(
             mode=mode,
+            profile_id=profile_id,
             total_fetched=len(fetched),
             total_ingested=len(ingested),
             total_valid=valid_count,
@@ -142,19 +147,30 @@ def persist_pipeline_results(
                 indicator = indicator_lookup.get(key)
                 if not indicator:
                     continue
-                session.add(
-                    AugmentedIndicator(
-                        indicator_id=indicator.id,
-                        augmented_value=entry.augmented,
-                        changes=list(entry.changes),
+
+                existing_aug = session.exec(
+                    select(AugmentedIndicator).where(AugmentedIndicator.indicator_id == indicator.id)
+                ).one_or_none()
+
+                if existing_aug:
+                    existing_aug.augmented_value = entry.augmented
+                    existing_aug.changes = list(entry.changes)
+                    existing_aug.created_at = datetime.utcnow()
+                    session.add(existing_aug)
+                else:
+                    session.add(
+                        AugmentedIndicator(
+                            indicator_id=indicator.id,
+                            augmented_value=entry.augmented,
+                            changes=list(entry.changes),
+                        )
                     )
-                )
 
         run.completed_at = datetime.utcnow()
         session.add(run)
 
         # session_scope commits and closes
-        logger.info("DB persistence succeeded | run_id=%s", run.id)
+        logger.info("DB persistence succeeded | run_id=%s profile=%s", run.id, profile_id)
         return run.id
 
 

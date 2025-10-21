@@ -13,6 +13,7 @@ import time
 from contextlib import contextmanager
 from typing import Generator, Optional
 
+from sqlalchemy import inspect, text
 from sqlalchemy.exc import OperationalError
 from sqlmodel import Session, SQLModel, create_engine
 
@@ -124,9 +125,45 @@ def init_db(drop_existing: bool = False) -> None:
     SQLModel.metadata.create_all(ENGINE)
 
 
+def ensure_schema() -> None:
+    """
+    Idempotently create any missing tables without dropping existing data.
+    """
+
+    from db import models  # Local import to avoid circular dependency
+
+    SQLModel.metadata.create_all(ENGINE)
+
+    inspector = inspect(ENGINE)
+    table_names = inspector.get_table_names()
+    if "pipeline_runs" in table_names:
+        columns = {col["name"] for col in inspector.get_columns("pipeline_runs")}
+        if "profile_id" not in columns:
+            logger.info("Adding missing profile_id column to pipeline_runs")
+            with ENGINE.begin() as conn:
+                conn.execute(text("ALTER TABLE pipeline_runs ADD COLUMN profile_id TEXT"))
+    if "pipeline_config_profiles" in table_names:
+        columns = {col["name"] for col in inspector.get_columns("pipeline_config_profiles")}
+        column_defs = {
+            "refresh_interval_minutes": "ALTER TABLE pipeline_config_profiles ADD COLUMN refresh_interval_minutes FLOAT",
+            "last_refreshed_at": "ALTER TABLE pipeline_config_profiles ADD COLUMN last_refreshed_at TIMESTAMP",
+            "default_mode": "ALTER TABLE pipeline_config_profiles ADD COLUMN default_mode TEXT DEFAULT 'validate'",
+            "default_output_path": "ALTER TABLE pipeline_config_profiles ADD COLUMN default_output_path TEXT DEFAULT 'test_output_data/validated_output.json'",
+            "default_timeout": "ALTER TABLE pipeline_config_profiles ADD COLUMN default_timeout INTEGER DEFAULT 15",
+            "default_log_level": "ALTER TABLE pipeline_config_profiles ADD COLUMN default_log_level TEXT DEFAULT 'INFO'",
+            "default_persist_to_db": "ALTER TABLE pipeline_config_profiles ADD COLUMN default_persist_to_db BOOLEAN DEFAULT 1",
+        }
+        missing_columns = [col for col in column_defs if col not in columns]
+        for column_name in missing_columns:
+            logger.info("Adding missing column %s to pipeline_config_profiles", column_name)
+            with ENGINE.begin() as conn:
+                conn.execute(text(column_defs[column_name]))
+
+
 __all__ = [
     "ENGINE",
     "session_scope",
     "get_session",
     "init_db",
+    "ensure_schema",
 ]

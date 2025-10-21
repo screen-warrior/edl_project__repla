@@ -13,6 +13,7 @@ Responsibilities:
 from __future__ import annotations
 
 from typing import Optional, List, Dict, Any, Tuple
+from enum import Enum
 import ipaddress
 import re
 from urllib.parse import urlsplit

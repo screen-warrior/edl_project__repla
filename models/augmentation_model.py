@@ -49,6 +49,7 @@ class FqdnAugmenterConfig(BaseModel):
     remove_specific_port: PortOption = PortOption()
     wildcard_normalization: ToggleOption = ToggleOption()
     convert_unicode: ToggleOption = ToggleOption()
+    strip_path: ToggleOption = ToggleOption(enabled=True)
 
 
 class Ipv4AugmenterConfig(BaseModel):
@@ -196,6 +197,15 @@ class EDL_Augmentor:
                 changes.append("convert_unicode")
             except Exception:
                 self.logger.warning("Failed unicode conversion for host=%s", host)
+
+        if cfg.strip_path.enabled and "/" in host:
+            base = host.split("/", 1)[0]
+            if base != host:
+                host = base
+                changes.append("strip_path")
+            elif host.endswith("/"):
+                host = host.rstrip("/")
+                changes.append("strip_path")
 
         return host, changes
 

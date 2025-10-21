@@ -7,7 +7,7 @@ import uuid
 from datetime import datetime
 from typing import Any, Dict, Optional
 
-from sqlalchemy import Column, Enum as SAEnum, Index, JSON, UniqueConstraint
+from sqlalchemy import Column, Enum as SAEnum, Index, JSON, UniqueConstraint, Text
 from sqlmodel import Field, SQLModel
 
 
@@ -28,6 +28,7 @@ class PipelineRun(SQLModel, table=True):
 
     id: str = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)
     mode: str = Field(index=True)
+    profile_id: Optional[str] = Field(default=None, foreign_key="pipeline_config_profiles.id", index=True)
     started_at: datetime = Field(default_factory=datetime.utcnow, nullable=False, index=True)
     completed_at: Optional[datetime] = Field(default=None)
     total_fetched: int = Field(default=0, nullable=False)
@@ -103,6 +104,46 @@ class AugmentedIndicator(SQLModel, table=True):
     created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False, index=True)
 
 
+class HostedFeed(SQLModel, table=True):
+    __tablename__ = "hosted_feeds"
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    indicator_type: IndicatorType = Field(
+        sa_column=Column(SAEnum(IndicatorType, name="hosted_indicator_type"), nullable=False, unique=True),
+    )
+    run_id: str = Field(foreign_key="pipeline_runs.id", nullable=False, index=True)
+    updated_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
+
+
+class PipelineConfigProfile(SQLModel, table=True):
+    __tablename__ = "pipeline_config_profiles"
+
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)
+    name: Optional[str] = Field(default=None, nullable=True, index=True)
+    description: Optional[str] = Field(default=None, nullable=True)
+    refresh_interval_minutes: Optional[float] = Field(default=None, index=True)
+    last_refreshed_at: Optional[datetime] = Field(default=None, index=True)
+    default_mode: str = Field(default="validate", nullable=False)
+    default_output_path: str = Field(default="test_output_data/validated_output.json", nullable=False)
+    default_timeout: int = Field(default=15, nullable=False)
+    default_log_level: str = Field(default="INFO", nullable=False)
+    default_persist_to_db: bool = Field(default=True, nullable=False)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
+    updated_at: datetime = Field(default_factory=datetime.utcnow, nullable=False, sa_column_kwargs={"onupdate": datetime.utcnow})
+
+
+class ConfigArtifact(SQLModel, table=True):
+    __tablename__ = "config_artifacts"
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    profile_id: str = Field(foreign_key="pipeline_config_profiles.id", nullable=False, index=True)
+    kind: str = Field(nullable=False, index=True)
+    filename: Optional[str] = Field(default=None)
+    content: str = Field(sa_column=Column(Text, nullable=False))
+    sha256: str = Field(nullable=False, index=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
+
+
 class Firewall(SQLModel, table=True):
     __tablename__ = "firewalls"
 
@@ -139,6 +180,9 @@ __all__ = [
     "Feed",
     "Indicator",
     "AugmentedIndicator",
+    "HostedFeed",
+    "PipelineConfigProfile",
+    "ConfigArtifact",
     "Firewall",
     "FirewallConsumption",
 ]

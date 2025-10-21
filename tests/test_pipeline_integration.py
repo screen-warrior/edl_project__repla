@@ -3,7 +3,7 @@ from pathlib import Path
 
 from models.ingestion_model import EDLIngestionService
 from models.schemas import FetchedEntry
-from pipeline.engine_1 import Orchestrator
+from pipeline.engine import Orchestrator
 
 
 def test_ingestion_preserves_metadata():

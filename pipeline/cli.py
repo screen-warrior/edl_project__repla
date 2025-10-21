@@ -11,7 +11,7 @@ if __package__ in (None, ""):
         sys.path.insert(0, str(project_root))
 
 from utils.logger import get_logger, log_stage
-from pipeline.engine_1 import EngineConfig, run_pipeline
+from pipeline.engine import EngineConfig, run_pipeline
 
 def main():
     parser = argparse.ArgumentParser(description="Fetch + Validate EDL entries (with optional augmentation).")

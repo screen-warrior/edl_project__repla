@@ -6,7 +6,7 @@ from pathlib import Path
 from collections import Counter
 from typing import Any, Dict, List, Optional, Union
 
-from pipeline.fetcher import EDLFetcher
+from pipeline.ingestor import EDLIngestor
 from models.ingestion_model import EDLIngestionService
 from models.schemas import FetchedEntry, IngestedEntry, ValidatedEntry
 from models.validation_model import EDLValidator
@@ -46,16 +46,18 @@ class Orchestrator:
 
     def __init__(self, sources: List[Dict[str, str]], mode: str = "validate",
                  augmentor_cfg: Optional[Dict] = None, timeout: int = 15,
-                 log_level: str = "INFO", persist_to_db: bool = False):
+                 log_level: str = "INFO", persist_to_db: bool = False,
+                 profile_id: Optional[str] = None):
         self.logger = get_logger("engine.orchestrator", log_level, "engine.log")
         self.sources_cfg = [dict(src) for src in sources]
-        self.fetcher = EDLFetcher(sources=self.sources_cfg, timeout=timeout, log_level=log_level)
+        self.fetcher = EDLIngestor(sources=self.sources_cfg, timeout=timeout, log_level=log_level)
         self.persist_to_db = persist_to_db
         self.ingestor = EDLIngestionService(log_level=log_level)
         self.validator = EDLValidator(log_level=log_level)
         self.augmentor_cfg = augmentor_cfg or {}
         self.mode = mode
         self.log_level = log_level
+        self.profile_id = profile_id
         self.last_run_id: Optional[str] = None
 
     async def run(self) -> Union[List[ValidatedEntry], List[AugmentedEntry]]:
@@ -144,6 +146,7 @@ class Orchestrator:
                     ingested=ingested,
                     validated=validated,
                     augmented=augmented,
+                    profile_id=self.profile_id,
                     run_metadata=metadata_snapshot,
                 )
                 self.logger.info("Persisted pipeline run %s to database", run_id)
@@ -160,14 +163,15 @@ class Orchestrator:
 def run_pipeline(sources: List[Dict[str, str]], output: str,
                  mode: str = "validate", augmentor_cfg: Optional[Dict] = None,
                  timeout: int = 15, log_level: str = "INFO",
-                 persist_to_db: bool = False) -> None:
+                 persist_to_db: bool = False, profile_id: Optional[str] = None) -> Optional[str]:
     """
     Convenience wrapper for CLI entrypoint.
     Saves either validated or augmented results depending on mode.
     """
     orchestrator = Orchestrator(
         sources=sources, mode=mode, augmentor_cfg=augmentor_cfg,
-        timeout=timeout, log_level=log_level, persist_to_db=persist_to_db
+        timeout=timeout, log_level=log_level, persist_to_db=persist_to_db,
+        profile_id=profile_id
     )
 
     results = asyncio.run(orchestrator.run())
