@@ -2,6 +2,7 @@
 from __future__ import annotations
 import asyncio
 import json
+import os
 from pathlib import Path
 from collections import Counter
 from typing import Any, Dict, List, Optional, Union
@@ -47,10 +48,11 @@ class Orchestrator:
     def __init__(self, sources: List[Dict[str, str]], mode: str = "validate",
                  augmentor_cfg: Optional[Dict] = None, timeout: int = 15,
                  log_level: str = "INFO", persist_to_db: bool = False,
-                 profile_id: Optional[str] = None):
+                 profile_id: Optional[str] = None, proxy: Optional[Union[str, Dict[str, str]]] = None):
         self.logger = get_logger("engine.orchestrator", log_level, "engine.log")
         self.sources_cfg = [dict(src) for src in sources]
-        self.fetcher = EDLIngestor(sources=self.sources_cfg, timeout=timeout, log_level=log_level)
+        proxy = proxy or os.getenv("HTTPS_PROXY") or os.getenv("HTTP_PROXY")
+        self.fetcher = EDLIngestor(sources=self.sources_cfg, timeout=timeout, log_level=log_level, proxy=proxy)
         self.persist_to_db = persist_to_db
         self.ingestor = EDLIngestionService(log_level=log_level)
         self.validator = EDLValidator(log_level=log_level)
@@ -58,6 +60,7 @@ class Orchestrator:
         self.mode = mode
         self.log_level = log_level
         self.profile_id = profile_id
+        self.proxy = proxy
         self.last_run_id: Optional[str] = None
 
     async def run(self) -> Union[List[ValidatedEntry], List[AugmentedEntry]]:
@@ -163,7 +166,8 @@ class Orchestrator:
 def run_pipeline(sources: List[Dict[str, str]], output: str,
                  mode: str = "validate", augmentor_cfg: Optional[Dict] = None,
                  timeout: int = 15, log_level: str = "INFO",
-                 persist_to_db: bool = False, profile_id: Optional[str] = None) -> Optional[str]:
+                 persist_to_db: bool = False, profile_id: Optional[str] = None,
+                 proxy: Optional[Union[str, Dict[str, str]]] = None) -> Optional[str]:
     """
     Convenience wrapper for CLI entrypoint.
     Saves either validated or augmented results depending on mode.
@@ -171,7 +175,7 @@ def run_pipeline(sources: List[Dict[str, str]], output: str,
     orchestrator = Orchestrator(
         sources=sources, mode=mode, augmentor_cfg=augmentor_cfg,
         timeout=timeout, log_level=log_level, persist_to_db=persist_to_db,
-        profile_id=profile_id
+        profile_id=profile_id, proxy=proxy
     )
 
     results = asyncio.run(orchestrator.run())

@@ -27,3 +27,5 @@ def test_cli_invokes_run_pipeline(monkeypatch, tmp_path):
     assert "kwargs" in captured
     assert captured["kwargs"]["output"] == str(output_path)
     assert captured["kwargs"]["mode"] == "validate"
+    assert "proxy" in captured["kwargs"]
+    assert captured["kwargs"]["proxy"] is None

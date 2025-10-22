@@ -50,3 +50,83 @@
 2025-10-22 08:47:39,474 | INFO | ingestor | METRIC | entries_fetched_total=1073 stage=fetch source=__aggregate__
 2025-10-22 08:47:39,474 | INFO | ingestor | METRIC | entries_fetched_non_empty=1072 stage=fetch source=__aggregate__
 2025-10-22 08:47:39,474 | INFO | ingestor | Completed fetch. Total entries: 1073 (non-empty=1072)
+2025-10-22 10:56:46,071 | INFO | ingestor | Starting fetch for 24 sources
+2025-10-22 10:56:46,076 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-22 10:56:46,076 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-22 10:56:46,470 | INFO | ingestor | Fetched 40 lines (40 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
+2025-10-22 10:56:46,470 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
+2025-10-22 10:56:46,470 | INFO | ingestor | Fetched 135 lines (135 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
+2025-10-22 10:56:46,470 | INFO | ingestor | METRIC | entries_fetched_total=135 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
+2025-10-22 10:56:46,470 | INFO | ingestor | Fetched 26 lines (26 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
+2025-10-22 10:56:46,470 | INFO | ingestor | METRIC | entries_fetched_total=26 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
+2025-10-22 10:56:46,470 | INFO | ingestor | Fetched 12 lines (12 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
+2025-10-22 10:56:46,477 | INFO | ingestor | METRIC | entries_fetched_total=12 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
+2025-10-22 10:56:46,477 | INFO | ingestor | Fetched 28 lines (28 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
+2025-10-22 10:56:46,477 | INFO | ingestor | METRIC | entries_fetched_total=28 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
+2025-10-22 10:56:46,483 | INFO | ingestor | Fetched 57 lines (57 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
+2025-10-22 10:56:46,483 | INFO | ingestor | METRIC | entries_fetched_total=57 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
+2025-10-22 10:56:46,485 | INFO | ingestor | Fetched 8 lines (8 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
+2025-10-22 10:56:46,485 | INFO | ingestor | METRIC | entries_fetched_total=8 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
+2025-10-22 10:56:46,487 | INFO | ingestor | Fetched 2 lines (2 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
+2025-10-22 10:56:46,487 | INFO | ingestor | METRIC | entries_fetched_total=2 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
+2025-10-22 10:56:46,513 | INFO | ingestor | Fetched 66 lines (66 non-empty) from webex/all/url
+2025-10-22 10:56:46,516 | INFO | ingestor | METRIC | entries_fetched_total=66 stage=fetch source=webex/all/url
+2025-10-22 10:56:46,516 | INFO | ingestor | Fetched 30 lines (30 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-22 10:56:46,516 | INFO | ingestor | METRIC | entries_fetched_total=30 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-22 10:56:46,524 | INFO | ingestor | Fetched 2 lines (2 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
+2025-10-22 10:56:46,524 | INFO | ingestor | METRIC | entries_fetched_total=2 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
+2025-10-22 10:56:46,524 | INFO | ingestor | Fetched 62 lines (62 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
+2025-10-22 10:56:46,528 | INFO | ingestor | METRIC | entries_fetched_total=62 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
+2025-10-22 10:56:46,528 | INFO | ingestor | Fetched 92 lines (92 non-empty) from github/actions/url
+2025-10-22 10:56:46,528 | INFO | ingestor | METRIC | entries_fetched_total=92 stage=fetch source=github/actions/url
+2025-10-22 10:56:46,532 | INFO | ingestor | Fetched 34 lines (34 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
+2025-10-22 10:56:46,533 | INFO | ingestor | METRIC | entries_fetched_total=34 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
+2025-10-22 10:56:46,534 | INFO | ingestor | Fetched 48 lines (48 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
+2025-10-22 10:56:46,534 | INFO | ingestor | METRIC | entries_fetched_total=48 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
+2025-10-22 10:56:46,538 | INFO | ingestor | Fetched 91 lines (91 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
+2025-10-22 10:56:46,538 | INFO | ingestor | METRIC | entries_fetched_total=91 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
+2025-10-22 10:56:46,538 | INFO | ingestor | Fetched 5 lines (5 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
+2025-10-22 10:56:46,540 | INFO | ingestor | METRIC | entries_fetched_total=5 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
+2025-10-22 10:56:46,540 | INFO | ingestor | Fetched 69 lines (69 non-empty) from m365/china/exchange/all/url
+2025-10-22 10:56:46,542 | INFO | ingestor | METRIC | entries_fetched_total=69 stage=fetch source=m365/china/exchange/all/url
+2025-10-22 10:56:46,544 | INFO | ingestor | Fetched 71 lines (71 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
+2025-10-22 10:56:46,544 | INFO | ingestor | METRIC | entries_fetched_total=71 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
+2025-10-22 10:56:46,544 | INFO | ingestor | Fetched 30 lines (30 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-22 10:56:46,544 | INFO | ingestor | METRIC | entries_fetched_total=30 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+2025-10-22 10:56:46,549 | INFO | ingestor | Fetched 56 lines (56 non-empty) from m365/china/any/all/ipv4
+2025-10-22 10:56:46,549 | INFO | ingestor | METRIC | entries_fetched_total=56 stage=fetch source=m365/china/any/all/ipv4
+2025-10-22 10:56:46,549 | INFO | ingestor | Fetched 12 lines (12 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
+2025-10-22 10:56:46,549 | INFO | ingestor | METRIC | entries_fetched_total=12 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
+2025-10-22 10:56:46,552 | INFO | ingestor | Fetched 57 lines (57 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
+2025-10-22 10:56:46,552 | INFO | ingestor | METRIC | entries_fetched_total=57 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
+2025-10-22 10:56:46,562 | INFO | ingestor | METRIC | entries_fetched_total=1073 stage=fetch source=__aggregate__
+2025-10-22 10:56:46,566 | INFO | ingestor | METRIC | entries_fetched_non_empty=1072 stage=fetch source=__aggregate__
+2025-10-22 10:56:46,566 | INFO | ingestor | Completed fetch. Total entries: 1073 (non-empty=1072)
+2025-10-22 13:41:29,154 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-22 13:41:29,154 | DEBUG | ingestor | Reading file: local/test -> C:\Users\verma\AppData\Local\Temp\pytest-of-verma\pytest-0\test_ingestor_run_with_file0\sample.txt
+2025-10-22 13:41:29,176 | INFO | ingestor | Read 3 lines (2 non-empty) from file C:\Users\verma\AppData\Local\Temp\pytest-of-verma\pytest-0\test_ingestor_run_with_file0\sample.txt
+2025-10-22 13:41:29,176 | INFO | ingestor | METRIC | entries_fetched_total=3 stage=fetch source=local/test
+2025-10-22 13:41:29,176 | INFO | ingestor | METRIC | entries_fetched_total=3 stage=fetch source=__aggregate__
+2025-10-22 13:41:29,176 | INFO | ingestor | METRIC | entries_fetched_non_empty=2 stage=fetch source=__aggregate__
+2025-10-22 13:41:29,176 | INFO | ingestor | Completed fetch. Total entries: 3 (non-empty=2)
+2025-10-22 13:41:29,191 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-22 13:41:29,193 | DEBUG | ingestor | Reading file: local/test -> C:\Users\verma\AppData\Local\Temp\pytest-of-verma\pytest-0\test_run_pipeline_validate_cre0\sample.txt
+2025-10-22 13:41:29,209 | INFO | ingestor | Read 2 lines (2 non-empty) from file C:\Users\verma\AppData\Local\Temp\pytest-of-verma\pytest-0\test_run_pipeline_validate_cre0\sample.txt
+2025-10-22 13:41:29,209 | INFO | ingestor | METRIC | entries_fetched_total=2 stage=fetch source=local/test
+2025-10-22 13:41:29,209 | INFO | ingestor | METRIC | entries_fetched_total=2 stage=fetch source=__aggregate__
+2025-10-22 13:41:29,209 | INFO | ingestor | METRIC | entries_fetched_non_empty=2 stage=fetch source=__aggregate__
+2025-10-22 13:41:29,209 | INFO | ingestor | Completed fetch. Total entries: 2 (non-empty=2)
+2025-10-22 13:42:15,330 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-22 13:42:15,330 | DEBUG | ingestor | Reading file: local/test -> C:\Users\verma\AppData\Local\Temp\pytest-of-verma\pytest-1\test_ingestor_run_with_file0\sample.txt
+2025-10-22 13:42:15,332 | INFO | ingestor | Read 3 lines (2 non-empty) from file C:\Users\verma\AppData\Local\Temp\pytest-of-verma\pytest-1\test_ingestor_run_with_file0\sample.txt
+2025-10-22 13:42:15,332 | INFO | ingestor | METRIC | entries_fetched_total=3 stage=fetch source=local/test
+2025-10-22 13:42:15,332 | INFO | ingestor | METRIC | entries_fetched_total=3 stage=fetch source=__aggregate__
+2025-10-22 13:42:15,332 | INFO | ingestor | METRIC | entries_fetched_non_empty=2 stage=fetch source=__aggregate__
+2025-10-22 13:42:15,332 | INFO | ingestor | Completed fetch. Total entries: 3 (non-empty=2)
+2025-10-22 13:42:15,344 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-22 13:42:15,344 | DEBUG | ingestor | Reading file: local/test -> C:\Users\verma\AppData\Local\Temp\pytest-of-verma\pytest-1\test_run_pipeline_validate_cre0\sample.txt
+2025-10-22 13:42:15,348 | INFO | ingestor | Read 2 lines (2 non-empty) from file C:\Users\verma\AppData\Local\Temp\pytest-of-verma\pytest-1\test_run_pipeline_validate_cre0\sample.txt
+2025-10-22 13:42:15,350 | INFO | ingestor | METRIC | entries_fetched_total=2 stage=fetch source=local/test
+2025-10-22 13:42:15,350 | INFO | ingestor | METRIC | entries_fetched_total=2 stage=fetch source=__aggregate__
+2025-10-22 13:42:15,351 | INFO | ingestor | METRIC | entries_fetched_non_empty=2 stage=fetch source=__aggregate__
+2025-10-22 13:42:15,351 | INFO | ingestor | Completed fetch. Total entries: 2 (non-empty=2)

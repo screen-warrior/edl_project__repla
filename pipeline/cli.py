@@ -21,6 +21,7 @@ def main():
     parser.add_argument("--output", default="test_output_data/validated_output.json")
     parser.add_argument("--timeout", type=int, default=15)
     parser.add_argument("--log-level", default="INFO")
+    parser.add_argument("--proxy", help="Optional proxy URL (e.g. http://host:port)")
     parser.add_argument(
         "--persist-db",
         action="store_true",
@@ -73,6 +74,9 @@ def main():
         )
         if "persist_to_db" in run_pipeline_sig.parameters:
             kwargs["persist_to_db"] = args.persist_db
+        else:
+            kwargs.pop("persist_to_db", None)
+        kwargs["proxy"] = args.proxy
 
         with log_stage(logger, "pipeline_total"):
             run_pipeline(**kwargs)

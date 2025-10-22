@@ -7,3 +7,6 @@ pyyaml
 requests
 ujson
 pip-tools>=7.4,<8.0
+sqlalchemy
+psycopg2
+sqlmodel

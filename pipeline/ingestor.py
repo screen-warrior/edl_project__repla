@@ -12,9 +12,10 @@ EDL Ingestor (Enterprise, Pydantic-Driven)
 import asyncio
 import aiohttp
 import logging
+import os
 from logging.handlers import TimedRotatingFileHandler
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Optional, Union
 
 from models.schemas import FetchedEntry
 from utils.logger import log_metric
@@ -64,16 +65,31 @@ class EDLIngestor:
     Returns raw `FetchedEntry` instances ready for ingestion.
     """
 
-    def __init__(self, sources: List[Dict[str, str]], timeout: int = 15, log_level: str = "INFO"):
+    def __init__(
+        self,
+        sources: List[Dict[str, str]],
+        timeout: int = 15,
+        log_level: str = "INFO",
+        proxy: Optional[Union[str, Dict[str, str]]] = None,
+    ):
         self.sources = sources
         self.timeout = aiohttp.ClientTimeout(total=timeout)
         self.logger = setup_module_logger("ingestor", log_level, "ingestor.log")
+        if isinstance(proxy, dict):
+            proxy_url = proxy.get("https") or proxy.get("http")
+        else:
+            proxy_url = proxy
+        env_proxy = os.getenv("HTTPS_PROXY") or os.getenv("HTTP_PROXY")
+        self.proxy = proxy_url or env_proxy
+        if self.proxy:
+            self.logger.info("Using proxy for ingestion: %s", self.proxy)
 
     async def _fetch_url(self, session: aiohttp.ClientSession, name: str, url: str) -> List[FetchedEntry]:
         """Fetch raw entries from a URL."""
         try:
             self.logger.debug("Fetching URL: %s -> %s", name, url)
-            async with session.get(url) as resp:
+            kwargs = {"proxy": self.proxy} if self.proxy else {}
+            async with session.get(url, **kwargs) as resp:
                 if resp.status != 200:
                     self.logger.warning("%s returned HTTP %s", name, resp.status)
                     return []
