@@ -704,22 +704,9 @@ def _auto_refresh_tick() -> None:
             interval,
         )
 
-        with session_scope() as inner:
-            config = inner.exec(
-                select(ProfileConfig)
-                .where(ProfileConfig.profile_id == profile.id)
-                .order_by(ProfileConfig.version.desc())
-            ).first()
-            if not config:
-                continue
-            inner.expunge(config)
-
-        _enqueue_pipeline_run(
-            profile=profile,
-            config=config,
-            overrides={},
-            background_tasks=None,
-        )
+        background_tasks = BackgroundTasks()
+        request = RunCreateRequest(profile_id=profile.id, profile_config_id=None, overrides={})
+        create_run_endpoint(request, background_tasks)
 
 
 __all__ = ["app"]

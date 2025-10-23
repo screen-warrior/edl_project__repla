@@ -1,52 +1,22 @@
-2025-10-22 08:47:38,722 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | engine.py:64 | Starting pipeline run in 'augment' mode...
-2025-10-22 08:47:38,765 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | engine.py:65 | Pipeline persistence flag is ENABLED
-2025-10-22 08:47:39,474 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | logger.py:136 | Stage 'fetch' completed in 0.71s
-2025-10-22 08:47:39,474 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | logger.py:116 | METRIC | engine_fetch_total=1073 stage=fetch
-2025-10-22 08:47:39,525 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | logger.py:136 | Stage 'ingest' completed in 0.05s
-2025-10-22 08:47:39,525 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | logger.py:116 | METRIC | engine_ingested_total=1072 stage=ingest
-2025-10-22 08:47:39,587 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | logger.py:136 | Stage 'validate' completed in 0.06s
-2025-10-22 08:47:39,587 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | logger.py:116 | METRIC | engine_validated_total=1072 stage=validate
-2025-10-22 08:47:39,640 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | engine.py:108 | Augmentation complete: 1072 entries processed
-2025-10-22 08:47:39,643 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | logger.py:136 | Stage 'augment' completed in 0.05s
-2025-10-22 08:47:39,644 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | engine.py:132 | Persisting pipeline run | mode=augment fetched=1073 ingested=1072 validated=1072 augmented=1072
-2025-10-22 08:47:40,943 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | engine.py:152 | Persisted pipeline run 65b39ce1-cd9c-476a-9f4c-b18aef257663 to database
-2025-10-22 08:47:40,987 | INFO | engine.runner | run_id=484a4e02-5caa-4a32-a7f7-77e81e737695 | engine.py:185 | Pipeline results written to test_output_data\api_output.json
-2025-10-22 10:56:46,069 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | engine.py:64 | Starting pipeline run in 'augment' mode...
-2025-10-22 10:56:46,071 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | engine.py:65 | Pipeline persistence flag is ENABLED
-2025-10-22 10:56:46,566 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | logger.py:136 | Stage 'fetch' completed in 0.50s
-2025-10-22 10:56:46,566 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | logger.py:116 | METRIC | engine_fetch_total=1073 stage=fetch
-2025-10-22 10:56:46,590 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | logger.py:136 | Stage 'ingest' completed in 0.02s
-2025-10-22 10:56:46,590 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | logger.py:116 | METRIC | engine_ingested_total=1072 stage=ingest
-2025-10-22 10:56:46,661 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | logger.py:136 | Stage 'validate' completed in 0.07s
-2025-10-22 10:56:46,661 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | logger.py:116 | METRIC | engine_validated_total=1072 stage=validate
-2025-10-22 10:56:46,733 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | engine.py:108 | Augmentation complete: 1072 entries processed
-2025-10-22 10:56:46,733 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | logger.py:136 | Stage 'augment' completed in 0.07s
-2025-10-22 10:56:46,733 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | engine.py:132 | Persisting pipeline run | mode=augment fetched=1073 ingested=1072 validated=1072 augmented=1072
-2025-10-22 10:56:48,857 | INFO | engine.orchestrator | run_id=e9b17088-b5ef-4a0c-8a12-9c3430f6dabe | engine.py:152 | Persisted pipeline run d13c8c7b-d868-417c-b81c-786be3ae8327 to database
-2025-10-22 10:56:48,938 | INFO | engine.runner | run_id=484a4e02-5caa-4a32-a7f7-77e81e737695 | engine.py:185 | Pipeline results written to test_output_data\api_output.json
-2025-10-22 13:41:29,184 | INFO | engine.orchestrator | run_id=a9e42561-ee32-4864-87cc-c1890dc0e4e1 | engine.py:67 | Starting pipeline run in 'validate' mode...
-2025-10-22 13:41:29,191 | INFO | engine.orchestrator | run_id=a9e42561-ee32-4864-87cc-c1890dc0e4e1 | engine.py:68 | Pipeline persistence flag is DISABLED
-2025-10-22 13:41:29,191 | DEBUG | engine.orchestrator | run_id=a9e42561-ee32-4864-87cc-c1890dc0e4e1 | logger.py:131 | Stage 'fetch' started
-2025-10-22 13:41:29,209 | INFO | engine.orchestrator | run_id=a9e42561-ee32-4864-87cc-c1890dc0e4e1 | logger.py:136 | Stage 'fetch' completed in 0.02s
-2025-10-22 13:41:29,209 | INFO | engine.orchestrator | run_id=a9e42561-ee32-4864-87cc-c1890dc0e4e1 | logger.py:116 | METRIC | engine_fetch_total=2 stage=fetch
-2025-10-22 13:41:29,209 | DEBUG | engine.orchestrator | run_id=a9e42561-ee32-4864-87cc-c1890dc0e4e1 | logger.py:131 | Stage 'ingest' started
-2025-10-22 13:41:29,216 | INFO | engine.orchestrator | run_id=a9e42561-ee32-4864-87cc-c1890dc0e4e1 | logger.py:136 | Stage 'ingest' completed in 0.00s
-2025-10-22 13:41:29,216 | INFO | engine.orchestrator | run_id=a9e42561-ee32-4864-87cc-c1890dc0e4e1 | logger.py:116 | METRIC | engine_ingested_total=2 stage=ingest
-2025-10-22 13:41:29,216 | DEBUG | engine.orchestrator | run_id=a9e42561-ee32-4864-87cc-c1890dc0e4e1 | logger.py:131 | Stage 'validate' started
-2025-10-22 13:41:29,218 | INFO | engine.orchestrator | run_id=a9e42561-ee32-4864-87cc-c1890dc0e4e1 | logger.py:136 | Stage 'validate' completed in 0.00s
-2025-10-22 13:41:29,218 | INFO | engine.orchestrator | run_id=a9e42561-ee32-4864-87cc-c1890dc0e4e1 | logger.py:116 | METRIC | engine_validated_total=2 stage=validate
-2025-10-22 13:41:29,220 | INFO | engine.orchestrator | run_id=a9e42561-ee32-4864-87cc-c1890dc0e4e1 | engine.py:114 | Validation-only mode complete: 2 entries processed
-2025-10-22 13:41:29,223 | INFO | engine.runner | run_id=0f1487ea-e9cd-43b3-b4f0-1563825091b7 | engine.py:189 | Pipeline results written to C:\Users\verma\AppData\Local\Temp\pytest-of-verma\pytest-0\test_run_pipeline_validate_cre0\output.json
-2025-10-22 13:42:15,344 | INFO | engine.orchestrator | run_id=a63bd695-1aa1-415d-b78b-7feddbbe6832 | engine.py:67 | Starting pipeline run in 'validate' mode...
-2025-10-22 13:42:15,344 | INFO | engine.orchestrator | run_id=a63bd695-1aa1-415d-b78b-7feddbbe6832 | engine.py:68 | Pipeline persistence flag is DISABLED
-2025-10-22 13:42:15,344 | DEBUG | engine.orchestrator | run_id=a63bd695-1aa1-415d-b78b-7feddbbe6832 | logger.py:131 | Stage 'fetch' started
-2025-10-22 13:42:15,351 | INFO | engine.orchestrator | run_id=a63bd695-1aa1-415d-b78b-7feddbbe6832 | logger.py:136 | Stage 'fetch' completed in 0.00s
-2025-10-22 13:42:15,351 | INFO | engine.orchestrator | run_id=a63bd695-1aa1-415d-b78b-7feddbbe6832 | logger.py:116 | METRIC | engine_fetch_total=2 stage=fetch
-2025-10-22 13:42:15,351 | DEBUG | engine.orchestrator | run_id=a63bd695-1aa1-415d-b78b-7feddbbe6832 | logger.py:131 | Stage 'ingest' started
-2025-10-22 13:42:15,351 | INFO | engine.orchestrator | run_id=a63bd695-1aa1-415d-b78b-7feddbbe6832 | logger.py:136 | Stage 'ingest' completed in 0.00s
-2025-10-22 13:42:15,351 | INFO | engine.orchestrator | run_id=a63bd695-1aa1-415d-b78b-7feddbbe6832 | logger.py:116 | METRIC | engine_ingested_total=2 stage=ingest
-2025-10-22 13:42:15,353 | DEBUG | engine.orchestrator | run_id=a63bd695-1aa1-415d-b78b-7feddbbe6832 | logger.py:131 | Stage 'validate' started
-2025-10-22 13:42:15,354 | INFO | engine.orchestrator | run_id=a63bd695-1aa1-415d-b78b-7feddbbe6832 | logger.py:136 | Stage 'validate' completed in 0.00s
-2025-10-22 13:42:15,354 | INFO | engine.orchestrator | run_id=a63bd695-1aa1-415d-b78b-7feddbbe6832 | logger.py:116 | METRIC | engine_validated_total=2 stage=validate
-2025-10-22 13:42:15,354 | INFO | engine.orchestrator | run_id=a63bd695-1aa1-415d-b78b-7feddbbe6832 | engine.py:114 | Validation-only mode complete: 2 entries processed
-2025-10-22 13:42:15,359 | INFO | engine.runner | run_id=24664cb8-1306-45f7-8fbc-67f4d7af9664 | engine.py:189 | Pipeline results written to C:\Users\verma\AppData\Local\Temp\pytest-of-verma\pytest-1\test_run_pipeline_validate_cre0\output.json
+2025-10-23 01:35:20,560 | INFO | engine.orchestrator | run_id=6e96ed85-2895-4e10-a211-1365cdb8f3a8 | engine.py:120 | Starting pipeline run in 'augment' mode...
+2025-10-23 01:35:20,580 | INFO | engine.orchestrator | run_id=6e96ed85-2895-4e10-a211-1365cdb8f3a8 | engine.py:121 | Pipeline persistence flag is ENABLED
+2025-10-23 01:35:20,865 | INFO | engine.orchestrator | run_id=6e96ed85-2895-4e10-a211-1365cdb8f3a8 | logger.py:136 | Stage 'fetch' completed in 0.28s
+2025-10-23 01:35:20,865 | INFO | engine.orchestrator | run_id=6e96ed85-2895-4e10-a211-1365cdb8f3a8 | logger.py:116 | METRIC | engine_fetch_total=1063 stage=fetch
+2025-10-23 01:35:20,883 | INFO | engine.orchestrator | run_id=6e96ed85-2895-4e10-a211-1365cdb8f3a8 | logger.py:136 | Stage 'ingest' completed in 0.01s
+2025-10-23 01:35:20,883 | INFO | engine.orchestrator | run_id=6e96ed85-2895-4e10-a211-1365cdb8f3a8 | logger.py:116 | METRIC | engine_ingested_total=1062 stage=ingest
+2025-10-23 01:35:20,913 | INFO | engine.orchestrator | run_id=6e96ed85-2895-4e10-a211-1365cdb8f3a8 | logger.py:136 | Stage 'validate' completed in 0.03s
+2025-10-23 01:35:20,914 | INFO | engine.orchestrator | run_id=6e96ed85-2895-4e10-a211-1365cdb8f3a8 | logger.py:116 | METRIC | engine_validated_total=1062 stage=validate
+2025-10-23 01:35:20,931 | INFO | engine.orchestrator | run_id=6e96ed85-2895-4e10-a211-1365cdb8f3a8 | engine.py:159 | Augmentation complete: 1062 entries processed
+2025-10-23 01:35:20,931 | INFO | engine.orchestrator | run_id=6e96ed85-2895-4e10-a211-1365cdb8f3a8 | logger.py:136 | Stage 'augment' completed in 0.01s
+2025-10-23 01:35:20,952 | INFO | engine.runner | run_id=ecb4acb7-2b91-4f1e-b29f-b0c1223e108c | engine.py:241 | Pipeline results written to test_output_data\api_output.json
+2025-10-23 08:46:35,331 | INFO | engine.orchestrator | run_id=8adff47a-a66e-4d98-9c58-c416c33c3727 | engine.py:120 | Starting pipeline run in 'augment' mode...
+2025-10-23 08:46:35,331 | INFO | engine.orchestrator | run_id=8adff47a-a66e-4d98-9c58-c416c33c3727 | engine.py:121 | Pipeline persistence flag is ENABLED
+2025-10-23 08:46:35,921 | INFO | engine.orchestrator | run_id=8adff47a-a66e-4d98-9c58-c416c33c3727 | logger.py:136 | Stage 'fetch' completed in 0.58s
+2025-10-23 08:46:35,921 | INFO | engine.orchestrator | run_id=8adff47a-a66e-4d98-9c58-c416c33c3727 | logger.py:116 | METRIC | engine_fetch_total=1073 stage=fetch
+2025-10-23 08:46:35,942 | INFO | engine.orchestrator | run_id=8adff47a-a66e-4d98-9c58-c416c33c3727 | logger.py:136 | Stage 'ingest' completed in 0.01s
+2025-10-23 08:46:35,942 | INFO | engine.orchestrator | run_id=8adff47a-a66e-4d98-9c58-c416c33c3727 | logger.py:116 | METRIC | engine_ingested_total=1072 stage=ingest
+2025-10-23 08:46:35,982 | INFO | engine.orchestrator | run_id=8adff47a-a66e-4d98-9c58-c416c33c3727 | logger.py:136 | Stage 'validate' completed in 0.04s
+2025-10-23 08:46:35,982 | INFO | engine.orchestrator | run_id=8adff47a-a66e-4d98-9c58-c416c33c3727 | logger.py:116 | METRIC | engine_validated_total=1072 stage=validate
+2025-10-23 08:46:36,012 | INFO | engine.orchestrator | run_id=8adff47a-a66e-4d98-9c58-c416c33c3727 | engine.py:159 | Augmentation complete: 1072 entries processed
+2025-10-23 08:46:36,012 | INFO | engine.orchestrator | run_id=8adff47a-a66e-4d98-9c58-c416c33c3727 | logger.py:136 | Stage 'augment' completed in 0.02s
+2025-10-23 08:46:36,053 | INFO | engine.runner | run_id=b40b28d3-bca6-497c-98dd-cb91b6a34014 | engine.py:241 | Pipeline results written to test_output_data\api_output.json

@@ -6,3 +6,7 @@
 2025-10-22 13:42:15,318 | INFO | cli | run_id=0c2f5308-8d13-4076-8f92-5869a5bb9f0d | config_loader.py:65 | Loaded config file: C:\Users\verma\AppData\Local\Temp\pytest-of-verma\pytest-1\test_cli_invokes_run_pipeline0\sources.yaml
 2025-10-22 13:42:15,318 | INFO | cli | run_id=0c2f5308-8d13-4076-8f92-5869a5bb9f0d | engine.py:29 | Loaded 1 sources from C:\Users\verma\AppData\Local\Temp\pytest-of-verma\pytest-1\test_cli_invokes_run_pipeline0\sources.yaml
 2025-10-22 13:42:15,318 | INFO | cli | run_id=0c2f5308-8d13-4076-8f92-5869a5bb9f0d | logger.py:136 | Stage 'pipeline_total' completed in 0.00s
+2025-10-22 14:55:36,736 | INFO | cli | run_id=aa22d1a0-a958-4c29-8dfb-35e3b873ce4e | cli.py:39 | CLI invocation | mode=validate persist_db=False output=C:\Users\verma\AppData\Local\Temp\pytest-of-verma\pytest-2\test_cli_invokes_run_pipeline0\out.json interval_minutes=0.00
+2025-10-22 14:55:36,761 | INFO | cli | run_id=aa22d1a0-a958-4c29-8dfb-35e3b873ce4e | config_loader.py:65 | Loaded config file: C:\Users\verma\AppData\Local\Temp\pytest-of-verma\pytest-2\test_cli_invokes_run_pipeline0\sources.yaml
+2025-10-22 14:55:36,761 | INFO | cli | run_id=aa22d1a0-a958-4c29-8dfb-35e3b873ce4e | engine.py:29 | Loaded 1 sources from C:\Users\verma\AppData\Local\Temp\pytest-of-verma\pytest-2\test_cli_invokes_run_pipeline0\sources.yaml
+2025-10-22 14:55:36,766 | INFO | cli | run_id=aa22d1a0-a958-4c29-8dfb-35e3b873ce4e | logger.py:136 | Stage 'pipeline_total' completed in 0.00s

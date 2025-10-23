@@ -40,8 +40,8 @@ def test_orchestrator_validate_with_local_file():
         log_level="ERROR",
     )
 
-    results = asyncio.run(orchestrator.run())
+    execution = asyncio.run(orchestrator.run())
 
-    assert results, "Pipeline should produce validation results"
-    assert any(entry.valid for entry in results), "Expected some valid entries"
-    assert any(not entry.valid for entry in results), "Expected some invalid entries to surface"
+    assert execution.validated, "Pipeline should produce validation results"
+    assert any(entry.valid for entry in execution.validated), "Expected some valid entries"
+    assert any(not entry.valid for entry in execution.validated), "Expected some invalid entries to surface"

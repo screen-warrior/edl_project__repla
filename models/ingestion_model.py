@@ -29,7 +29,8 @@ def _strip_inline_comment(value: str) -> Tuple[str, Optional[str]]:
     idx = value.find(" #")
     if idx == -1:
         return value, None
-    return value[:idx].rstrip(), value[idx + 1 :].strip()
+    comment = value[idx + 2 :].strip() if idx + 2 <= len(value) else ""
+    return value[:idx].rstrip(), comment or None
 
 
 def _normalize_entry(value: str) -> str:

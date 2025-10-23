@@ -1,19 +1,35 @@
 # engine.py
 from __future__ import annotations
+
 import asyncio
 import json
-import os
+from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
-from collections import Counter
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Sequence, Union
+
+import yaml
 
 from pipeline.ingestor import EDLIngestor
 from models.ingestion_model import EDLIngestionService
 from models.schemas import FetchedEntry, IngestedEntry, ValidatedEntry
 from models.validation_model import EDLValidator
-from models.augmentation_model import EDL_Augmentor, AugmentedEntry   # <- new augmentor
+from models.augmentation_model import EDL_Augmentor, AugmentedEntry
 from utils.logger import get_logger, log_metric, log_stage
 from utils.config_loader import load_config
+from db.models import RunState
+from db.persistence import create_pipeline_run_record, finalize_pipeline_run, update_run_state
+
+
+# ----------------------------------------------------------------------
+# Structured execution payload
+# ----------------------------------------------------------------------
+@dataclass
+class PipelineExecutionResult:
+    fetched: List[FetchedEntry]
+    ingested: List[IngestedEntry]
+    validated: List[ValidatedEntry]
+    augmented: Optional[List[AugmentedEntry]]
 
 
 # ----------------------------------------------------------------------
@@ -35,6 +51,25 @@ class EngineConfig:
         logger.info("Loaded augmentor configuration from %s", path)
         return cfg
 
+    @staticmethod
+    def parse_sources_yaml(content: str, logger) -> List[Dict[str, str]]:
+        data = yaml.safe_load(content) or {}
+        sources = data.get("sources", []) if isinstance(data, dict) else data
+        if not isinstance(sources, list):
+            raise ValueError("Invalid sources YAML payload")
+        logger.info("Loaded %d sources from inline payload", len(sources))
+        return [dict(src) for src in sources]
+
+    @staticmethod
+    def parse_augmentor_yaml(content: Optional[str], logger) -> Dict:
+        if not content:
+            return {}
+        data = yaml.safe_load(content) or {}
+        if not isinstance(data, dict):
+            raise ValueError("Invalid augmentor YAML payload")
+        logger.info("Loaded augmentor configuration from inline payload")
+        return data
+
 
 # ----------------------------------------------------------------------
 # Orchestrator
@@ -45,14 +80,20 @@ class Orchestrator:
       fetch -> ingest -> validate -> (optional augmentation) -> json output
     """
 
-    def __init__(self, sources: List[Dict[str, str]], mode: str = "validate",
-                 augmentor_cfg: Optional[Dict] = None, timeout: int = 15,
-                 log_level: str = "INFO", persist_to_db: bool = False,
-                 profile_id: Optional[str] = None, proxy: Optional[Union[str, Dict[str, str]]] = None):
+    def __init__(
+        self,
+        sources: List[Dict[str, str]],
+        mode: str = "validate",
+        augmentor_cfg: Optional[Dict] = None,
+        timeout: int = 15,
+        log_level: str = "INFO",
+        persist_to_db: bool = False,
+        run_id: Optional[str] = None,
+        profile_id: Optional[str] = None,
+    ):
         self.logger = get_logger("engine.orchestrator", log_level, "engine.log")
         self.sources_cfg = [dict(src) for src in sources]
-        proxy = proxy or os.getenv("HTTPS_PROXY") or os.getenv("HTTP_PROXY")
-        self.fetcher = EDLIngestor(sources=self.sources_cfg, timeout=timeout, log_level=log_level, proxy=proxy)
+        self.fetcher = EDLIngestor(sources=self.sources_cfg, timeout=timeout, log_level=log_level)
         self.persist_to_db = persist_to_db
         self.ingestor = EDLIngestionService(log_level=log_level)
         self.validator = EDLValidator(log_level=log_level)
@@ -60,131 +101,167 @@ class Orchestrator:
         self.mode = mode
         self.log_level = log_level
         self.profile_id = profile_id
-        self.proxy = proxy
-        self.last_run_id: Optional[str] = None
+        self.run_id = run_id
+        self.last_run_id: Optional[str] = run_id
 
-    async def run(self) -> Union[List[ValidatedEntry], List[AugmentedEntry]]:
+    def _transition(self, state: RunState, sub_state: Optional[str], percent: float, *, started_at: Optional[datetime] = None, metadata: Optional[Dict[str, Any]] = None) -> None:
+        if not self.run_id:
+            return
+        update_run_state(
+            self.run_id,
+            state=state,
+            sub_state=sub_state,
+            percent_complete=percent,
+            started_at=started_at,
+            metadata=metadata,
+        )
+
+    async def run(self) -> PipelineExecutionResult:
         self.logger.info("Starting pipeline run in '%s' mode...", self.mode)
         self.logger.info(
             "Pipeline persistence flag is %s", "ENABLED" if self.persist_to_db else "DISABLED"
         )
 
+        self._transition(RunState.RUNNING, "fetch", 0.0, started_at=datetime.utcnow())
+
         # Step 1: Fetch
         with log_stage(self.logger, "fetch"):
             fetched: List[FetchedEntry] = await self.fetcher.run()
         if not fetched:
-            self.logger.warning("No entries fetched; exiting early.")
-            return []
+            self.logger.warning("No entries fetched from configured sources.")
 
         log_metric(self.logger, "engine_fetch_total", len(fetched), stage="fetch")
+        self._transition(RunState.RUNNING, "ingest", 25.0)
 
         # Step 2: Ingest
         with log_stage(self.logger, "ingest"):
             ingested: List[IngestedEntry] = self.ingestor.ingest(fetched)
         if not ingested:
-            self.logger.warning("No entries ingested; exiting early.")
-            return []
+            self.logger.warning("No entries ingested after processing fetched data.")
 
         log_metric(self.logger, "engine_ingested_total", len(ingested), stage="ingest")
+        self._transition(RunState.RUNNING, "validate", 55.0)
 
         # Step 3: Validate
         with log_stage(self.logger, "validate"):
             validated: List[ValidatedEntry] = self.validator.validate_entries(ingested)
         if not validated:
-            self.logger.warning("No validated entries; exiting early.")
-            return []
+            self.logger.warning("Validation produced no entries.")
 
         log_metric(self.logger, "engine_validated_total", len(validated), stage="validate")
 
-        type_counter = Counter(
-            getattr(entry.entry_type, "value", str(entry.entry_type)) for entry in validated
-        )
-        error_counter = Counter(
-            entry.error.code for entry in validated if entry.error is not None
-        )
-
         augmented: Optional[List[AugmentedEntry]] = None
         if self.mode == "augment":
+            self._transition(RunState.RUNNING, "augment", 75.0)
             with log_stage(self.logger, "augment"):
                 augmentor = EDL_Augmentor(cfg=self.augmentor_cfg, log_level=self.log_level)
                 augmented = augmentor.augment_entries(validated)
                 self.logger.info("Augmentation complete: %d entries processed", len(augmented))
-            results: Union[List[ValidatedEntry], List[AugmentedEntry]] = augmented
         else:
             self.logger.info("Validation-only mode complete: %d entries processed", len(validated))
-            results = validated
 
-        if self.persist_to_db:
-            try:
-                from db.persistence import persist_pipeline_results
+        self._transition(RunState.RUNNING, "finalize", 90.0)
 
-                metadata_snapshot: Dict[str, Any] = {
-                    "log_level": self.log_level,
-                    "source_summaries": [
-                        {
-                            "name": src.get("name"),
-                            "type": src.get("type"),
-                            "location": src.get("location"),
-                        }
-                        for src in self.sources_cfg
-                    ],
-                    "entry_type_counts": dict(type_counter),
-                    "validation_error_counts": dict(error_counter),
-                }
-
-                self.logger.info(
-                    "Persisting pipeline run | mode=%s fetched=%d ingested=%d validated=%d augmented=%d",
-                    self.mode,
-                    len(fetched),
-                    len(ingested),
-                    len(validated),
-                    len(augmented) if augmented else 0,
-                )
-                self.logger.debug("Pipeline persistence metadata: %s", metadata_snapshot)
-
-                run_id = persist_pipeline_results(
-                    mode=self.mode,
-                    sources=self.sources_cfg,
-                    fetched=fetched,
-                    ingested=ingested,
-                    validated=validated,
-                    augmented=augmented,
-                    profile_id=self.profile_id,
-                    run_metadata=metadata_snapshot,
-                )
-                self.logger.info("Persisted pipeline run %s to database", run_id)
-                self.last_run_id = run_id
-            except Exception:
-                self.logger.exception("Failed to persist pipeline run to database")
-
-        return results
+        return PipelineExecutionResult(
+            fetched=fetched,
+            ingested=ingested,
+            validated=validated,
+            augmented=augmented,
+        )
 
 
 # ----------------------------------------------------------------------
 # Runner
 # ----------------------------------------------------------------------
-def run_pipeline(sources: List[Dict[str, str]], output: str,
-                 mode: str = "validate", augmentor_cfg: Optional[Dict] = None,
-                 timeout: int = 15, log_level: str = "INFO",
-                 persist_to_db: bool = False, profile_id: Optional[str] = None,
-                 proxy: Optional[Union[str, Dict[str, str]]] = None) -> Optional[str]:
-    """
-    Convenience wrapper for CLI entrypoint.
-    Saves either validated or augmented results depending on mode.
-    """
+def run_pipeline(
+    sources: List[Dict[str, str]],
+    output: str,
+    mode: str = "validate",
+    augmentor_cfg: Optional[Dict] = None,
+    timeout: int = 15,
+    log_level: str = "INFO",
+    persist_to_db: bool = False,
+    proxy: Optional[str] = None,
+    profile_id: Optional[str] = None,
+    profile_config_id: Optional[str] = None,
+    run_id: Optional[str] = None,
+) -> Optional[str]:
+    """Run the pipeline synchronously."""
+
+    metadata = {"sources": [dict(src) for src in sources]}
+    _ = proxy  # Reserved for future proxy support
+
+    if persist_to_db and run_id is None:
+        run_id = create_pipeline_run_record(
+            profile_id=profile_id,
+            profile_config_id=profile_config_id,
+            mode=mode,
+            metadata={"initial": metadata},
+        )
+
     orchestrator = Orchestrator(
-        sources=sources, mode=mode, augmentor_cfg=augmentor_cfg,
-        timeout=timeout, log_level=log_level, persist_to_db=persist_to_db,
-        profile_id=profile_id, proxy=proxy
+        sources=sources,
+        mode=mode,
+        augmentor_cfg=augmentor_cfg,
+        timeout=timeout,
+        log_level=log_level,
+        persist_to_db=persist_to_db,
+        run_id=run_id,
+        profile_id=profile_id,
     )
 
-    results = asyncio.run(orchestrator.run())
+    execution: PipelineExecutionResult
+    try:
+        execution = asyncio.run(orchestrator.run())
+    except Exception as exc:  # noqa: BLE001
+        logger = get_logger("engine.runner", log_level, "engine.log")
+        logger.exception("Pipeline execution failed")
+        if persist_to_db and run_id:
+            update_run_state(
+                run_id,
+                state=RunState.FAILED,
+                sub_state="error",
+                percent_complete=100.0,
+                metadata={"exception": str(exc)},
+            )
+        raise
+
     out_path = Path(output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
+    if execution.augmented is not None and mode == "augment":
+        output_entries: Sequence[Union[AugmentedEntry, ValidatedEntry]] = execution.augmented
+    else:
+        output_entries = execution.validated
+
     with out_path.open("w", encoding="utf-8") as f:
-        json.dump([r.model_dump() for r in results], f, indent=2, ensure_ascii=False)
+        json.dump([r.model_dump() for r in output_entries], f, indent=2, ensure_ascii=False)
 
     logger = get_logger("engine.runner", log_level, "engine.log")
     logger.info("Pipeline results written to %s", out_path)
-    return getattr(orchestrator, "last_run_id", None)
+
+    if persist_to_db:
+        try:
+            finalize_pipeline_run(
+                run_id=run_id,
+                mode=mode,
+                sources=sources,
+                fetched=execution.fetched,
+                ingested=execution.ingested,
+                validated=execution.validated,
+                augmented=execution.augmented,
+                metadata={"output_path": str(out_path)},
+            )
+        except Exception as exc:  # noqa: BLE001
+            logger.exception("Failed to finalize pipeline run in database")
+            if run_id:
+                update_run_state(
+                    run_id,
+                    state=RunState.FAILED,
+                    sub_state="finalize",
+                    percent_complete=100.0,
+                    metadata={"exception": str(exc)},
+                )
+            raise
+
+    return run_id or orchestrator.last_run_id

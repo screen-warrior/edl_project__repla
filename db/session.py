@@ -79,7 +79,7 @@ def session_scope(
     attempt = 0
 
     while True:
-        session = Session(ENGINE)
+        session = Session(ENGINE, expire_on_commit=False)
         try:
             yield session
             session.commit()
@@ -110,7 +110,7 @@ def get_session() -> Session:
     Convenience helper to obtain a raw Session (caller must close it).
     """
 
-    return Session(ENGINE)
+    return Session(ENGINE, expire_on_commit=False)
 
 
 def init_db(drop_existing: bool = False) -> None:

@@ -1,6 +1,4 @@
-2025-10-22 08:47:38,649 | INFO | api.app | run_id=1ea0533f-e4a2-4bc9-9e3f-e765302797c3 | main.py:384 | Queued pipeline job 8e117cf6-2599-45ca-a6aa-b4f400c9c5fe | mode=augment persist_to_db=True profile=933c09b8-3cb6-45cc-bbea-037bd5ef278a
-2025-10-22 08:47:38,684 | INFO | api.app | run_id=1ea0533f-e4a2-4bc9-9e3f-e765302797c3 | main.py:204 | Uploaded configuration queued for job 8e117cf6-2599-45ca-a6aa-b4f400c9c5fe | mode=augment persist_to_db=True
-2025-10-22 08:47:41,019 | INFO | api.job | run_id=8e117cf6-2599-45ca-a6aa-b4f400c9c5fe | main.py:450 | Pipeline job 8e117cf6-2599-45ca-a6aa-b4f400c9c5fe finished | run_id=65b39ce1-cd9c-476a-9f4c-b18aef257663
-2025-10-22 10:56:46,000 | INFO | api.app | run_id=1ea0533f-e4a2-4bc9-9e3f-e765302797c3 | main.py:384 | Queued pipeline job e7d24883-7854-45b7-af3a-d58b8135b724 | mode=augment persist_to_db=True profile=561fc5a1-ed66-47e5-a68f-a4297bf7fd68
-2025-10-22 10:56:46,010 | INFO | api.app | run_id=1ea0533f-e4a2-4bc9-9e3f-e765302797c3 | main.py:204 | Uploaded configuration queued for job e7d24883-7854-45b7-af3a-d58b8135b724 | mode=augment persist_to_db=True
-2025-10-22 10:56:48,981 | INFO | api.job | run_id=8e117cf6-2599-45ca-a6aa-b4f400c9c5fe | main.py:450 | Pipeline job e7d24883-7854-45b7-af3a-d58b8135b724 finished | run_id=d13c8c7b-d868-417c-b81c-786be3ae8327
+2025-10-23 01:35:20,550 | INFO | api.app | run_id=43383c6e-c0af-4325-b1d8-56f8e473e2cb | engine.py:60 | Loaded 24 sources from inline payload
+2025-10-23 01:35:20,557 | INFO | api.app | run_id=43383c6e-c0af-4325-b1d8-56f8e473e2cb | engine.py:70 | Loaded augmentor configuration from inline payload
+2025-10-23 08:46:35,321 | INFO | api.app | run_id=cd3f69cb-fd70-4cae-8640-f2be5f62b957 | engine.py:60 | Loaded 24 sources from inline payload
+2025-10-23 08:46:35,323 | INFO | api.app | run_id=cd3f69cb-fd70-4cae-8640-f2be5f62b957 | engine.py:70 | Loaded augmentor configuration from inline payload

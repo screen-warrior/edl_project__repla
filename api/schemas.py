@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 from datetime import datetime
-from enum import Enum
-from typing import Any, Dict, List, Literal, Optional
+from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field
+
+from db.models import ArtifactStatus, ArtifactType, RunState
 
 
 class APIKeySettings(BaseModel):
@@ -18,159 +19,137 @@ class APIKeySettings(BaseModel):
     )
 
 
-class SourceConfig(BaseModel):
-    """Inline representation of a single feed definition."""
-
-    name: str = Field(..., description="Human-friendly name of the feed.")
-    type: Optional[str] = Field(
-        None, description="Optional feed type (e.g., file, http, s3)."
-    )
-    location: Optional[str] = Field(
-        None, description="Location of the feed (URL, file path, etc.)."
-    )
-    description: Optional[str] = Field(None, description="Optional description.")
-    enabled: Optional[bool] = Field(
-        True,
-        description="If present, controls whether the feed should be processed.",
+class ProfileCreateRequest(BaseModel):
+    name: str = Field(..., description="Human-friendly profile name.")
+    description: Optional[str] = Field(
+        None, description="Optional description for the profile."
     )
 
-    def to_dict(self) -> Dict[str, Any]:
-        data = self.model_dump()
-        # Filter out None values to align with existing config loader expectations.
-        return {k: v for k, v in data.items() if v is not None}
+
+class ProfileResponse(BaseModel):
+    id: str
+    name: str
+    description: Optional[str]
+    created_at: datetime
+    updated_at: datetime
+    latest_config_version: Optional[int] = None
 
 
-class RunRequest(BaseModel):
-    """
-    Request payload for launching a pipeline execution.
+class ProfileSummary(ProfileResponse):
+    total_runs: int = Field(..., description="How many runs have been recorded for this profile.")
+    active_runs: int = Field(..., description="How many runs are currently queued or running.")
 
-    Mirrors CLI arguments while supporting inline source and augmentor payloads.
-    """
 
-    profile_id: Optional[str] = Field(
+class ProfileConfigCreateRequest(BaseModel):
+    sources_yaml: str = Field(..., description="YAML content describing sources.")
+    augment_yaml: Optional[str] = Field(
+        None, description="Optional YAML content describing augmentation settings."
+    )
+    pipeline_settings: Dict[str, Any] = Field(
+        default_factory=dict,
+        description="Additional pipeline settings (mode, timeout, log-level, etc.).",
+    )
+    created_by: Optional[str] = Field(
+        None, description="Optional identifier for the engineer creating this configuration."
+    )
+
+
+class ProfileConfigResponse(BaseModel):
+    id: str
+    profile_id: str
+    version: int
+    config_hash: str
+    created_at: datetime
+    created_by: Optional[str]
+    pipeline_settings: Dict[str, Any]
+
+
+class RunCreateRequest(BaseModel):
+    profile_id: str = Field(..., description="Profile to execute.")
+    profile_config_id: Optional[str] = Field(
         None,
-        description="Identifier of a stored configuration profile to reuse.",
+        description="Specific configuration version. If omitted, the latest version is used.",
     )
-    sources_path: Optional[str] = Field(
-        None, description="Filesystem path to sources.yaml."
+    overrides: Dict[str, Any] = Field(
+        default_factory=dict,
+        description="Optional overrides (mode, timeout, persist_to_db, etc.).",
     )
-    sources: Optional[List[SourceConfig]] = Field(
-        None,
-        description="Inline list of sources. Required if sources_path is not provided.",
-    )
-    mode: Literal["validate", "augment"] = Field(
-        "validate", description="Pipeline mode to execute."
-    )
-    augmentor_config_path: Optional[str] = Field(
-        None, description="Filesystem path to augmentor configuration."
-    )
-    augmentor_config: Optional[Dict[str, Any]] = Field(
-        None, description="Inline augmentor configuration dictionary."
-    )
-    output_path: str = Field(
-        "test_output_data/validated_output.json",
-        description="Destination path for the JSON output written by the pipeline.",
-    )
-    timeout: int = Field(
-        15, ge=1, le=300, description="Timeout (seconds) applied to fetch operations."
-    )
-    log_level: str = Field(
-        "INFO",
-        description="Logging level propagated to pipeline components (INFO, DEBUG, ...).",
-    )
-    persist_to_db: bool = Field(
-        False, description="If true, persist run results into the configured database."
-    )
-
-    @model_validator(mode="after")
-    def validate_sources_and_mode(self) -> RunRequest:
-        if not self.profile_id and not self.sources and not self.sources_path:
-            raise ValueError("Either 'sources' or 'sources_path' must be provided.")
-        if self.mode == "augment" and not (
-            self.augmentor_config or self.augmentor_config_path or self.profile_id
-        ):
-            raise ValueError(
-                "Augmentor configuration must be provided (inline or path) when mode='augment'."
-            )
-        return self
-
-
-class JobStatus(str, Enum):
-    QUEUED = "queued"
-    RUNNING = "running"
-    SUCCEEDED = "succeeded"
-    FAILED = "failed"
 
 
 class RunSubmissionResponse(BaseModel):
-    job_id: str = Field(..., description="Identifier assigned to the submitted job.")
-    status: JobStatus = Field(..., description="Initial job status.")
-    persist_to_db: bool = Field(
-        ..., description="Whether the job was instructed to persist results."
-    )
-    profile_id: Optional[str] = Field(
-        None, description="Configuration profile associated with the run, if any."
-    )
-    detail: str = Field(..., description="Human readable acknowledgement message.")
+    job_id: str
+    run_id: str
+    profile_id: Optional[str]
+    profile_config_id: Optional[str]
+    state: RunState
+    detail: str
+
+
+class ArtifactResponse(BaseModel):
+    id: str
+    run_id: str
+    artifact_type: ArtifactType
+    location: str
+    status: ArtifactStatus
+    checksum: Optional[str]
+    size_bytes: Optional[int]
+    created_at: datetime
+    updated_at: datetime
+
+
+class RunErrorResponse(BaseModel):
+    id: str
+    phase: Optional[str]
+    source: Optional[str]
+    message: str
+    detail: Optional[Dict[str, Any]]
+    created_at: datetime
 
 
 class PipelineRunSummary(BaseModel):
     run_id: str = Field(..., description="Database primary key for the pipeline run.")
-    mode: str = Field(..., description="Pipeline mode that was executed.")
-    profile_id: Optional[str] = Field(None, description="Configuration profile used for the run, if any.")
-    started_at: datetime = Field(..., description="Timestamp when the run started.")
-    completed_at: Optional[datetime] = Field(
-        None, description="Timestamp when the run finished."
-    )
-    total_fetched: int = Field(..., description="Total entries fetched.")
-    total_ingested: int = Field(..., description="Total entries ingested.")
-    total_valid: int = Field(..., description="Total entries marked valid.")
-    total_invalid: int = Field(..., description="Total entries flagged invalid.")
-    total_augmented: int = Field(..., description="Total entries augmented.")
-    metadata_snapshot: Dict[str, Any] = Field(
-        default_factory=dict, description="Snapshot of run metadata."
-    )
+    profile_id: Optional[str]
+    profile_config_id: Optional[str]
+    mode: str
+    state: RunState
+    sub_state: Optional[str]
+    percent_complete: float
+    queued_at: datetime
+    started_at: Optional[datetime]
+    completed_at: Optional[datetime]
+    total_fetched: int
+    total_ingested: int
+    total_valid: int
+    total_invalid: int
+    total_augmented: int
 
 
+class PipelineRunDetail(PipelineRunSummary):
+    metadata_snapshot: Dict[str, Any]
+    artifacts: List[ArtifactResponse] = Field(default_factory=list)
+    errors: List[RunErrorResponse] = Field(default_factory=list)
 
 
-class ConfigProfileSummary(BaseModel):
-    id: str = Field(..., description="Identifier of the configuration profile.")
-    name: Optional[str] = Field(None, description="Human-friendly profile name.")
-    description: Optional[str] = Field(None, description="Optional profile description.")
-    refresh_interval_minutes: Optional[float] = Field(
-        None, description="Scheduled refresh interval in minutes."
-    )
-    last_refreshed_at: Optional[datetime] = Field(
-        None, description="Last time the profile was refreshed."
-    )
-    next_run_at: Optional[datetime] = Field(
-        None, description="Next scheduled refresh time if applicable."
-    )
-    default_mode: str = Field(..., description="Default pipeline mode for this profile.")
-    default_output_path: str = Field(..., description="Default output path used when running this profile.")
-    default_timeout: int = Field(..., description="Default fetch timeout in seconds.")
-    default_log_level: str = Field(..., description="Default log level when executing this profile.")
-    default_persist_to_db: bool = Field(..., description="Whether runs for this profile persist to the database by default.")
+class RunListResponse(BaseModel):
+    runs: List[PipelineRunSummary]
+
 
 class JobStatusResponse(BaseModel):
-    job_id: str = Field(..., description="Identifier of the requested job.")
-    status: JobStatus = Field(..., description="Current execution state.")
-    created_at: datetime = Field(..., description="Submission timestamp.")
-    updated_at: datetime = Field(..., description="Last update timestamp.")
-    persist_to_db: bool = Field(
-        ..., description="Whether the job persisted into the database."
-    )
-    profile_id: Optional[str] = Field(
-        None, description="Configuration profile associated with the job, if any."
-    )
-    run_id: Optional[str] = Field(
-        None, description="Database run identifier (when persistence is enabled)."
-    )
-    error: Optional[str] = Field(None, description="Error message if the job failed.")
-    detail: Optional[str] = Field(
-        None, description="Additional detail about the job outcome."
-    )
-    pipeline_run: Optional[PipelineRunSummary] = Field(
-        None, description="Summary of the persisted pipeline run if available."
-    )
+    job_id: str
+    run_id: Optional[str]
+    profile_id: Optional[str]
+    profile_config_id: Optional[str]
+    state: RunState
+    created_at: datetime
+    updated_at: datetime
+    detail: Optional[str] = None
+
+
+class ProfileConfigSummary(BaseModel):
+    id: str
+    profile_id: str
+    version: int
+    created_at: datetime
+    created_by: Optional[str]
+    pipeline_settings: Dict[str, Any]
+
