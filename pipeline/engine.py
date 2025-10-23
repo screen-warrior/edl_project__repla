@@ -88,12 +88,18 @@ class Orchestrator:
         timeout: int = 15,
         log_level: str = "INFO",
         persist_to_db: bool = False,
+        proxy: Optional[str] = None,
         run_id: Optional[str] = None,
         profile_id: Optional[str] = None,
     ):
         self.logger = get_logger("engine.orchestrator", log_level, "engine.log")
         self.sources_cfg = [dict(src) for src in sources]
-        self.fetcher = EDLIngestor(sources=self.sources_cfg, timeout=timeout, log_level=log_level)
+        self.fetcher = EDLIngestor(
+            sources=self.sources_cfg,
+            timeout=timeout,
+            log_level=log_level,
+            proxy=proxy,
+        )
         self.persist_to_db = persist_to_db
         self.ingestor = EDLIngestionService(log_level=log_level)
         self.validator = EDLValidator(log_level=log_level)
@@ -103,6 +109,8 @@ class Orchestrator:
         self.profile_id = profile_id
         self.run_id = run_id
         self.last_run_id: Optional[str] = run_id
+        if proxy:
+            self.logger.info("Proxy configured for fetch stage: %s", proxy)
 
     def _transition(self, state: RunState, sub_state: Optional[str], percent: float, *, started_at: Optional[datetime] = None, metadata: Optional[Dict[str, Any]] = None) -> None:
         if not self.run_id:
@@ -189,7 +197,8 @@ def run_pipeline(
     """Run the pipeline synchronously."""
 
     metadata = {"sources": [dict(src) for src in sources]}
-    _ = proxy  # Reserved for future proxy support
+    if proxy:
+        metadata["proxy"] = proxy
 
     if persist_to_db and run_id is None:
         run_id = create_pipeline_run_record(
@@ -206,6 +215,7 @@ def run_pipeline(
         timeout=timeout,
         log_level=log_level,
         persist_to_db=persist_to_db,
+        proxy=proxy,
         run_id=run_id,
         profile_id=profile_id,
     )
