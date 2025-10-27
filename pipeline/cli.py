@@ -23,6 +23,11 @@ def main():
     parser.add_argument("--log-level", default="INFO")
     parser.add_argument("--proxy", help="Optional proxy URL (e.g. http://host:port)")
     parser.add_argument(
+        "--use-proxy",
+        action="store_true",
+        help="Enable proxy usage (falls back to HTTPS_PROXY/HTTP_PROXY if --proxy is not provided).",
+    )
+    parser.add_argument(
         "--persist-db",
         action="store_true",
         help="Persist pipeline results to the configured database.",
@@ -37,11 +42,12 @@ def main():
 
     logger = get_logger("cli", args.log_level, "cli.log")
     logger.info(
-        "CLI invocation | mode=%s persist_db=%s output=%s interval_minutes=%.2f",
+        "CLI invocation | mode=%s persist_db=%s output=%s interval_minutes=%.2f proxy_enabled=%s",
         args.mode,
         args.persist_db,
         args.output,
         args.interval_minutes,
+        args.use_proxy,
     )
 
     # Validate required args for modes
@@ -77,6 +83,8 @@ def main():
         else:
             kwargs.pop("persist_to_db", None)
         kwargs["proxy"] = args.proxy
+        if "use_proxy" in run_pipeline_sig.parameters:
+            kwargs["use_proxy"] = args.use_proxy
 
         with log_stage(logger, "pipeline_total"):
             run_pipeline(**kwargs)

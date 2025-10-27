@@ -159,6 +159,13 @@ def ensure_schema() -> None:
             with ENGINE.begin() as conn:
                 conn.execute(text(column_defs[column_name]))
 
+    if "profile_configs" in table_names:
+        columns = {col["name"] for col in inspector.get_columns("profile_configs")}
+        if "refresh_interval_minutes" not in columns:
+            logger.info("Adding refresh_interval_minutes column to profile_configs")
+            with ENGINE.begin() as conn:
+                conn.execute(text("ALTER TABLE profile_configs ADD COLUMN refresh_interval_minutes INTEGER"))
+
 
 __all__ = [
     "ENGINE",

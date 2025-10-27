@@ -1,95 +1,95 @@
 sources:
-  - name: m365/china/any/all/ipv4
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/m365/china/any/all/ipv4
+  # - name: m365/china/any/all/ipv4
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/m365/china/any/all/ipv4
 
-  - name: webex/all/url
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/webex/all/url
+  # - name: webex/all/url
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/webex/all/url
 
-  - name: github/actions/url
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/github/actions/url
+  # - name: github/actions/url
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/github/actions/url
 
-  - name: m365/china/exchange/all/url
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/m365/china/exchange/all/url
+  # - name: m365/china/exchange/all/url
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/m365/china/exchange/all/url
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
+  # - name: https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
+  # - name: https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
+  # - name: https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
+  # - name: https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
+  # - name: https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
+  # - name: https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
+  # - name: https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
+  # - name: https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
+  # - name: https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
+  # - name: https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
+  # - name: https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+  # - name: https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+  # - name: https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
+  # - name: https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
+  # - name: https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
+  # - name: https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
+  # - name: https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
+  # - name: https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
 
-  - name: https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
-    type: url
-    location: https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
+  # - name: https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
+  #   type: url
+  #   location: https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
 
   - name: local/test/file
     type: file

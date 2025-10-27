@@ -9,7 +9,7 @@ import uuid
 from datetime import datetime
 from typing import Any, Dict, Optional
 
-from sqlalchemy import Column, Enum as SAEnum, JSON, Text, UniqueConstraint
+from sqlalchemy import Column, Enum as SAEnum, JSON, Text, UniqueConstraint, Index, Integer
 from sqlmodel import Field, SQLModel
 
 
@@ -79,6 +79,11 @@ class ProfileConfig(SQLModel, table=True):
         default_factory=dict,
         sa_column=Column(JSON, nullable=False, default=dict),
     )
+    refresh_interval_minutes: Optional[int] = Field(
+        default=None,
+        sa_column=Column(Integer, nullable=True),
+        description="Automatic refresh cadence for pipelines referencing this config.",
+    )
     created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     created_by: Optional[str] = Field(default=None)
 
@@ -91,12 +96,14 @@ class PipelineRun(SQLModel, table=True):
     __tablename__ = "pipeline_runs"
 
     id: str = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)
+    pipeline_id: str = Field(foreign_key="pipelines.id", nullable=False, index=True)
     profile_id: Optional[str] = Field(default=None, foreign_key="profiles.id", index=True)
     profile_config_id: Optional[str] = Field(default=None, foreign_key="profile_configs.id", index=True)
     mode: str = Field(index=True)
     queued_at: datetime = Field(default_factory=datetime.utcnow, nullable=False, index=True)
     started_at: Optional[datetime] = Field(default=None, index=True)
     completed_at: Optional[datetime] = Field(default=None)
+    idempotency_key: Optional[str] = Field(default=None, index=True)
     state: RunState = Field(
         default=RunState.QUEUED,
         sa_column=Column(SAEnum(RunState, name="run_state"), nullable=False, index=True),
@@ -111,6 +118,31 @@ class PipelineRun(SQLModel, table=True):
     metadata_snapshot: Dict[str, Any] = Field(
         default_factory=dict,
         sa_column=Column(JSON, nullable=False, default=dict),
+    )
+    created_by: Optional[str] = Field(default=None, index=True)
+
+
+class Pipeline(SQLModel, table=True):
+    __tablename__ = "pipelines"
+
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)
+    profile_id: str = Field(foreign_key="profiles.id", nullable=False, index=True)
+    profile_config_id: str = Field(foreign_key="profile_configs.id", nullable=False, index=True)
+    name: str = Field(index=True)
+    description: Optional[str] = Field(default=None)
+    concurrency_limit: int = Field(default=1, nullable=False)
+    is_active: bool = Field(default=True, index=True)
+    idempotency_key: Optional[str] = Field(default=None, index=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
+    updated_at: datetime = Field(
+        default_factory=datetime.utcnow,
+        nullable=False,
+        sa_column_kwargs={"onupdate": datetime.utcnow},
+    )
+
+    __table_args__ = (
+        UniqueConstraint("profile_id", "name", name="uq_pipeline_profile_name"),
+        Index("ix_pipeline_profile_config", "profile_id", "profile_config_id"),
     )
 
 
@@ -182,11 +214,31 @@ class HostedFeed(SQLModel, table=True):
     __tablename__ = "hosted_feeds"
 
     id: Optional[int] = Field(default=None, primary_key=True)
+    pipeline_id: str = Field(foreign_key="pipelines.id", nullable=False, index=True)
     indicator_type: IndicatorType = Field(
-        sa_column=Column(SAEnum(IndicatorType, name="hosted_indicator_type"), nullable=False, unique=True),
+        sa_column=Column(SAEnum(IndicatorType, name="hosted_indicator_type"), nullable=False),
     )
     run_id: str = Field(foreign_key="pipeline_runs.id", nullable=False, index=True)
     updated_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
+
+    __table_args__ = (
+        UniqueConstraint("pipeline_id", "indicator_type", name="uq_hosted_feed_pipeline_type"),
+    )
+
+
+class PipelineRunEvent(SQLModel, table=True):
+    __tablename__ = "pipeline_run_events"
+
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)
+    run_id: str = Field(foreign_key="pipeline_runs.id", nullable=False, index=True)
+    state: RunState = Field(sa_column=Column(SAEnum(RunState, name="run_state_event"), nullable=False))
+    sub_state: Optional[str] = Field(default=None)
+    percent_complete: Optional[float] = Field(default=None)
+    detail: Optional[Dict[str, Any]] = Field(
+        default=None,
+        sa_column=Column(JSON, nullable=True),
+    )
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False, index=True)
 
 
 class Artifact(SQLModel, table=True):
@@ -235,7 +287,9 @@ __all__ = [
     "ArtifactType",
     "Profile",
     "ProfileConfig",
+    "Pipeline",
     "PipelineRun",
+    "PipelineRunEvent",
     "Feed",
     "Indicator",
     "AugmentedIndicator",

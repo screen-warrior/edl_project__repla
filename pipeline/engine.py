@@ -18,7 +18,7 @@ from models.augmentation_model import EDL_Augmentor, AugmentedEntry
 from utils.logger import get_logger, log_metric, log_stage
 from utils.config_loader import load_config
 from db.models import RunState
-from db.persistence import create_pipeline_run_record, finalize_pipeline_run, update_run_state
+from db.persistence import finalize_pipeline_run, update_run_state
 
 
 # ----------------------------------------------------------------------
@@ -89,6 +89,7 @@ class Orchestrator:
         log_level: str = "INFO",
         persist_to_db: bool = False,
         proxy: Optional[str] = None,
+        use_proxy: bool = False,
         run_id: Optional[str] = None,
         profile_id: Optional[str] = None,
     ):
@@ -99,6 +100,7 @@ class Orchestrator:
             timeout=timeout,
             log_level=log_level,
             proxy=proxy,
+            use_proxy=use_proxy,
         )
         self.persist_to_db = persist_to_db
         self.ingestor = EDLIngestionService(log_level=log_level)
@@ -109,8 +111,12 @@ class Orchestrator:
         self.profile_id = profile_id
         self.run_id = run_id
         self.last_run_id: Optional[str] = run_id
-        if proxy:
-            self.logger.info("Proxy configured for fetch stage: %s", proxy)
+        if proxy and use_proxy:
+            self.logger.info("Proxy enabled for fetch stage: %s", proxy)
+        elif use_proxy and not proxy:
+            self.logger.info("Proxy enabled via environment configuration.")
+        elif not use_proxy and proxy:
+            self.logger.debug("Proxy value supplied but disabled via flag.")
 
     def _transition(self, state: RunState, sub_state: Optional[str], percent: float, *, started_at: Optional[datetime] = None, metadata: Optional[Dict[str, Any]] = None) -> None:
         if not self.run_id:
@@ -190,6 +196,7 @@ def run_pipeline(
     log_level: str = "INFO",
     persist_to_db: bool = False,
     proxy: Optional[str] = None,
+    use_proxy: bool = False,
     profile_id: Optional[str] = None,
     profile_config_id: Optional[str] = None,
     run_id: Optional[str] = None,
@@ -197,16 +204,12 @@ def run_pipeline(
     """Run the pipeline synchronously."""
 
     metadata = {"sources": [dict(src) for src in sources]}
-    if proxy:
+    if proxy and use_proxy:
         metadata["proxy"] = proxy
+    metadata["proxy_enabled"] = use_proxy
 
     if persist_to_db and run_id is None:
-        run_id = create_pipeline_run_record(
-            profile_id=profile_id,
-            profile_config_id=profile_config_id,
-            mode=mode,
-            metadata={"initial": metadata},
-        )
+        raise ValueError("run_id must be provided when persist_to_db is True")
 
     orchestrator = Orchestrator(
         sources=sources,
@@ -216,6 +219,7 @@ def run_pipeline(
         log_level=log_level,
         persist_to_db=persist_to_db,
         proxy=proxy,
+        use_proxy=use_proxy,
         run_id=run_id,
         profile_id=profile_id,
     )

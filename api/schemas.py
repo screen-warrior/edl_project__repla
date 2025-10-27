@@ -52,6 +52,11 @@ class ProfileConfigCreateRequest(BaseModel):
     created_by: Optional[str] = Field(
         None, description="Optional identifier for the engineer creating this configuration."
     )
+    refresh_interval_minutes: Optional[int] = Field(
+        None,
+        ge=1,
+        description="If provided, pipelines using this config auto-refresh every N minutes.",
+    )
 
 
 class ProfileConfigResponse(BaseModel):
@@ -62,23 +67,24 @@ class ProfileConfigResponse(BaseModel):
     created_at: datetime
     created_by: Optional[str]
     pipeline_settings: Dict[str, Any]
+    refresh_interval_minutes: Optional[int]
 
 
 class RunCreateRequest(BaseModel):
-    profile_id: str = Field(..., description="Profile to execute.")
-    profile_config_id: Optional[str] = Field(
-        None,
-        description="Specific configuration version. If omitted, the latest version is used.",
-    )
+    pipeline_id: str = Field(..., description="Pipeline to execute.")
     overrides: Dict[str, Any] = Field(
         default_factory=dict,
         description="Optional overrides (mode, timeout, persist_to_db, etc.).",
+    )
+    requested_by: Optional[str] = Field(
+        None, description="Optional identifier for the caller triggering the run."
     )
 
 
 class RunSubmissionResponse(BaseModel):
     job_id: str
     run_id: str
+    pipeline_id: str
     profile_id: Optional[str]
     profile_config_id: Optional[str]
     state: RunState
@@ -108,6 +114,7 @@ class RunErrorResponse(BaseModel):
 
 class PipelineRunSummary(BaseModel):
     run_id: str = Field(..., description="Database primary key for the pipeline run.")
+    pipeline_id: str
     profile_id: Optional[str]
     profile_config_id: Optional[str]
     mode: str
@@ -137,12 +144,14 @@ class RunListResponse(BaseModel):
 class JobStatusResponse(BaseModel):
     job_id: str
     run_id: Optional[str]
+    pipeline_id: Optional[str]
     profile_id: Optional[str]
     profile_config_id: Optional[str]
     state: RunState
     created_at: datetime
     updated_at: datetime
     detail: Optional[str] = None
+    cancel_requested: bool = False
 
 
 class ProfileConfigSummary(BaseModel):
@@ -152,4 +161,54 @@ class ProfileConfigSummary(BaseModel):
     created_at: datetime
     created_by: Optional[str]
     pipeline_settings: Dict[str, Any]
+
+
+class PipelineCreateRequest(BaseModel):
+    profile_id: str
+    profile_config_id: str
+    name: str
+    description: Optional[str] = None
+    concurrency_limit: Optional[int] = Field(
+        default=1, description="Maximum concurrent runs for this pipeline (1 = serial)."
+    )
+    created_by: Optional[str] = Field(
+        None, description="Optional identifier for the engineer creating the pipeline."
+    )
+
+
+class PipelineResponse(BaseModel):
+    id: str
+    profile_id: str
+    profile_config_id: str
+    name: str
+    description: Optional[str]
+    concurrency_limit: int
+    is_active: bool
+    created_at: datetime
+    updated_at: datetime
+
+
+class PipelineListResponse(BaseModel):
+    pipelines: List[PipelineResponse]
+
+
+class ConfigUsageSummary(BaseModel):
+    config: ProfileConfigResponse
+    pipelines_total: int
+    pipelines_active: int
+    runs_active: int
+
+
+class PipelineScheduleEntry(BaseModel):
+    pipeline: PipelineResponse
+    config: ProfileConfigResponse
+    last_run_id: Optional[str]
+    last_run_state: Optional[RunState]
+    last_completed_at: Optional[datetime]
+    next_run_at: Optional[datetime]
+
+
+class PipelineScheduleResponse(BaseModel):
+    profile_id: str
+    pipelines: List[PipelineScheduleEntry]
 

@@ -16,6 +16,7 @@ class JobRecord:
 
     id: str
     request: Dict[str, Any]
+    pipeline_id: Optional[str] = None
     profile_id: Optional[str] = None
     profile_config_id: Optional[str] = None
     run_id: Optional[str] = None
@@ -24,6 +25,7 @@ class JobRecord:
     updated_at: datetime = field(default_factory=datetime.utcnow)
     detail: Optional[str] = None
     error: Optional[str] = None
+    cancel_requested: bool = False
 
     def to_response(
         self,
@@ -33,12 +35,14 @@ class JobRecord:
         return JobStatusResponse(
             job_id=self.id,
             run_id=self.run_id,
+            pipeline_id=self.pipeline_id,
             profile_id=self.profile_id,
             profile_config_id=self.profile_config_id,
             state=self.state,
             created_at=self.created_at,
             updated_at=self.updated_at,
             detail=self.detail,
+            cancel_requested=self.cancel_requested,
         )
 
 
@@ -54,12 +58,14 @@ class JobStore:
         *,
         job_id: str,
         request: Dict[str, Any],
+        pipeline_id: Optional[str] = None,
         profile_id: Optional[str] = None,
         profile_config_id: Optional[str] = None,
     ) -> JobRecord:
         record = JobRecord(
             id=job_id,
             request=request,
+            pipeline_id=pipeline_id or request.get("pipeline_id"),
             profile_id=profile_id or request.get("profile_id"),
             profile_config_id=profile_config_id or request.get("profile_config_id"),
         )
@@ -79,6 +85,7 @@ class JobStore:
             for key, value in changes.items():
                 setattr(record, key, value)
             if "request" in changes and isinstance(record.request, dict):
+                record.pipeline_id = record.request.get("pipeline_id", record.pipeline_id)
                 record.profile_id = record.request.get("profile_id", record.profile_id)
                 record.profile_config_id = record.request.get("profile_config_id", record.profile_config_id)
             record.updated_at = datetime.utcnow()
@@ -91,6 +98,20 @@ class JobStore:
                 for record in self._jobs.values()
             )
 
+    def has_active_job_for_pipeline(self, pipeline_id: str) -> bool:
+        with self._lock:
+            return any(
+                record.pipeline_id == pipeline_id and record.state in {RunState.QUEUED, RunState.RUNNING}
+                for record in self._jobs.values()
+            )
+
     def all(self) -> Dict[str, JobRecord]:
         with self._lock:
             return dict(self._jobs)
+
+    def find_by_run_id(self, run_id: str) -> Optional[JobRecord]:
+        with self._lock:
+            for record in self._jobs.values():
+                if record.run_id == run_id:
+                    return record
+        return None

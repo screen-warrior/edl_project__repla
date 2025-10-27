@@ -71,6 +71,7 @@ class EDLIngestor:
         timeout: int = 15,
         log_level: str = "INFO",
         proxy: Optional[Union[str, Dict[str, str]]] = None,
+        use_proxy: bool = False,
     ):
         self.sources = sources
         self.timeout = aiohttp.ClientTimeout(total=timeout)
@@ -80,9 +81,14 @@ class EDLIngestor:
         else:
             proxy_url = proxy
         env_proxy = os.getenv("HTTPS_PROXY") or os.getenv("HTTP_PROXY")
-        self.proxy = proxy_url or env_proxy
+        configured_proxy = proxy_url or env_proxy
+        self.proxy = configured_proxy if use_proxy and configured_proxy else None
         if self.proxy:
             self.logger.info("Using proxy for ingestion: %s", self.proxy)
+        elif use_proxy and not configured_proxy:
+            self.logger.warning("Proxy enabled but no proxy URL configured; requests will go direct.")
+        elif not use_proxy and configured_proxy:
+            self.logger.debug("Proxy configuration detected but disabled via flag.")
 
     async def _fetch_url(self, session: aiohttp.ClientSession, name: str, url: str) -> List[FetchedEntry]:
         """Fetch raw entries from a URL."""
