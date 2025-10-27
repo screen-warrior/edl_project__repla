@@ -11,7 +11,9 @@
       "raw": "8.8.8.8",
       "line_number": 1,
       "kind": "ipv4"
-    }
+    },
+    "augmented": "8.8.8.8",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -25,7 +27,9 @@
       "raw": "1.1.1.1",
       "line_number": 2,
       "kind": "ipv4"
-    }
+    },
+    "augmented": "1.1.1.1",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -39,7 +43,9 @@
       "raw": "192.168.1.1",
       "line_number": 3,
       "kind": "ipv4"
-    }
+    },
+    "augmented": "192.168.1.1",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -53,7 +59,9 @@
       "raw": "10.0.0.1",
       "line_number": 4,
       "kind": "ipv4"
-    }
+    },
+    "augmented": "10.0.0.1",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -67,7 +75,9 @@
       "raw": "172.16.0.5",
       "line_number": 5,
       "kind": "ipv4"
-    }
+    },
+    "augmented": "172.16.0.5",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -81,7 +91,9 @@
       "raw": "203.0.113.15",
       "line_number": 6,
       "kind": "ipv4"
-    }
+    },
+    "augmented": "203.0.113.15",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -95,7 +107,9 @@
       "raw": "198.51.100.42",
       "line_number": 7,
       "kind": "ipv4"
-    }
+    },
+    "augmented": "198.51.100.42",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -109,7 +123,9 @@
       "raw": "255.255.255.255",
       "line_number": 8,
       "kind": "ipv4"
-    }
+    },
+    "augmented": "255.255.255.255",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -123,7 +139,9 @@
       "raw": "0.0.0.0",
       "line_number": 9,
       "kind": "ipv4"
-    }
+    },
+    "augmented": "0.0.0.0",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -137,7 +155,9 @@
       "raw": "123.45.67.89",
       "line_number": 10,
       "kind": "ipv4"
-    }
+    },
+    "augmented": "123.45.67.89",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -154,7 +174,11 @@
       "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
       "raw": "300.10.10.1",
       "line_number": 11
-    }
+    },
+    "augmented": "300.10.10.1",
+    "changes": [
+      "invalid_pass_through"
+    ]
   },
   {
     "source": "local/test/file",
@@ -171,7 +195,11 @@
       "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
       "raw": "256.256.256.256",
       "line_number": 12
-    }
+    },
+    "augmented": "256.256.256.256",
+    "changes": [
+      "invalid_pass_through"
+    ]
   },
   {
     "source": "local/test/file",
@@ -188,7 +216,11 @@
       "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
       "raw": "192.168.1",
       "line_number": 13
-    }
+    },
+    "augmented": "192.168.1",
+    "changes": [
+      "invalid_pass_through"
+    ]
   },
   {
     "source": "local/test/file",
@@ -205,7 +237,11 @@
       "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
       "raw": "10.0.0.999",
       "line_number": 14
-    }
+    },
+    "augmented": "10.0.0.999",
+    "changes": [
+      "invalid_pass_through"
+    ]
   },
   {
     "source": "local/test/file",
@@ -222,7 +258,11 @@
       "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
       "raw": "172.16.0.0.1",
       "line_number": 15
-    }
+    },
+    "augmented": "172.16.0.0.1",
+    "changes": [
+      "invalid_pass_through"
+    ]
   },
   {
     "source": "local/test/file",
@@ -237,7 +277,9 @@
       "line_number": 16,
       "kind": "ipv6",
       "zone": null
-    }
+    },
+    "augmented": "2001:4860:4860::8888",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -252,7 +294,9 @@
       "line_number": 17,
       "kind": "ipv6",
       "zone": null
-    }
+    },
+    "augmented": "2001:db8::1",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -267,7 +311,9 @@
       "line_number": 18,
       "kind": "ipv6",
       "zone": null
-    }
+    },
+    "augmented": "::1",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -282,7 +328,9 @@
       "line_number": 19,
       "kind": "ipv6",
       "zone": "lo0"
-    }
+    },
+    "augmented": "fe80::1%lo0",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -297,7 +345,9 @@
       "line_number": 20,
       "kind": "ipv6",
       "zone": null
-    }
+    },
+    "augmented": "::ffff:192.0.2.128",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -312,7 +362,9 @@
       "line_number": 21,
       "kind": "ipv6",
       "zone": null
-    }
+    },
+    "augmented": "2001:0db8:85a3::8a2e:0370:7334",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -329,7 +381,11 @@
       "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
       "raw": "2001:db8::12345",
       "line_number": 22
-    }
+    },
+    "augmented": "2001:db8::12345",
+    "changes": [
+      "invalid_pass_through"
+    ]
   },
   {
     "source": "local/test/file",
@@ -346,7 +402,11 @@
       "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
       "raw": "1234:5678:90ab:cdef:ghij::1",
       "line_number": 23
-    }
+    },
+    "augmented": "1234:5678:90ab:cdef:ghij::1",
+    "changes": [
+      "invalid_pass_through"
+    ]
   },
   {
     "source": "local/test/file",
@@ -363,7 +423,11 @@
       "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
       "raw": "2001:::1",
       "line_number": 24
-    }
+    },
+    "augmented": "2001:::1",
+    "changes": [
+      "invalid_pass_through"
+    ]
   },
   {
     "source": "local/test/file",
@@ -380,7 +444,11 @@
       "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
       "raw": "abcd",
       "line_number": 25
-    }
+    },
+    "augmented": "abcd",
+    "changes": [
+      "invalid_pass_through"
+    ]
   },
   {
     "source": "local/test/file",
@@ -397,7 +465,9 @@
       "version": 4,
       "network": "192.168.0.0",
       "prefixlen": 16
-    }
+    },
+    "augmented": "192.168.0.0/16",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -414,7 +484,9 @@
       "version": 4,
       "network": "10.0.0.0",
       "prefixlen": 8
-    }
+    },
+    "augmented": "10.0.0.0/8",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -431,7 +503,9 @@
       "version": 4,
       "network": "172.16.0.0",
       "prefixlen": 12
-    }
+    },
+    "augmented": "172.16.0.0/12",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -448,7 +522,9 @@
       "version": 4,
       "network": "8.8.8.0",
       "prefixlen": 24
-    }
+    },
+    "augmented": "8.8.8.0/24",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -465,7 +541,9 @@
       "version": 6,
       "network": "2001:db8::",
       "prefixlen": 32
-    }
+    },
+    "augmented": "2001:db8::/32",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -482,7 +560,9 @@
       "version": 6,
       "network": "2400:cb00::",
       "prefixlen": 32
-    }
+    },
+    "augmented": "2400:cb00::/32",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -499,7 +579,9 @@
       "version": 4,
       "network": "203.0.113.0",
       "prefixlen": 30
-    }
+    },
+    "augmented": "203.0.113.0/30",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -516,7 +598,9 @@
       "version": 4,
       "network": "198.51.100.0",
       "prefixlen": 24
-    }
+    },
+    "augmented": "198.51.100.0/24",
+    "changes": []
   },
   {
     "source": "local/test/file",
@@ -533,7 +617,11 @@
       "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
       "raw": "34.157.240.0.0/21",
       "line_number": 34
-    }
+    },
+    "augmented": "34.157.240.0.0/21",
+    "changes": [
+      "invalid_pass_through"
+    ]
   },
   {
     "source": "local/test/file",
@@ -550,7 +638,11 @@
       "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
       "raw": "192.168.0.1/33",
       "line_number": 35
-    }
+    },
+    "augmented": "192.168.0.1/33",
+    "changes": [
+      "invalid_pass_through"
+    ]
   },
   {
     "source": "local/test/file",
@@ -567,7 +659,11 @@
       "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
       "raw": "10.0.0.0/-1",
       "line_number": 36
-    }
+    },
+    "augmented": "10.0.0.0/-1",
+    "changes": [
+      "invalid_pass_through"
+    ]
   },
   {
     "source": "local/test/file",
@@ -584,7 +680,11 @@
       "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
       "raw": "2001:db8::/129",
       "line_number": 37
-    }
+    },
+    "augmented": "2001:db8::/129",
+    "changes": [
+      "invalid_pass_through"
+    ]
   },
   {
     "source": "local/test/file",
@@ -601,7 +701,11 @@
       "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
       "raw": "8.8.8.8/foobar",
       "line_number": 38
-    }
+    },
+    "augmented": "8.8.8.8/foobar",
+    "changes": [
+      "invalid_pass_through"
+    ]
   },
   {
     "source": "local/test/file",
@@ -618,6 +722,8 @@
       "host": "网站.中国",
       "port": null,
       "trailing_slash": false
-    }
+    },
+    "augmented": "网站.中国",
+    "changes": []
   }
 ]

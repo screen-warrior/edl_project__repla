@@ -1,6 +1,96 @@
-2025-10-23 01:35:20,872 | INFO | ingestion.service | run_id=8f23fd26-7269-481c-ac9e-c2243f16950d | ingestion_model.py:83 | Ingestion complete | processed=1062 skipped_empty=1
-2025-10-23 01:35:20,883 | INFO | ingestion.service | run_id=8f23fd26-7269-481c-ac9e-c2243f16950d | logger.py:116 | METRIC | entries_ingested_total=1062 stage=ingest
-2025-10-23 01:35:20,883 | INFO | ingestion.service | run_id=8f23fd26-7269-481c-ac9e-c2243f16950d | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
-2025-10-23 08:46:35,940 | INFO | ingestion.service | run_id=493999d9-88ac-44a7-b8c8-875d96a19a95 | ingestion_model.py:83 | Ingestion complete | processed=1072 skipped_empty=1
-2025-10-23 08:46:35,942 | INFO | ingestion.service | run_id=493999d9-88ac-44a7-b8c8-875d96a19a95 | logger.py:116 | METRIC | entries_ingested_total=1072 stage=ingest
-2025-10-23 08:46:35,942 | INFO | ingestion.service | run_id=493999d9-88ac-44a7-b8c8-875d96a19a95 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 00:52:43,438 | INFO | ingestion.service | run_id=edca2f2f-99c1-4b64-b4cc-a817e588f8fe | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 00:52:43,441 | INFO | ingestion.service | run_id=edca2f2f-99c1-4b64-b4cc-a817e588f8fe | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 00:52:43,441 | INFO | ingestion.service | run_id=edca2f2f-99c1-4b64-b4cc-a817e588f8fe | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 01:27:39,801 | INFO | ingestion.service | run_id=edca2f2f-99c1-4b64-b4cc-a817e588f8fe | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 01:27:39,801 | INFO | ingestion.service | run_id=edca2f2f-99c1-4b64-b4cc-a817e588f8fe | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 01:27:39,801 | INFO | ingestion.service | run_id=edca2f2f-99c1-4b64-b4cc-a817e588f8fe | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 01:53:08,488 | INFO | ingestion.service | run_id=44b8fcde-034f-49a6-94f4-5f983bb13d57 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 01:53:08,490 | INFO | ingestion.service | run_id=44b8fcde-034f-49a6-94f4-5f983bb13d57 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 01:53:08,490 | INFO | ingestion.service | run_id=44b8fcde-034f-49a6-94f4-5f983bb13d57 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 10:36:57,038 | INFO | ingestion.service | run_id=5d79e194-09e0-42ec-8a5a-235f0f8781cd | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 10:36:57,038 | INFO | ingestion.service | run_id=5d79e194-09e0-42ec-8a5a-235f0f8781cd | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 10:36:57,038 | INFO | ingestion.service | run_id=5d79e194-09e0-42ec-8a5a-235f0f8781cd | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 10:39:57,081 | INFO | ingestion.service | run_id=5d79e194-09e0-42ec-8a5a-235f0f8781cd | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 10:39:57,081 | INFO | ingestion.service | run_id=5d79e194-09e0-42ec-8a5a-235f0f8781cd | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 10:39:57,081 | INFO | ingestion.service | run_id=5d79e194-09e0-42ec-8a5a-235f0f8781cd | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 10:42:57,138 | INFO | ingestion.service | run_id=5d79e194-09e0-42ec-8a5a-235f0f8781cd | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 10:42:57,140 | INFO | ingestion.service | run_id=5d79e194-09e0-42ec-8a5a-235f0f8781cd | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 10:42:57,140 | INFO | ingestion.service | run_id=5d79e194-09e0-42ec-8a5a-235f0f8781cd | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 10:45:57,202 | INFO | ingestion.service | run_id=5d79e194-09e0-42ec-8a5a-235f0f8781cd | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 10:45:57,202 | INFO | ingestion.service | run_id=5d79e194-09e0-42ec-8a5a-235f0f8781cd | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 10:45:57,202 | INFO | ingestion.service | run_id=5d79e194-09e0-42ec-8a5a-235f0f8781cd | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:03:15,557 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:03:15,559 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:03:15,559 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:06:15,604 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:06:15,604 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:06:15,604 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:09:15,670 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:09:15,670 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:09:15,670 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:12:15,750 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:12:15,752 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:12:15,753 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:13:15,830 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:13:15,830 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:13:15,830 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:15:15,879 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:15:15,879 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:15:15,885 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:16:15,923 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:16:15,923 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:16:15,927 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:18:15,973 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:18:15,975 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:18:15,977 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:19:16,026 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:19:16,028 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:19:16,030 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:21:16,089 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:21:16,091 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:21:16,091 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:22:16,147 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:22:16,147 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:22:16,147 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:24:16,212 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:24:16,212 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:24:16,212 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:25:16,265 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:25:16,267 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:25:16,267 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:27:16,296 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:27:16,298 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:27:16,298 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:28:16,411 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:28:16,413 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:28:16,415 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:29:51,240 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:29:51,242 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:29:51,242 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:30:16,417 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:30:16,420 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:30:16,420 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:32:16,480 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:32:16,481 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:32:16,481 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:33:16,527 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:33:16,527 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:33:16,527 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:35:16,585 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:35:16,587 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:35:16,588 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:36:16,623 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:36:16,624 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:36:16,624 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:38:16,698 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:38:16,698 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:38:16,698 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:39:16,749 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:39:16,754 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:39:16,754 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:41:16,790 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:41:16,790 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:41:16,790 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest
+2025-10-27 11:42:16,885 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | ingestion_model.py:83 | Ingestion complete | processed=39 skipped_empty=1
+2025-10-27 11:42:16,890 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_total=39 stage=ingest
+2025-10-27 11:42:16,890 | INFO | ingestion.service | run_id=761742bd-daac-44e4-afab-ffa212c325f2 | logger.py:116 | METRIC | entries_ingested_skipped_empty=1 stage=ingest

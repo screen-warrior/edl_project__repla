@@ -1,104 +1,192 @@
-2025-10-23 01:35:20,582 | INFO | ingestor | Starting fetch for 24 sources
-2025-10-23 01:35:20,585 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
-2025-10-23 01:35:20,585 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
-2025-10-23 01:35:20,684 | INFO | ingestor | Fetched 28 lines (28 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
-2025-10-23 01:35:20,684 | INFO | ingestor | METRIC | entries_fetched_total=28 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
-2025-10-23 01:35:20,684 | INFO | ingestor | Fetched 8 lines (8 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
-2025-10-23 01:35:20,684 | INFO | ingestor | METRIC | entries_fetched_total=8 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
-2025-10-23 01:35:20,700 | INFO | ingestor | Fetched 66 lines (66 non-empty) from webex/all/url
-2025-10-23 01:35:20,700 | INFO | ingestor | METRIC | entries_fetched_total=66 stage=fetch source=webex/all/url
-2025-10-23 01:35:20,703 | INFO | ingestor | Fetched 56 lines (56 non-empty) from m365/china/any/all/ipv4
-2025-10-23 01:35:20,704 | INFO | ingestor | METRIC | entries_fetched_total=56 stage=fetch source=m365/china/any/all/ipv4
-2025-10-23 01:35:20,743 | INFO | ingestor | Fetched 91 lines (91 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
-2025-10-23 01:35:20,743 | INFO | ingestor | METRIC | entries_fetched_total=91 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
-2025-10-23 01:35:20,746 | INFO | ingestor | Fetched 71 lines (71 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
-2025-10-23 01:35:20,747 | INFO | ingestor | METRIC | entries_fetched_total=71 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
-2025-10-23 01:35:20,747 | INFO | ingestor | Fetched 2 lines (2 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
-2025-10-23 01:35:20,747 | INFO | ingestor | METRIC | entries_fetched_total=2 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
-2025-10-23 01:35:20,749 | INFO | ingestor | Fetched 12 lines (12 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
-2025-10-23 01:35:20,749 | INFO | ingestor | METRIC | entries_fetched_total=12 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
-2025-10-23 01:35:20,752 | INFO | ingestor | Fetched 135 lines (135 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
-2025-10-23 01:35:20,752 | INFO | ingestor | METRIC | entries_fetched_total=135 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
-2025-10-23 01:35:20,752 | INFO | ingestor | Fetched 69 lines (69 non-empty) from m365/china/exchange/all/url
-2025-10-23 01:35:20,752 | INFO | ingestor | METRIC | entries_fetched_total=69 stage=fetch source=m365/china/exchange/all/url
-2025-10-23 01:35:20,753 | INFO | ingestor | Fetched 40 lines (40 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
-2025-10-23 01:35:20,753 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
-2025-10-23 01:35:20,754 | INFO | ingestor | Fetched 57 lines (57 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
-2025-10-23 01:35:20,754 | INFO | ingestor | METRIC | entries_fetched_total=57 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
-2025-10-23 01:35:20,754 | INFO | ingestor | Fetched 26 lines (26 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
-2025-10-23 01:35:20,755 | INFO | ingestor | METRIC | entries_fetched_total=26 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
-2025-10-23 01:35:20,759 | INFO | ingestor | Fetched 92 lines (92 non-empty) from github/actions/url
-2025-10-23 01:35:20,759 | INFO | ingestor | METRIC | entries_fetched_total=92 stage=fetch source=github/actions/url
-2025-10-23 01:35:20,759 | INFO | ingestor | Fetched 12 lines (12 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
-2025-10-23 01:35:20,759 | INFO | ingestor | METRIC | entries_fetched_total=12 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
-2025-10-23 01:35:20,759 | INFO | ingestor | Fetched 2 lines (2 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
-2025-10-23 01:35:20,759 | INFO | ingestor | METRIC | entries_fetched_total=2 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
-2025-10-23 01:35:20,767 | INFO | ingestor | Fetched 5 lines (5 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
-2025-10-23 01:35:20,767 | INFO | ingestor | METRIC | entries_fetched_total=5 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
-2025-10-23 01:35:20,778 | INFO | ingestor | Fetched 29 lines (29 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
-2025-10-23 01:35:20,778 | INFO | ingestor | METRIC | entries_fetched_total=29 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
-2025-10-23 01:35:20,778 | INFO | ingestor | Fetched 29 lines (29 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
-2025-10-23 01:35:20,779 | INFO | ingestor | METRIC | entries_fetched_total=29 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
-2025-10-23 01:35:20,795 | INFO | ingestor | Fetched 55 lines (55 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
-2025-10-23 01:35:20,795 | INFO | ingestor | METRIC | entries_fetched_total=55 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
-2025-10-23 01:35:20,803 | INFO | ingestor | Fetched 33 lines (33 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
-2025-10-23 01:35:20,803 | INFO | ingestor | METRIC | entries_fetched_total=33 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
-2025-10-23 01:35:20,822 | INFO | ingestor | Fetched 48 lines (48 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
-2025-10-23 01:35:20,822 | INFO | ingestor | METRIC | entries_fetched_total=48 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
-2025-10-23 01:35:20,860 | INFO | ingestor | Fetched 57 lines (57 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
-2025-10-23 01:35:20,860 | INFO | ingestor | METRIC | entries_fetched_total=57 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
-2025-10-23 01:35:20,864 | INFO | ingestor | METRIC | entries_fetched_total=1063 stage=fetch source=__aggregate__
-2025-10-23 01:35:20,864 | INFO | ingestor | METRIC | entries_fetched_non_empty=1062 stage=fetch source=__aggregate__
-2025-10-23 01:35:20,864 | INFO | ingestor | Completed fetch. Total entries: 1063 (non-empty=1062)
-2025-10-23 08:46:35,338 | INFO | ingestor | Starting fetch for 24 sources
-2025-10-23 08:46:35,340 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
-2025-10-23 08:46:35,340 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
-2025-10-23 08:46:35,706 | INFO | ingestor | Fetched 56 lines (56 non-empty) from m365/china/any/all/ipv4
-2025-10-23 08:46:35,706 | INFO | ingestor | METRIC | entries_fetched_total=56 stage=fetch source=m365/china/any/all/ipv4
-2025-10-23 08:46:35,709 | INFO | ingestor | Fetched 69 lines (69 non-empty) from m365/china/exchange/all/url
-2025-10-23 08:46:35,709 | INFO | ingestor | METRIC | entries_fetched_total=69 stage=fetch source=m365/china/exchange/all/url
-2025-10-23 08:46:35,711 | INFO | ingestor | Fetched 92 lines (92 non-empty) from github/actions/url
-2025-10-23 08:46:35,711 | INFO | ingestor | METRIC | entries_fetched_total=92 stage=fetch source=github/actions/url
-2025-10-23 08:46:35,713 | INFO | ingestor | Fetched 66 lines (66 non-empty) from webex/all/url
-2025-10-23 08:46:35,713 | INFO | ingestor | METRIC | entries_fetched_total=66 stage=fetch source=webex/all/url
-2025-10-23 08:46:35,713 | INFO | ingestor | Fetched 71 lines (71 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
-2025-10-23 08:46:35,716 | INFO | ingestor | METRIC | entries_fetched_total=71 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv4
-2025-10-23 08:46:35,716 | INFO | ingestor | Fetched 12 lines (12 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
-2025-10-23 08:46:35,716 | INFO | ingestor | METRIC | entries_fetched_total=12 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv6
-2025-10-23 08:46:35,716 | INFO | ingestor | Fetched 26 lines (26 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
-2025-10-23 08:46:35,716 | INFO | ingestor | METRIC | entries_fetched_total=26 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv4
-2025-10-23 08:46:35,720 | INFO | ingestor | Fetched 30 lines (30 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
-2025-10-23 08:46:35,720 | INFO | ingestor | METRIC | entries_fetched_total=30 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
-2025-10-23 08:46:35,735 | INFO | ingestor | Fetched 57 lines (57 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
-2025-10-23 08:46:35,737 | INFO | ingestor | METRIC | entries_fetched_total=57 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/eu-north/amazon/ipv4
-2025-10-23 08:46:35,740 | INFO | ingestor | Fetched 2 lines (2 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
-2025-10-23 08:46:35,740 | INFO | ingestor | METRIC | entries_fetched_total=2 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/af-south/amazon-appflow/ipv4
-2025-10-23 08:46:35,762 | INFO | ingestor | Fetched 28 lines (28 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
-2025-10-23 08:46:35,762 | INFO | ingestor | METRIC | entries_fetched_total=28 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv4
-2025-10-23 08:46:35,850 | INFO | ingestor | Fetched 40 lines (40 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
-2025-10-23 08:46:35,851 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/all/amazon-appflow/ipv4
-2025-10-23 08:46:35,851 | INFO | ingestor | Fetched 34 lines (34 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
-2025-10-23 08:46:35,851 | INFO | ingestor | METRIC | entries_fetched_total=34 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv6
-2025-10-23 08:46:35,858 | INFO | ingestor | Fetched 8 lines (8 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
-2025-10-23 08:46:35,860 | INFO | ingestor | METRIC | entries_fetched_total=8 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/germany/any/ipv6
-2025-10-23 08:46:35,860 | INFO | ingestor | Fetched 2 lines (2 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
-2025-10-23 08:46:35,860 | INFO | ingestor | METRIC | entries_fetched_total=2 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/af/amazon-appflow/ipv4
-2025-10-23 08:46:35,866 | INFO | ingestor | Fetched 91 lines (91 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
-2025-10-23 08:46:35,868 | INFO | ingestor | METRIC | entries_fetched_total=91 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me/amazon/ipv4
-2025-10-23 08:46:35,868 | INFO | ingestor | Fetched 135 lines (135 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
-2025-10-23 08:46:35,868 | INFO | ingestor | METRIC | entries_fetched_total=135 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/eu-south/amazon/ipv4
-2025-10-23 08:46:35,868 | INFO | ingestor | Fetched 48 lines (48 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
-2025-10-23 08:46:35,868 | INFO | ingestor | METRIC | entries_fetched_total=48 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/me-south/amazon/ipv4
-2025-10-23 08:46:35,875 | INFO | ingestor | Fetched 62 lines (62 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
-2025-10-23 08:46:35,879 | INFO | ingestor | METRIC | entries_fetched_total=62 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn/amazon/ipv6
-2025-10-23 08:46:35,879 | INFO | ingestor | Fetched 5 lines (5 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
-2025-10-23 08:46:35,879 | INFO | ingestor | METRIC | entries_fetched_total=5 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-northeast/amazon-appflow/ipv4
-2025-10-23 08:46:35,899 | INFO | ingestor | Fetched 57 lines (57 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
-2025-10-23 08:46:35,899 | INFO | ingestor | METRIC | entries_fetched_total=57 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/ap-east/amazon/ipv6
-2025-10-23 08:46:35,901 | INFO | ingestor | Fetched 30 lines (30 non-empty) from https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
-2025-10-23 08:46:35,901 | INFO | ingestor | METRIC | entries_fetched_total=30 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/aws/cn-northwest/amazon/ipv6
-2025-10-23 08:46:35,907 | INFO | ingestor | Fetched 12 lines (12 non-empty) from https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
-2025-10-23 08:46:35,907 | INFO | ingestor | METRIC | entries_fetched_total=12 stage=fetch source=https://saasedl.paloaltonetworks.com/feeds/azure/china/actiongroup/ipv4
-2025-10-23 08:46:35,919 | INFO | ingestor | METRIC | entries_fetched_total=1073 stage=fetch source=__aggregate__
-2025-10-23 08:46:35,919 | INFO | ingestor | METRIC | entries_fetched_non_empty=1072 stage=fetch source=__aggregate__
-2025-10-23 08:46:35,919 | INFO | ingestor | Completed fetch. Total entries: 1073 (non-empty=1072)
+2025-10-27 00:52:43,422 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 00:52:43,429 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 00:52:43,429 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 00:52:43,429 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 00:52:43,431 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 00:52:43,431 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 01:27:39,789 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 01:27:39,789 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 01:27:39,789 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 01:27:39,792 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 01:27:39,793 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 01:27:39,793 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 01:53:08,470 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 01:53:08,476 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 01:53:08,476 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 01:53:08,476 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 01:53:08,476 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 01:53:08,476 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 10:36:56,998 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 10:36:57,016 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 10:36:57,016 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 10:36:57,024 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 10:36:57,024 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 10:36:57,024 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 10:39:57,069 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 10:39:57,072 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 10:39:57,072 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 10:39:57,072 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 10:39:57,072 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 10:39:57,072 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 10:42:57,127 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 10:42:57,128 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 10:42:57,128 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 10:42:57,129 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 10:42:57,129 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 10:42:57,130 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 10:45:57,193 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 10:45:57,193 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 10:45:57,193 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 10:45:57,193 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 10:45:57,193 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 10:45:57,193 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:03:15,537 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:03:15,538 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:03:15,540 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:03:15,540 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:03:15,540 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:03:15,542 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:06:15,582 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:06:15,585 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:06:15,585 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:06:15,587 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:06:15,587 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:06:15,589 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:09:15,661 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:09:15,662 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:09:15,663 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:09:15,663 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:09:15,663 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:09:15,663 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:12:15,726 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:12:15,734 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:12:15,735 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:12:15,735 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:12:15,735 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:12:15,738 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:13:15,815 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:13:15,817 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:13:15,817 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:13:15,817 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:13:15,817 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:13:15,817 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:15:15,867 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:15:15,870 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:15:15,872 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:15:15,872 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:15:15,872 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:15:15,874 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:16:15,904 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:16:15,907 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:16:15,907 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:16:15,907 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:16:15,907 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:16:15,907 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:18:15,960 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:18:15,960 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:18:15,960 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:18:15,960 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:18:15,960 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:18:15,960 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:19:16,014 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:19:16,014 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:19:16,014 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:19:16,016 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:19:16,016 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:19:16,016 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:21:16,063 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:21:16,071 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:21:16,071 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:21:16,073 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:21:16,073 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:21:16,075 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:22:16,121 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:22:16,127 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:22:16,129 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:22:16,130 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:22:16,131 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:22:16,131 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:24:16,192 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:24:16,193 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:24:16,195 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:24:16,195 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:24:16,195 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:24:16,195 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:25:16,240 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:25:16,243 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:25:16,243 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:25:16,246 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:25:16,246 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:25:16,246 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:27:16,278 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:27:16,278 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:27:16,278 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:27:16,278 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:27:16,278 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:27:16,278 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:28:16,388 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:28:16,390 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:28:16,390 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:28:16,390 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:28:16,390 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:28:16,390 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:29:51,213 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:29:51,216 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:29:51,216 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:29:51,218 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:29:51,218 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:29:51,221 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:30:16,407 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:30:16,409 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:30:16,409 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:30:16,409 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:30:16,410 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:30:16,410 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:32:16,468 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:32:16,470 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:32:16,470 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:32:16,470 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:32:16,470 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:32:16,470 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:33:16,515 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:33:16,515 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:33:16,519 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:33:16,519 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:33:16,519 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:33:16,519 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:35:16,571 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:35:16,575 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:35:16,575 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:35:16,575 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:35:16,575 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:35:16,575 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:36:16,612 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:36:16,613 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:36:16,614 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:36:16,614 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:36:16,615 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:36:16,615 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:38:16,682 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:38:16,684 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:38:16,685 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:38:16,686 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:38:16,686 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:38:16,687 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:39:16,716 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:39:16,737 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:39:16,737 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:39:16,737 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:39:16,737 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:39:16,741 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:41:16,776 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:41:16,778 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:41:16,778 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:41:16,778 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:41:16,780 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:41:16,780 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:42:16,859 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:42:16,859 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:42:16,859 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:42:16,859 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:42:16,867 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:42:16,868 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
