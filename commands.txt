@@ -1,0 +1,130 @@
+# EDL Backend CLI Cheat Sheet
+
+## 1. Admin environment & server start
+# Run in the PowerShell session that will host Uvicorn.
+$env:EDL_API_KEY       = 'super-secret-key'
+$env:EDL_OPERATOR_KEYS = 'super-secret-key'
+
+# Launch FastAPI (no reload; adjust port if 8000 is free again)
+uvicorn api.main:app --host 0.0.0.0 --port 8100
+
+## 2. Create a profile (admin/operator key required)
+# Response returns the tenant's API key once; save both id and api_key.
+Invoke-RestMethod `
+    -Method Post `
+    -Uri 'http://localhost:8100/profiles' `
+    -Headers @{
+        'X-API-Key'    = 'super-secret-key'
+        'Content-Type' = 'application/json'
+    } `
+    -Body '{"name":"Acme SOC","description":"Tier-1 security operations"}'
+
+## 3. Tenant-scoped variables (replace with values from the response)
+$profileId  = '8e6b47c8-3bef-460f-aea4-a34f81651c8d'
+$profileKey = 'wfyPOwnv5PHYfRWwgPFi9bRH1rpmZUdZnfEBCbYNTX8'
+$baseUrl    = 'http://localhost:8100'
+
+$headers = @{
+    'Content-Type' = 'application/json; charset=utf-8'
+    'X-API-Key'    = $profileKey
+}
+
+## 4. Create a profile config (augment mode, 2-minute cadence)
+$sources = Get-Content -Raw 'config\sources.yaml'
+$augment = Get-Content -Raw 'config\augmentor_config.yaml'
+
+$configPayload = [ordered]@{
+    sources_yaml             = [string]$sources
+    augment_yaml             = [string]$augment
+    pipeline_settings        = @{
+        mode            = 'augment'
+        output_path     = 'test_output_data/augment_output.json'
+        persist_to_db   = $true
+        timeout         = 15
+        log_level       = 'INFO'
+    }
+    refresh_interval_minutes = 2
+    created_by               = 'CLI demo'
+} | ConvertTo-Json -Depth 6
+
+$configResponse = Invoke-RestMethod `
+    -Method Post `
+    -Uri "$baseUrl/profiles/$profileId/configs" `
+    -Headers $headers `
+    -Body ([Text.Encoding]::UTF8.GetBytes($configPayload))
+
+$configId = $configResponse.id
+
+## 5. Create a pipeline bound to the config
+$pipelinePayload = @{
+    profile_id        = $profileId
+    profile_config_id = $configId
+    name              = 'Acme Augment Pipeline'
+    description       = 'Runs augment mode every 2 minutes'
+    concurrency_limit = 1
+    created_by        = 'CLI demo'
+} | ConvertTo-Json -Depth 4
+
+$pipelineResponse = Invoke-RestMethod `
+    -Method Post `
+    -Uri "$baseUrl/pipelines" `
+    -Headers $headers `
+    -Body ([Text.Encoding]::UTF8.GetBytes($pipelinePayload))
+
+$pipelineId = $pipelineResponse.id
+
+## 6. Kick off a run immediately
+$runPayload = @{
+    pipeline_id  = $pipelineId
+    overrides    = @{ mode = 'augment' }  # optional; matches config default
+    requested_by = 'CLI demo'
+} | ConvertTo-Json -Depth 4
+
+$runResponse = Invoke-RestMethod `
+    -Method Post `
+    -Uri "$baseUrl/runs" `
+    -Headers $headers `
+    -Body ([Text.Encoding]::UTF8.GetBytes($runPayload))
+
+$runId = $runResponse.run_id
+
+## 7. Monitor runs & jobs
+# Detailed run status (artifacts, errors, metadata)
+Invoke-RestMethod -Method Get -Uri "$baseUrl/runs/$runId" -Headers $headers
+
+# Tail run logs (matches engine.log lines)
+Invoke-RestMethod -Method Get -Uri "$baseUrl/runs/$runId/logs" -Headers $headers
+
+# List latest runs for the profile
+Invoke-RestMethod -Method Get -Uri "$baseUrl/runs?profile_id=$profileId" -Headers $headers
+
+# Inspect background jobs the API is tracking
+Invoke-RestMethod -Method Get -Uri "$baseUrl/jobs?profile_id=$profileId" -Headers $headers
+
+## 8. List configs & pipelines now owned by the profile
+Invoke-RestMethod -Method Get -Uri "$baseUrl/profiles/$profileId/configs" -Headers $headers
+Invoke-RestMethod -Method Get -Uri "$baseUrl/pipelines" -Headers $headers
+
+## 9. Hosted EDL feeds (requires completed run + profile key)
+$indicatorTypes = @('ipv4','ipv6','cidr','fqdn','url')
+foreach ($type in $indicatorTypes) {
+    Write-Host "`n===== $type feed ====="
+    try {
+        Invoke-WebRequest `
+            -Uri "$baseUrl/pipelines/$pipelineId/edl/$type" `
+            -Headers @{ 'X-API-Key' = $profileKey } `
+            -UseBasicParsing | Select-Object -ExpandProperty Content
+    } catch {
+        Write-Warning "No hosted data for $type yet."
+    }
+}
+
+## 10. Optional cleanup / verification
+# Cancel a run
+# Invoke-RestMethod -Method Post -Uri "$baseUrl/runs/$runId/cancel" -Headers $headers
+
+# Delete (soft-delete) a pipeline
+# Invoke-RestMethod -Method Delete -Uri "$baseUrl/pipelines/$pipelineId" -Headers $headers
+
+# Health check (no auth required)
+Invoke-RestMethod -Method Get -Uri "$baseUrl/health"

@@ -142,6 +142,27 @@ def ensure_schema() -> None:
             logger.info("Adding missing profile_id column to pipeline_runs")
             with ENGINE.begin() as conn:
                 conn.execute(text("ALTER TABLE pipeline_runs ADD COLUMN profile_id TEXT"))
+    if "profiles" in table_names:
+        columns = {col["name"] for col in inspector.get_columns("profiles")}
+        if "api_key_hash" not in columns:
+            logger.info("Adding api_key_hash column to profiles")
+            with ENGINE.begin() as conn:
+                conn.execute(text("ALTER TABLE profiles ADD COLUMN api_key_hash TEXT"))
+        if "api_key_prefix" not in columns:
+            logger.info("Adding api_key_prefix column to profiles")
+            with ENGINE.begin() as conn:
+                conn.execute(text("ALTER TABLE profiles ADD COLUMN api_key_prefix TEXT"))
+                conn.execute(text("CREATE INDEX IF NOT EXISTS ix_profiles_api_key_prefix ON profiles(api_key_prefix)"))
+        if "deleted_at" not in columns:
+            logger.info("Adding deleted_at column to profiles")
+            with ENGINE.begin() as conn:
+                conn.execute(text("ALTER TABLE profiles ADD COLUMN deleted_at TIMESTAMP"))
+    if "pipelines" in table_names:
+        columns = {col["name"] for col in inspector.get_columns("pipelines")}
+        if "deleted_at" not in columns:
+            logger.info("Adding deleted_at column to pipelines")
+            with ENGINE.begin() as conn:
+                conn.execute(text("ALTER TABLE pipelines ADD COLUMN deleted_at TIMESTAMP"))
     if "pipeline_config_profiles" in table_names:
         columns = {col["name"] for col in inspector.get_columns("pipeline_config_profiles")}
         column_defs = {

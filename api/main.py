@@ -7,7 +7,8 @@ from typing import Any, Dict, List, Optional, Type, TypeVar
 from uuid import uuid4
 
 import yaml
-from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException, Request, status
+from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException, Request, Response, status
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from sqlalchemy import func
 from sqlmodel import select
@@ -32,22 +33,26 @@ from db.persistence import (
     create_profile,
     create_profile_config,
     finalize_pipeline_run,
+    generate_profile_api_key,
     list_config_usage,
     list_pipelines,
     record_run_error,
+    soft_delete_pipeline,
     update_run_state,
 )
 from db.session import ensure_schema, get_session, session_scope
 from pipeline.engine import EngineConfig, run_pipeline
 from utils.logger import get_logger
+from utils.log_reader import read_run_log
 
-from .auth import AuthContext, require_reader, require_operator
+from .auth import AuthContext, require_profile, require_reader, require_operator
 from .jobs import JobStore
 from .refresh import RefreshScheduler
 from pydantic import BaseModel, ValidationError
 from .schemas import (
     ProfileCreateRequest,
     ProfileResponse,
+    ProfileBootstrapResponse,
     ProfileSummary,
     ProfileConfigCreateRequest,
     ProfileConfigResponse,
@@ -77,6 +82,23 @@ app = FastAPI(
     ),
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:5175",
+        "http://localhost:5176",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174",
+        "http://127.0.0.1:5175",
+        "http://127.0.0.1:5176",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 job_store = JobStore()
 refresh_scheduler = RefreshScheduler()
 api_logger = get_logger("api.app", "INFO", "api.log")
@@ -90,6 +112,34 @@ HOSTED_TYPES = {
     "ipv6": IndicatorType.IPV6,
     "cidr": IndicatorType.CIDR,
 }
+
+
+def _assert_profile_access(context: AuthContext, profile_id: str) -> None:
+    if context.profile_id and context.profile_id != profile_id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden for this profile.")
+
+
+def _assert_pipeline_access(context: AuthContext, pipeline: Pipeline) -> None:
+    if pipeline.deleted_at:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Pipeline not found")
+    if pipeline.profile_id:
+        _assert_profile_access(context, pipeline.profile_id)
+
+
+def _assert_run_access(context: AuthContext, run: PipelineRun) -> None:
+    if not context.profile_id:
+        return
+    if run.profile_id:
+        _assert_profile_access(context, run.profile_id)
+        return
+    if run.pipeline_id:
+        session = get_session()
+        try:
+            pipeline = session.get(Pipeline, run.pipeline_id)
+            if pipeline:
+                _assert_pipeline_access(context, pipeline)
+        finally:
+            session.close()
 
 
 # ---------------------------------------------------------------------------
@@ -127,22 +177,28 @@ def healthcheck() -> Dict[str, str]:
 # ---------------------------------------------------------------------------
 @app.post(
     "/profiles",
-    response_model=ProfileResponse,
+    response_model=ProfileBootstrapResponse,
     status_code=status.HTTP_201_CREATED,
     tags=["profiles"],
 )
 async def create_profile_endpoint(
     request: Request,
     context: AuthContext = Depends(require_operator),
-) -> ProfileResponse:
+) -> ProfileBootstrapResponse:
+    if context.profile_id is not None:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin API key required.")
     body = await _safe_json(request)
     payload = _extract_payload(body, ProfileCreateRequest)
     profile = create_profile(name=payload.name, description=payload.description)
-    return _serialize_profile(profile)
+    api_key = generate_profile_api_key(profile.id)
+    serialized = _serialize_profile(profile)
+    return ProfileBootstrapResponse(**serialized.model_dump(), api_key=api_key)
 
 
 @app.get("/profiles", response_model=List[ProfileSummary], tags=["profiles"])
 def list_profiles_endpoint(context: AuthContext = Depends(require_reader)) -> List[ProfileSummary]:
+    if context.profile_id is not None:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin API key required.")
     session = get_session()
     try:
         profiles = session.exec(select(Profile)).all()
@@ -188,6 +244,7 @@ async def create_profile_config_endpoint(
     request: Request,
     context: AuthContext = Depends(require_operator),
 ) -> ProfileConfigResponse:
+    _assert_profile_access(context, profile_id)
     body = await _safe_json(request)
     payload = _extract_payload(body, ProfileConfigCreateRequest)
     try:
@@ -214,6 +271,7 @@ def list_profile_configs_endpoint(
     profile_id: str,
     context: AuthContext = Depends(require_reader),
 ) -> List[ConfigUsageSummary]:
+    _assert_profile_access(context, profile_id)
     usage = list_config_usage(profile_id)
     if not usage:
         session = get_session()
@@ -246,10 +304,13 @@ def get_profile_schedule(
     profile_id: str,
     context: AuthContext = Depends(require_reader),
 ) -> PipelineScheduleResponse:
+    _assert_profile_access(context, profile_id)
     session = get_session()
     try:
         pipelines = session.exec(
-            select(Pipeline).where(Pipeline.profile_id == profile_id).order_by(Pipeline.created_at)
+            select(Pipeline)
+            .where(Pipeline.profile_id == profile_id, Pipeline.deleted_at.is_(None))
+            .order_by(Pipeline.created_at)
         ).all()
         if not pipelines:
             _ensure_profile_exists(session, profile_id)
@@ -328,6 +389,7 @@ async def create_pipeline_endpoint(
 ) -> PipelineResponse:
     body = await _safe_json(request)
     payload = _extract_payload(body, PipelineCreateRequest)
+    _assert_profile_access(context, payload.profile_id)
     idempotency_key = request.headers.get("Idempotency-Key")
     pipeline = create_pipeline(
         profile_id=payload.profile_id,
@@ -339,6 +401,28 @@ async def create_pipeline_endpoint(
         created_by=payload.created_by or context.api_key,
     )
     return _serialize_pipeline(pipeline)
+
+
+@app.delete(
+    "/pipelines/{pipeline_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    tags=["pipelines"],
+)
+async def delete_pipeline_endpoint(
+    pipeline_id: str,
+    context: AuthContext = Depends(require_operator),
+) -> Response:
+    session = get_session()
+    try:
+        pipeline = session.get(Pipeline, pipeline_id)
+        if not pipeline or pipeline.deleted_at:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Pipeline not found")
+        _assert_pipeline_access(context, pipeline)
+    finally:
+        session.close()
+
+    soft_delete_pipeline(pipeline_id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @app.get(
@@ -354,6 +438,11 @@ def list_pipelines_endpoint(
     offset: int = 0,
     context: AuthContext = Depends(require_reader),
 ) -> PipelineListResponse:
+    if context.profile_id:
+        if profile_id and profile_id != context.profile_id:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden for this profile.")
+        profile_id = context.profile_id
+
     pipelines = list_pipelines(profile_id=profile_id, profile_config_id=profile_config_id)
     if active_only:
         pipelines = [p for p in pipelines if p.is_active]
@@ -376,6 +465,7 @@ def list_profile_pipelines_endpoint(
     offset: int = 0,
     context: AuthContext = Depends(require_reader),
 ) -> PipelineListResponse:
+    _assert_profile_access(context, profile_id)
     pipelines = list_pipelines(profile_id=profile_id)
     if active_only:
         pipelines = [p for p in pipelines if p.is_active]
@@ -407,8 +497,9 @@ async def create_run_endpoint(
     session = get_session()
     try:
         pipeline = session.get(Pipeline, payload.pipeline_id)
-        if not pipeline or not pipeline.is_active:
+        if not pipeline or pipeline.deleted_at or not pipeline.is_active:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Pipeline not found or inactive")
+        _assert_pipeline_access(context, pipeline)
         config = session.get(ProfileConfig, pipeline.profile_config_id)
         if not config:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Pipeline configuration missing")
@@ -448,8 +539,9 @@ async def create_pipeline_scoped_run_endpoint(
     session = get_session()
     try:
         pipeline = session.get(Pipeline, pipeline_id)
-        if not pipeline or not pipeline.is_active:
+        if not pipeline or pipeline.deleted_at or not pipeline.is_active:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Pipeline not found or inactive")
+        _assert_pipeline_access(context, pipeline)
         config = session.get(ProfileConfig, pipeline.profile_config_id)
         if not config:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Pipeline configuration missing")
@@ -478,8 +570,19 @@ def list_runs_endpoint(
     offset: int = 0,
     context: AuthContext = Depends(require_reader),
 ) -> RunListResponse:
+    if context.profile_id:
+        if profile_id and profile_id != context.profile_id:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden for this profile.")
+        profile_id = context.profile_id
+
     session = get_session()
     try:
+        if pipeline_id:
+            pipeline = session.get(Pipeline, pipeline_id)
+            if not pipeline or pipeline.deleted_at:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Pipeline not found")
+            _assert_pipeline_access(context, pipeline)
+
         query = select(PipelineRun)
         if state:
             query = query.where(PipelineRun.state == state)
@@ -506,12 +609,33 @@ def get_run_detail_endpoint(run_id: str, context: AuthContext = Depends(require_
         run = session.get(PipelineRun, run_id)
         if not run:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Run not found")
+        _assert_run_access(context, run)
         artifacts = session.exec(select(Artifact).where(Artifact.run_id == run.id)).all()
         errors = session.exec(select(RunError).where(RunError.run_id == run.id)).all()
         return _serialize_run_detail(run, artifacts, errors)
     finally:
         session.close()
 
+
+
+
+@app.get("/runs/{run_id}/logs", tags=["runs"])
+def get_run_logs_endpoint(
+    run_id: str,
+    limit: Optional[int] = None,
+    context: AuthContext = Depends(require_reader),
+) -> Dict[str, Any]:
+    session = get_session()
+    try:
+        run = session.get(PipelineRun, run_id)
+        if not run:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Run not found")
+        _assert_run_access(context, run)
+    finally:
+        session.close()
+
+    lines = read_run_log(run_id, limit=limit)
+    return {"run_id": run_id, "lines": lines}
 
 @app.get("/jobs", response_model=List[JobStatusResponse], tags=["runs"])
 def list_jobs_endpoint(
@@ -521,6 +645,11 @@ def list_jobs_endpoint(
     offset: int = 0,
     context: AuthContext = Depends(require_reader),
 ) -> List[JobStatusResponse]:
+    if context.profile_id:
+        if profile_id and profile_id != context.profile_id:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden for this profile.")
+        profile_id = context.profile_id
+
     responses: List[JobStatusResponse] = []
     runs_cache: Dict[str, PipelineRunSummary] = {}
     for job_id, record in job_store.all().items():
@@ -558,6 +687,15 @@ async def cancel_run_endpoint(
         body = await _safe_json(request)
     reason = body.get("reason") if isinstance(body, dict) else None
 
+    session = get_session()
+    try:
+        run = session.get(PipelineRun, run_id)
+        if not run:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Run not found")
+        _assert_run_access(context, run)
+    finally:
+        session.close()
+
     job_record = job_store.find_by_run_id(run_id)
     if job_record:
         job_store.update(job_record.id, cancel_requested=True, detail="Cancellation requested")
@@ -578,7 +716,11 @@ async def cancel_run_endpoint(
     tags=["feeds"],
     summary="Hosted EDL output segregated by indicator type.",
 )
-def serve_edl(indicator_type: str, pipeline_id: Optional[str] = None) -> StreamingResponse:
+def serve_edl(
+    indicator_type: str,
+    pipeline_id: Optional[str] = None,
+    context: AuthContext = Depends(require_reader),
+) -> StreamingResponse:
     indicator_key = indicator_type.lower()
     if indicator_key not in HOSTED_TYPES:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Unsupported indicator type.")
@@ -588,6 +730,15 @@ def serve_edl(indicator_type: str, pipeline_id: Optional[str] = None) -> Streami
 
     if not run_id:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No pipeline runs available.")
+
+    session = get_session()
+    try:
+        run = session.get(PipelineRun, run_id)
+        if not run:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Run not found")
+        _assert_run_access(context, run)
+    finally:
+        session.close()
 
     def stream(run_id: str):
         session = get_session()
@@ -625,8 +776,12 @@ def serve_edl(indicator_type: str, pipeline_id: Optional[str] = None) -> Streami
     tags=["feeds"],
     summary="Hosted EDL output for a specific pipeline.",
 )
-def serve_pipeline_edl(pipeline_id: str, indicator_type: str) -> StreamingResponse:
-    return serve_edl(indicator_type, pipeline_id=pipeline_id)
+def serve_pipeline_edl(
+    pipeline_id: str,
+    indicator_type: str,
+    context: AuthContext = Depends(require_reader),
+) -> StreamingResponse:
+    return serve_edl(indicator_type, pipeline_id=pipeline_id, context=context)
 
 
 
@@ -661,7 +816,7 @@ def _execute_pipeline_job(job_id: str) -> None:
         session = get_session()
         try:
             pipeline = session.get(Pipeline, record.pipeline_id) if record.pipeline_id else None
-            if not pipeline or not pipeline.is_active:
+            if not pipeline or pipeline.deleted_at or not pipeline.is_active:
                 raise RuntimeError("Pipeline not found or inactive")
             config = session.get(ProfileConfig, pipeline.profile_config_id)
             if not config:
@@ -1031,6 +1186,7 @@ def _auto_refresh_tick() -> None:
             .join(ProfileConfig, Pipeline.profile_config_id == ProfileConfig.id)
             .where(
                 Pipeline.is_active.is_(True),
+                Pipeline.deleted_at.is_(None),
                 ProfileConfig.refresh_interval_minutes.isnot(None),
                 ProfileConfig.refresh_interval_minutes > 0,
             )
@@ -1096,3 +1252,4 @@ def _auto_refresh_tick() -> None:
 
 
 __all__ = ["app"]
+

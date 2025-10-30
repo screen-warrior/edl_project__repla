@@ -35,6 +35,10 @@ class ProfileResponse(BaseModel):
     latest_config_version: Optional[int] = None
 
 
+class ProfileBootstrapResponse(ProfileResponse):
+    api_key: str
+
+
 class ProfileSummary(ProfileResponse):
     total_runs: int = Field(..., description="How many runs have been recorded for this profile.")
     active_runs: int = Field(..., description="How many runs are currently queued or running.")

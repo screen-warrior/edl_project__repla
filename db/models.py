@@ -9,7 +9,7 @@ import uuid
 from datetime import datetime
 from typing import Any, Dict, Optional
 
-from sqlalchemy import Column, Enum as SAEnum, JSON, Text, UniqueConstraint, Index, Integer
+from sqlalchemy import Column, Enum as SAEnum, JSON, Text, UniqueConstraint, Index, Integer, DateTime
 from sqlmodel import Field, SQLModel
 
 
@@ -56,6 +56,8 @@ class Profile(SQLModel, table=True):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)
     name: str = Field(index=True)
     description: Optional[str] = Field(default=None)
+    api_key_hash: Optional[str] = Field(default=None, sa_column=Column(Text, nullable=True))
+    api_key_prefix: Optional[str] = Field(default=None, sa_column=Column(Text, nullable=True, index=True))
     refresh_interval_minutes: Optional[float] = Field(default=None, index=True)
     last_refreshed_at: Optional[datetime] = Field(default=None, index=True)
     created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
@@ -132,6 +134,7 @@ class Pipeline(SQLModel, table=True):
     description: Optional[str] = Field(default=None)
     concurrency_limit: int = Field(default=1, nullable=False)
     is_active: bool = Field(default=True, index=True)
+    deleted_at: datetime = Field(default=None, sa_column=Column(DateTime, nullable=True))
     idempotency_key: Optional[str] = Field(default=None, index=True)
     created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     updated_at: datetime = Field(

@@ -37,6 +37,7 @@ from models.augmentation_model import AugmentedEntry
 from models.schemas import FetchedEntry, IngestedEntry, ValidatedEntry
 
 from db.session import session_scope
+from utils.security import generate_api_key, hash_token, verify_token
 
 logger = logging.getLogger("db.persistence")
 
@@ -53,6 +54,50 @@ def _get_limit(name: str) -> Optional[int]:
         logger.warning("Invalid integer for %s: %s", name, value)
         return None
     return parsed if parsed > 0 else None
+
+
+def generate_profile_api_key(profile_id: str, *, key_length: int = 32) -> str:
+    """
+    Generate a new API key for the given profile, persist the hashed value, and return
+    the plaintext token (returned exactly once to the caller).
+    """
+    api_key = generate_api_key(key_length)
+    key_hash = hash_token(api_key)
+    prefix = api_key[:16]
+
+    with session_scope() as session:
+        profile = session.get(Profile, profile_id)
+        if not profile:
+            raise ValueError(f"Profile {profile_id} not found.")
+        profile.api_key_hash = key_hash
+        profile.api_key_prefix = prefix
+        session.add(profile)
+
+    return api_key
+
+
+def revoke_profile_api_key(profile_id: str) -> None:
+    with session_scope() as session:
+        profile = session.get(Profile, profile_id)
+        if not profile:
+            return
+        profile.api_key_hash = None
+        profile.api_key_prefix = None
+        session.add(profile)
+
+
+def get_profile_by_api_key(api_key: str) -> Optional[Profile]:
+    if not api_key:
+        return None
+    prefix = api_key[:16]
+    with session_scope() as session:
+        profile = session.exec(
+            select(Profile).where(Profile.api_key_prefix == prefix)
+        ).one_or_none()
+        if profile and profile.api_key_hash and verify_token(api_key, profile.api_key_hash):
+            session.expunge(profile)
+            return profile
+    return None
 
 
 def _record_run_event(
@@ -216,6 +261,26 @@ def create_pipeline(
         return pipeline
 
 
+def soft_delete_pipeline(
+    pipeline_id: str,
+    *,
+    deleted_at: Optional[datetime] = None,
+) -> Pipeline:
+    deleted_at = deleted_at or datetime.utcnow()
+    with session_scope() as session:
+        pipeline = session.get(Pipeline, pipeline_id)
+        if not pipeline:
+            raise ValueError(f"Pipeline {pipeline_id} not found")
+        if pipeline.deleted_at:
+            return pipeline
+        pipeline.deleted_at = deleted_at
+        pipeline.is_active = False
+        session.add(pipeline)
+        session.flush()
+        session.refresh(pipeline)
+        return pipeline
+
+
 def get_pipeline(pipeline_id: str) -> Optional[Pipeline]:
     with session_scope() as session:
         return session.get(Pipeline, pipeline_id)
@@ -289,16 +354,16 @@ def list_pipelines(
     profile_config_id: Optional[str] = None,
 ) -> List[Pipeline]:
     with session_scope() as session:
-        query = select(Pipeline)
-    if profile_id:
-        query = query.where(Pipeline.profile_id == profile_id)
-    if profile_config_id:
-        query = query.where(Pipeline.profile_config_id == profile_config_id)
-    query = query.order_by(Pipeline.created_at.desc())
-    results = session.exec(query).all()
-    for pipeline in results:
-        session.expunge(pipeline)
-    return results
+        query = select(Pipeline).where(Pipeline.deleted_at.is_(None))
+        if profile_id:
+            query = query.where(Pipeline.profile_id == profile_id)
+        if profile_config_id:
+            query = query.where(Pipeline.profile_config_id == profile_config_id)
+        query = query.order_by(Pipeline.created_at.desc())
+        results = session.exec(query).all()
+        for pipeline in results:
+            session.expunge(pipeline)
+        return results
 
 
 # ---------------------------------------------------------------------------
@@ -650,14 +715,18 @@ def _coerce_indicator_type(entry_type: Any) -> IndicatorType:
 
 
 __all__ = [
-    "create_profile",
-    "create_profile_config",
-    "create_pipeline",
-    "list_config_usage",
-    "list_pipelines",
-    "create_pipeline_run",
-    "update_run_state",
-    "record_run_error",
-    "finalize_pipeline_run",
-    "cancel_pipeline_run",
+    'create_profile',
+    'create_profile_config',
+    'create_pipeline',
+    'soft_delete_pipeline',
+    'list_config_usage',
+    'list_pipelines',
+    'create_pipeline_run',
+    'update_run_state',
+    'record_run_error',
+    'finalize_pipeline_run',
+    'cancel_pipeline_run',
+    'generate_profile_api_key',
+    'revoke_profile_api_key',
+    'get_profile_by_api_key',
 ]
