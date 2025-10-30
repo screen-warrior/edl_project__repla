@@ -92,6 +92,7 @@ class Orchestrator:
         use_proxy: bool = False,
         run_id: Optional[str] = None,
         profile_id: Optional[str] = None,
+        manual_entries: Optional[List[Dict[str, Any]]] = None,
     ):
         self.logger = get_logger("engine.orchestrator", log_level, "engine.log")
         self.sources_cfg = [dict(src) for src in sources]
@@ -111,6 +112,8 @@ class Orchestrator:
         self.profile_id = profile_id
         self.run_id = run_id
         self.last_run_id: Optional[str] = run_id
+        self.manual_entries = manual_entries or []
+        self.manual_entries_count: int = 0
         if proxy and use_proxy:
             self.logger.info("Proxy enabled for fetch stage: %s", proxy)
         elif use_proxy and not proxy:
@@ -141,6 +144,39 @@ class Orchestrator:
         # Step 1: Fetch
         with log_stage(self.logger, "fetch"):
             fetched: List[FetchedEntry] = await self.fetcher.run()
+
+        if self.manual_entries:
+            manual_results: List[FetchedEntry] = []
+            for index, item in enumerate(self.manual_entries, start=1):
+                raw_value = str(item.get("value", "")).strip()
+                if not raw_value:
+                    continue
+                metadata = dict(item.get("metadata") or {})
+                metadata.setdefault("source_type", "manual")
+                metadata.setdefault("manual", True)
+                if "submitted_at" in item:
+                    metadata.setdefault("submitted_at", item["submitted_at"])
+                if "submitted_by" in item:
+                    metadata.setdefault("submitted_by", item["submitted_by"])
+                declared_type = item.get("type")
+                if declared_type:
+                    metadata.setdefault("declared_type", declared_type)
+                manual_results.append(
+                    FetchedEntry(
+                        source=item.get("source") or "manual",
+                        raw=raw_value,
+                        line_number=index,
+                        metadata=metadata,
+                    )
+                )
+            if manual_results:
+                fetched.extend(manual_results)
+                self.manual_entries_count = len(manual_results)
+                self.logger.info("Appended %d manual entries to fetched set.", len(manual_results))
+                log_metric(self.logger, "manual_entries_fetched_total", len(manual_results), stage="fetch", source="manual")
+            else:
+                self.logger.debug("Manual submission contained only empty values; nothing appended.")
+
         if not fetched:
             self.logger.warning("No entries fetched from configured sources.")
 
@@ -200,6 +236,7 @@ def run_pipeline(
     profile_id: Optional[str] = None,
     profile_config_id: Optional[str] = None,
     run_id: Optional[str] = None,
+    manual_submission: Optional[Dict[str, Any]] = None,
 ) -> Optional[str]:
     """Run the pipeline synchronously."""
 
@@ -207,6 +244,18 @@ def run_pipeline(
     if proxy and use_proxy:
         metadata["proxy"] = proxy
     metadata["proxy_enabled"] = use_proxy
+    manual_entries = None
+    manual_summary: Optional[Dict[str, Any]] = None
+    if manual_submission:
+        manual_entries = manual_submission.get("entries") or []
+        manual_summary = {
+            "entry_count": len(manual_entries),
+            "source": manual_submission.get("source"),
+            "notes": manual_submission.get("notes"),
+            "submitted_at": manual_submission.get("submitted_at"),
+            "submitted_by": manual_submission.get("submitted_by"),
+        }
+        metadata["manual_submission"] = manual_summary
 
     if persist_to_db and run_id is None:
         raise ValueError("run_id must be provided when persist_to_db is True")
@@ -222,6 +271,7 @@ def run_pipeline(
         use_proxy=use_proxy,
         run_id=run_id,
         profile_id=profile_id,
+        manual_entries=manual_entries,
     )
 
     execution: PipelineExecutionResult
@@ -256,6 +306,9 @@ def run_pipeline(
 
     if persist_to_db:
         try:
+            finalize_metadata = {"output_path": str(out_path)}
+            if manual_summary:
+                finalize_metadata["manual_submission"] = manual_summary
             finalize_pipeline_run(
                 run_id=run_id,
                 mode=mode,
@@ -264,7 +317,7 @@ def run_pipeline(
                 ingested=execution.ingested,
                 validated=execution.validated,
                 augmented=execution.augmented,
-                metadata={"output_path": str(out_path)},
+                metadata=finalize_metadata,
             )
         except Exception as exc:  # noqa: BLE001
             logger.exception("Failed to finalize pipeline run in database")

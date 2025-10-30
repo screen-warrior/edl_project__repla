@@ -1,0 +1,192 @@
+2025-10-27 00:52:43,422 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 00:52:43,429 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 00:52:43,429 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 00:52:43,429 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 00:52:43,431 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 00:52:43,431 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 01:27:39,789 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 01:27:39,789 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 01:27:39,789 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 01:27:39,792 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 01:27:39,793 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 01:27:39,793 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 01:53:08,470 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 01:53:08,476 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 01:53:08,476 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 01:53:08,476 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 01:53:08,476 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 01:53:08,476 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 10:36:56,998 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 10:36:57,016 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 10:36:57,016 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 10:36:57,024 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 10:36:57,024 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 10:36:57,024 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 10:39:57,069 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 10:39:57,072 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 10:39:57,072 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 10:39:57,072 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 10:39:57,072 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 10:39:57,072 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 10:42:57,127 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 10:42:57,128 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 10:42:57,128 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 10:42:57,129 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 10:42:57,129 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 10:42:57,130 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 10:45:57,193 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 10:45:57,193 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 10:45:57,193 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 10:45:57,193 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 10:45:57,193 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 10:45:57,193 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:03:15,537 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:03:15,538 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:03:15,540 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:03:15,540 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:03:15,540 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:03:15,542 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:06:15,582 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:06:15,585 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:06:15,585 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:06:15,587 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:06:15,587 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:06:15,589 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:09:15,661 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:09:15,662 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:09:15,663 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:09:15,663 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:09:15,663 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:09:15,663 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:12:15,726 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:12:15,734 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:12:15,735 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:12:15,735 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:12:15,735 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:12:15,738 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:13:15,815 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:13:15,817 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:13:15,817 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:13:15,817 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:13:15,817 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:13:15,817 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:15:15,867 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:15:15,870 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:15:15,872 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:15:15,872 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:15:15,872 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:15:15,874 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:16:15,904 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:16:15,907 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:16:15,907 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:16:15,907 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:16:15,907 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:16:15,907 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:18:15,960 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:18:15,960 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:18:15,960 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:18:15,960 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:18:15,960 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:18:15,960 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:19:16,014 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:19:16,014 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:19:16,014 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:19:16,016 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:19:16,016 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:19:16,016 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:21:16,063 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:21:16,071 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:21:16,071 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:21:16,073 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:21:16,073 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:21:16,075 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:22:16,121 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:22:16,127 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:22:16,129 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:22:16,130 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:22:16,131 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:22:16,131 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:24:16,192 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:24:16,193 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:24:16,195 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:24:16,195 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:24:16,195 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:24:16,195 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:25:16,240 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:25:16,243 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:25:16,243 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:25:16,246 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:25:16,246 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:25:16,246 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:27:16,278 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:27:16,278 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:27:16,278 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:27:16,278 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:27:16,278 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:27:16,278 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:28:16,388 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:28:16,390 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:28:16,390 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:28:16,390 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:28:16,390 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:28:16,390 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:29:51,213 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:29:51,216 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:29:51,216 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:29:51,218 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:29:51,218 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:29:51,221 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:30:16,407 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:30:16,409 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:30:16,409 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:30:16,409 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:30:16,410 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:30:16,410 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:32:16,468 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:32:16,470 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:32:16,470 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:32:16,470 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:32:16,470 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:32:16,470 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:33:16,515 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:33:16,515 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:33:16,519 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:33:16,519 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:33:16,519 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:33:16,519 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:35:16,571 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:35:16,575 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:35:16,575 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:35:16,575 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:35:16,575 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:35:16,575 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:36:16,612 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:36:16,613 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:36:16,614 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:36:16,614 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:36:16,615 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:36:16,615 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:38:16,682 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:38:16,684 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:38:16,685 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:38:16,686 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:38:16,686 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:38:16,687 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:39:16,716 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:39:16,737 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:39:16,737 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:39:16,737 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:39:16,737 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:39:16,741 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:41:16,776 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:41:16,778 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:41:16,778 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:41:16,778 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:41:16,780 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:41:16,780 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)
+2025-10-27 11:42:16,859 | INFO | ingestor | Starting fetch for 1 sources
+2025-10-27 11:42:16,859 | INFO | ingestor | Read 40 lines (39 non-empty) from file C:\Users\verma\OneDrive\Desktop\My-Scripts\edl_project_repla\test_data\sample_data
+2025-10-27 11:42:16,859 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=local/test/file
+2025-10-27 11:42:16,859 | INFO | ingestor | METRIC | entries_fetched_total=40 stage=fetch source=__aggregate__
+2025-10-27 11:42:16,867 | INFO | ingestor | METRIC | entries_fetched_non_empty=39 stage=fetch source=__aggregate__
+2025-10-27 11:42:16,868 | INFO | ingestor | Completed fetch. Total entries: 40 (non-empty=39)

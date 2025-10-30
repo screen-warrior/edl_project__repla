@@ -1,7 +1,28 @@
-from __future__ import annotations
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20251029102652
+Username: BOOK-5KRMIGKE6I\verma
+RunAs User: BOOK-5KRMIGKE6I\verma
+Configuration Name: 
+Machine: BOOK-5KRMIGKE6I (Microsoft Windows NT 10.0.26100.0)
+Host Application: powershell.exe -NoLogo -NoProfile -Command Start-Transcript -Path logs\codex_trace.txt -Append
+Get-Content api/main.py -Raw | Select-String -Pattern "ProfileBootstrapResponse" -Context 0,20
+Stop-Transcript
+Process ID: 38444
+PSVersion: 5.1.26100.6899
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.6899
+BuildVersion: 10.0.26100.6899
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is logs\codex_trace.txt
+
+> from __future__ import annotations
 
 import os
-from copy import deepcopy
 from datetime import datetime, timedelta
 from threading import Thread
 from typing import Any, Dict, List, Optional, Type, TypeVar
@@ -38,7 +59,6 @@ from db.persistence import (
     list_config_usage,
     list_pipelines,
     record_run_error,
-    record_manual_submission,
     soft_delete_pipeline,
     update_run_state,
 )
@@ -54,7 +74,6 @@ from pydantic import BaseModel, ValidationError
 from .schemas import (
     ProfileCreateRequest,
     ProfileResponse,
-    ProfileBootstrapResponse,
     ProfileSummary,
     ProfileConfigCreateRequest,
     ProfileConfigResponse,
@@ -72,10 +91,6 @@ from .schemas import (
     JobStatusResponse,
     PipelineScheduleEntry,
     PipelineScheduleResponse,
-    ManualSubmissionRequest,
-    ManualSubmissionResponse,
-    ManualSubmissionResult,
-    ManualSubmissionRejection,
 )
 
 
@@ -407,146 +422,6 @@ async def create_pipeline_endpoint(
         created_by=payload.created_by or context.api_key,
     )
     return _serialize_pipeline(pipeline)
-
-
-@app.post(
-    "/pipelines/manual-submissions",
-    response_model=ManualSubmissionResponse,
-    status_code=status.HTTP_202_ACCEPTED,
-    tags=["pipelines"],
-)
-def submit_manual_entries_endpoint(
-    payload: ManualSubmissionRequest,
-    background_tasks: BackgroundTasks,
-    context: AuthContext = Depends(require_operator),
-) -> ManualSubmissionResponse:
-    if not payload.pipeline_ids:
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="At least one pipeline_id is required.")
-    if not payload.entries:
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="At least one manual entry is required.")
-
-    manual_source = (payload.source or "manual").strip() or "manual"
-    notes = payload.notes.strip() if payload.notes else None
-
-    seen_entries: set[tuple[str, Optional[str]]] = set()
-    normalized_entries: List[Dict[str, Any]] = []
-    skipped_entries: List[str] = []
-
-    for entry in payload.entries:
-        value = entry.value.strip()
-        if not value:
-            skipped_entries.append(entry.value)
-            continue
-        entry_type = entry.type.value if entry.type else None
-        key = (value.lower(), entry_type)
-        if key in seen_entries:
-            skipped_entries.append(entry.value)
-            continue
-        seen_entries.add(key)
-        metadata = dict(entry.metadata or {})
-        metadata.setdefault("manual", True)
-        normalized_entries.append(
-            {
-                "value": value,
-                "type": entry_type,
-                "metadata": metadata,
-            }
-        )
-
-    if not normalized_entries:
-        raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="All manual entries were empty or duplicate.",
-        )
-
-    unique_pipeline_ids: List[str] = list(dict.fromkeys(payload.pipeline_ids))
-    submissions: List[ManualSubmissionResult] = []
-    rejections: List[ManualSubmissionRejection] = []
-    submitted_at = datetime.utcnow().isoformat()
-
-    for pipeline_id in unique_pipeline_ids:
-        session = get_session()
-        try:
-            pipeline_db = session.get(Pipeline, pipeline_id)
-            if not pipeline_db or pipeline_db.deleted_at:
-                rejections.append(ManualSubmissionRejection(pipeline_id=pipeline_id, reason="Pipeline not found or deleted."))
-                continue
-            if not pipeline_db.is_active:
-                rejections.append(ManualSubmissionRejection(pipeline_id=pipeline_id, reason="Pipeline is inactive."))
-                continue
-            config_db = session.get(ProfileConfig, pipeline_db.profile_config_id)
-            if not config_db:
-                rejections.append(ManualSubmissionRejection(pipeline_id=pipeline_id, reason="Pipeline configuration missing."))
-                continue
-            session.expunge(pipeline_db)
-            session.expunge(config_db)
-        finally:
-            session.close()
-
-        pipeline = pipeline_db
-        config = config_db
-
-        try:
-            _assert_pipeline_access(context, pipeline)  # type: ignore[arg-type]
-        except HTTPException as exc:  # forbidden
-            rejections.append(ManualSubmissionRejection(pipeline_id=pipeline_id, reason=exc.detail))
-            continue
-
-        manual_payload = {
-            "entries": [entry.copy() for entry in normalized_entries],
-            "source": manual_source,
-            "notes": notes,
-            "submitted_at": submitted_at,
-            "submitted_by": context.api_key,
-        }
-        manual_metadata_summary = {
-            "manual_submission": {
-                "entry_count": len(normalized_entries),
-                "source": manual_source,
-                "notes": notes,
-                "submitted_at": submitted_at,
-                "submitted_by": context.api_key,
-            }
-        }
-
-        response = _enqueue_pipeline_run(
-            pipeline=pipeline,  # type: ignore[arg-type]
-            config=config,  # type: ignore[arg-type]
-            overrides={},
-            requested_by=context.api_key,
-            idempotency_key=None,
-            background_tasks=background_tasks,
-            extra_metadata=manual_metadata_summary,
-            job_request_extra={"manual_submission": manual_payload},
-        )
-
-        submission_record = record_manual_submission(
-            profile_id=pipeline.profile_id,
-            pipeline_id=pipeline.id,
-            run_id=response.run_id,
-            submitted_by=context.api_key,
-            source=manual_source,
-            notes=notes,
-            entries=manual_payload["entries"],
-        )
-
-        submissions.append(
-            ManualSubmissionResult(
-                pipeline_id=pipeline.id,
-                run_id=response.run_id,
-                job_id=response.job_id,
-                submission_id=submission_record.id,
-                entry_count=submission_record.entry_count,
-            )
-        )
-
-    if not submissions:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Manual submission failed for all pipelines.",
-        )
-
-    return ManualSubmissionResponse(submissions=submissions, rejections=rejections, skipped_entries=skipped_entries)
 
 
 @app.delete(
@@ -975,8 +850,6 @@ def _execute_pipeline_job(job_id: str) -> None:
 
         overrides = record.request.get("overrides") or {}
         pipeline_settings.update(overrides)
-        manual_submission = record.request.get("manual_submission") if record.request else None
-        manual_payload = deepcopy(manual_submission) if manual_submission else None
 
         if _is_cancelled():
             cancel_pipeline_run(record.run_id, cancelled_by="system", reason="Cancelled before fetch")
@@ -1007,7 +880,6 @@ def _execute_pipeline_job(job_id: str) -> None:
             profile_id=pipeline.profile_id,
             profile_config_id=pipeline.profile_config_id,
             run_id=record.run_id,
-            manual_submission=manual_payload,
         )
 
         _update_hosted_feeds(record.run_id, pipeline_id=pipeline.id)
@@ -1021,7 +893,8 @@ def _execute_pipeline_job(job_id: str) -> None:
         finally:
             session.close()
 
-        detail_message = "Pipeline completed successfully" if final_state == RunState.SUCCESS else f"Pipeline finished with state {final_state.value}"
+        detail_message = "Pipeline completed successfully" if final_state == RunState.SUCCESS else f"Pipeline finished
+with state {final_state.value}"
         job_store.update(job_id, state=final_state, detail=detail_message)
 
         if pipeline.profile_id:
@@ -1056,7 +929,8 @@ def _update_hosted_feeds(run_id: str, pipeline_id: str) -> None:
         if not run:
             return
         counts = session.exec(
-            select(Indicator.entry_type, func.count()).where(Indicator.run_id == run.id, Indicator.is_valid == True).group_by(Indicator.entry_type)  # noqa: E712
+            select(Indicator.entry_type, func.count()).where(Indicator.run_id == run.id, Indicator.is_valid ==
+True).group_by(Indicator.entry_type)  # noqa: E712
         ).all()
         count_map = {entry_type.value: total for entry_type, total in counts}
 
@@ -1128,8 +1002,6 @@ def _enqueue_pipeline_run(
     requested_by: Optional[str],
     idempotency_key: Optional[str],
     background_tasks: Optional[BackgroundTasks],
-    extra_metadata: Optional[Dict[str, Any]] = None,
-    job_request_extra: Optional[Dict[str, Any]] = None,
 ) -> RunSubmissionResponse:
     settings = dict(config.pipeline_settings or {})
     settings.update(overrides)
@@ -1141,8 +1013,6 @@ def _enqueue_pipeline_run(
     }
     if requested_by:
         metadata["requested_by"] = requested_by
-    if extra_metadata:
-        metadata.update(extra_metadata)
 
     run_id = create_pipeline_run(
         pipeline_id=pipeline.id,
@@ -1153,17 +1023,14 @@ def _enqueue_pipeline_run(
     )
 
     job_id = str(uuid4())
-    job_request_payload = {
-        "overrides": overrides,
-        "pipeline_id": pipeline.id,
-        "profile_id": pipeline.profile_id,
-        "profile_config_id": pipeline.profile_config_id,
-    }
-    if job_request_extra:
-        job_request_payload.update(job_request_extra)
     job_store.create_job(
         job_id=job_id,
-        request=job_request_payload,
+        request={
+            "overrides": overrides,
+            "pipeline_id": pipeline.id,
+            "profile_id": pipeline.profile_id,
+            "profile_config_id": pipeline.profile_config_id,
+        },
         pipeline_id=pipeline.id,
         profile_id=pipeline.profile_id,
         profile_config_id=pipeline.profile_config_id,
@@ -1409,3 +1276,8 @@ def _auto_refresh_tick() -> None:
 
 __all__ = ["app"]
 
+
+**********************
+Windows PowerShell transcript end
+End time: 20251029102652
+**********************

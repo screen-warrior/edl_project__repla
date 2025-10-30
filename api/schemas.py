@@ -6,6 +6,7 @@ from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
 from db.models import ArtifactStatus, ArtifactType, RunState
+from models.schemas import EntryType
 
 
 class APIKeySettings(BaseModel):
@@ -165,6 +166,52 @@ class ProfileConfigSummary(BaseModel):
     created_at: datetime
     created_by: Optional[str]
     pipeline_settings: Dict[str, Any]
+
+
+class ManualEntry(BaseModel):
+    value: str = Field(..., description="Raw manual entry to inject.")
+    type: Optional[EntryType] = Field(
+        None, description="Optional declared type to assist validation."
+    )
+    metadata: Dict[str, Any] = Field(
+        default_factory=dict,
+        description="Optional metadata (tags, analyst notes).",
+    )
+
+
+class ManualSubmissionRequest(BaseModel):
+    pipeline_ids: List[str] = Field(..., description="Pipelines that should ingest the entries.")
+    entries: List[ManualEntry] = Field(..., description="One or more manual EDL entries.")
+    source: Optional[str] = Field(
+        default="manual",
+        description="Source label recorded with the entries.",
+    )
+    notes: Optional[str] = Field(
+        default=None,
+        description="Optional analyst note for audit trails.",
+    )
+
+
+class ManualSubmissionResult(BaseModel):
+    pipeline_id: str
+    run_id: str
+    job_id: str
+    submission_id: str
+    entry_count: int
+
+
+class ManualSubmissionRejection(BaseModel):
+    pipeline_id: str
+    reason: str
+
+
+class ManualSubmissionResponse(BaseModel):
+    submissions: List[ManualSubmissionResult] = Field(default_factory=list)
+    rejections: List[ManualSubmissionRejection] = Field(default_factory=list)
+    skipped_entries: List[str] = Field(
+        default_factory=list,
+        description="Manual entries that were ignored prior to queuing (empty or duplicate).",
+    )
 
 
 class PipelineCreateRequest(BaseModel):

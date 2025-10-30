@@ -2,8 +2,37 @@
 
 ## 1. Admin environment & server start
 # Run in the PowerShell session that will host Uvicorn.
-$env:EDL_API_KEY       = 'super-secret-key'
-$env:EDL_OPERATOR_KEYS = 'super-secret-key'
+# Core auth keys
+$env:EDL_API_KEY        = 'super-secret-key'   # primary admin/operator key
+$env:EDL_OPERATOR_KEYS  = 'super-secret-key'   # optional comma-separated operator keys
+$env:EDL_READER_KEYS    = ''                   # optional comma-separated read-only keys
+
+# Scheduler defaults (override per environment)
+$env:EDL_AUTO_REFRESH_MINUTES           = '5'  # scheduler wake interval
+$env:EDL_MAX_CONCURRENT_RUNS_TOTAL      = '10'
+$env:EDL_MAX_CONCURRENT_RUNS_PER_PROFILE = '3'
+
+# Optional database overrides
+# $env:DATABASE_URL     = 'postgresql://user:pass@host:5432/dbname'
+# $env:SQLITE_PATH      = 'C:\path\to\custom.db'
+# $env:SQL_ECHO         = '1'   # SQLAlchemy echo logs
+# $env:DB_POOL_SIZE     = '10'
+# $env:DB_MAX_OVERFLOW  = '20'
+# $env:DB_POOL_RECYCLE  = '1800'
+# $env:DB_RETRY_DELAY   = '2.0'
+
+# Scheduler-concurrency overrides
+# $env:EDL_MAX_CONCURRENT_RUNS_TOTAL      = '20'
+# $env:EDL_MAX_CONCURRENT_RUNS_PER_PROFILE = '5'
+
+# Pipeline execution tuning
+# $env:EDL_MAX_RUN_QUEUE               = '50'   # hypothetical queue cap
+# $env:EDL_RUN_BACKPRESSURE_SECONDS    = '5'
+# $env:EDL_RUN_CANCEL_GRACE_SECONDS    = '30'
+
+# Hosted feed customization
+# $env:EDL_HOSTED_LOG_DIR = 'logs'      # directory where engine logs/feeds live
+# $env:EDL_HOSTED_LOG_PREFIX = 'engine.log'
 
 # Launch FastAPI (no reload; adjust port if 8000 is free again)
 uvicorn api.main:app --host 0.0.0.0 --port 8100
@@ -73,7 +102,40 @@ $pipelineResponse = Invoke-RestMethod `
 
 $pipelineId = $pipelineResponse.id
 
-## 6. Kick off a run immediately
+## 6. Inject manual EDL entries into one or more pipelines
+# Prepare manual entries (deduplicated/trimmed server-side). Provide one or many pipelines.
+$manualPayload = @{
+    pipeline_ids = @(
+        $pipelineId
+        # 'optional-second-pipeline-id'
+    )
+    source        = 'manual'
+    notes         = 'Analyst override'
+    entries       = @(
+        @{
+            value    = '203.0.113.42'
+            type     = 'ipv4'
+            metadata = @{ ticket = 'INC-12345' }
+        },
+        @{
+            value = 'evil.example.org'
+            type  = 'fqdn'
+        }
+    )
+} | ConvertTo-Json -Depth 6
+
+$manualResponse = Invoke-RestMethod `
+    -Method Post `
+    -Uri "$baseUrl/pipelines/manual-submissions" `
+    -Headers $headers `
+    -Body ([Text.Encoding]::UTF8.GetBytes($manualPayload))
+
+# Manual submissions response includes run/job IDs per pipeline and any rejections/skipped entries
+$manualResponse.submissions
+$manualResponse.rejections
+$manualResponse.skipped_entries
+
+## 7. Kick off a run immediately
 $runPayload = @{
     pipeline_id  = $pipelineId
     overrides    = @{ mode = 'augment' }  # optional; matches config default
@@ -88,7 +150,7 @@ $runResponse = Invoke-RestMethod `
 
 $runId = $runResponse.run_id
 
-## 7. Monitor runs & jobs
+## 8. Monitor runs & jobs
 # Detailed run status (artifacts, errors, metadata)
 Invoke-RestMethod -Method Get -Uri "$baseUrl/runs/$runId" -Headers $headers
 
@@ -101,11 +163,11 @@ Invoke-RestMethod -Method Get -Uri "$baseUrl/runs?profile_id=$profileId" -Header
 # Inspect background jobs the API is tracking
 Invoke-RestMethod -Method Get -Uri "$baseUrl/jobs?profile_id=$profileId" -Headers $headers
 
-## 8. List configs & pipelines now owned by the profile
+## 9. List configs & pipelines now owned by the profile
 Invoke-RestMethod -Method Get -Uri "$baseUrl/profiles/$profileId/configs" -Headers $headers
 Invoke-RestMethod -Method Get -Uri "$baseUrl/pipelines" -Headers $headers
 
-## 9. Hosted EDL feeds (requires completed run + profile key)
+## 10. Hosted EDL feeds (requires completed run + profile key)
 $indicatorTypes = @('ipv4','ipv6','cidr','fqdn','url')
 foreach ($type in $indicatorTypes) {
     Write-Host "`n===== $type feed ====="
@@ -119,7 +181,7 @@ foreach ($type in $indicatorTypes) {
     }
 }
 
-## 10. Optional cleanup / verification
+## 11. Optional cleanup / verification
 # Cancel a run
 # Invoke-RestMethod -Method Post -Uri "$baseUrl/runs/$runId/cancel" -Headers $headers
 

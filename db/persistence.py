@@ -28,6 +28,7 @@ from db.models import (
     Pipeline,
     PipelineRun,
     PipelineRunEvent,
+    ManualSubmission,
     Profile,
     ProfileConfig,
     RunError,
@@ -98,6 +99,38 @@ def get_profile_by_api_key(api_key: str) -> Optional[Profile]:
             session.expunge(profile)
             return profile
     return None
+
+
+def record_manual_submission(
+    *,
+    profile_id: str,
+    pipeline_id: str,
+    run_id: Optional[str],
+    submitted_by: Optional[str],
+    source: str,
+    notes: Optional[str],
+    entries: Sequence[Dict[str, Any]],
+) -> ManualSubmission:
+    submission_payload = {
+        "entries": list(entries),
+        "source": source,
+        "notes": notes,
+    }
+    with session_scope() as session:
+        submission = ManualSubmission(
+            profile_id=profile_id,
+            pipeline_id=pipeline_id,
+            run_id=run_id,
+            submitted_by=submitted_by,
+            source=source,
+            notes=notes,
+            entry_count=len(entries),
+            payload=submission_payload,
+        )
+        session.add(submission)
+        session.flush()
+        session.refresh(submission)
+        return submission
 
 
 def _record_run_event(
@@ -729,4 +762,5 @@ __all__ = [
     'generate_profile_api_key',
     'revoke_profile_api_key',
     'get_profile_by_api_key',
+    'record_manual_submission',
 ]

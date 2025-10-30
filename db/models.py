@@ -282,6 +282,24 @@ class RunError(SQLModel, table=True):
     created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
 
 
+class ManualSubmission(SQLModel, table=True):
+    __tablename__ = "manual_submissions"
+
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)
+    profile_id: str = Field(foreign_key="profiles.id", nullable=False, index=True)
+    pipeline_id: str = Field(foreign_key="pipelines.id", nullable=False, index=True)
+    run_id: Optional[str] = Field(default=None, foreign_key="pipeline_runs.id", index=True)
+    submitted_by: Optional[str] = Field(default=None, index=True)
+    source: str = Field(default="manual", nullable=False, index=True)
+    notes: Optional[str] = Field(default=None)
+    entry_count: int = Field(default=0, nullable=False)
+    payload: Dict[str, Any] = Field(
+        default_factory=dict,
+        sa_column=Column(JSON, nullable=False, default=dict),
+    )
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False, index=True)
+
+
 __all__ = [
     "SQLModel",
     "IndicatorType",
@@ -299,4 +317,5 @@ __all__ = [
     "HostedFeed",
     "Artifact",
     "RunError",
+    "ManualSubmission",
 ]
