@@ -6,8 +6,6 @@ from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
 from db.models import ArtifactStatus, ArtifactType, RunState
-from models.schemas import EntryType
-
 
 class APIKeySettings(BaseModel):
     header_name: str = Field(
@@ -50,6 +48,9 @@ class ProfileConfigCreateRequest(BaseModel):
     augment_yaml: Optional[str] = Field(
         None, description="Optional YAML content describing augmentation settings."
     )
+    rules_yaml: Optional[str] = Field(
+        None, description="Optional YAML content describing manual assertions and exclusions."
+    )
     pipeline_settings: Dict[str, Any] = Field(
         default_factory=dict,
         description="Additional pipeline settings (mode, timeout, log-level, etc.).",
@@ -73,6 +74,22 @@ class ProfileConfigResponse(BaseModel):
     created_by: Optional[str]
     pipeline_settings: Dict[str, Any]
     refresh_interval_minutes: Optional[int]
+    has_rules: bool = Field(False, description="True when a rules.yaml was provided for this config.")
+
+
+class ProfileConfigUpdateRequest(BaseModel):
+    sources_yaml: Optional[str] = Field(None, description="Updated sources YAML.")
+    augment_yaml: Optional[str] = Field(None, description="Updated augmentor YAML.")
+    rules_yaml: Optional[str] = Field(None, description="Updated rules YAML.")
+    pipeline_settings: Optional[Dict[str, Any]] = Field(
+        default=None,
+        description="Updated pipeline settings dictionary.",
+    )
+    refresh_interval_minutes: Optional[int] = Field(
+        default=None,
+        ge=1,
+        description="Updated automatic refresh cadence.",
+    )
 
 
 class RunCreateRequest(BaseModel):
@@ -142,6 +159,10 @@ class PipelineRunDetail(PipelineRunSummary):
     errors: List[RunErrorResponse] = Field(default_factory=list)
 
 
+class PipelineConfigUpdateRequest(BaseModel):
+    profile_config_id: str = Field(..., description="Existing profile_config_id to attach to the pipeline.")
+
+
 class RunListResponse(BaseModel):
     runs: List[PipelineRunSummary]
 
@@ -167,51 +188,6 @@ class ProfileConfigSummary(BaseModel):
     created_by: Optional[str]
     pipeline_settings: Dict[str, Any]
 
-
-class ManualEntry(BaseModel):
-    value: str = Field(..., description="Raw manual entry to inject.")
-    type: Optional[EntryType] = Field(
-        None, description="Optional declared type to assist validation."
-    )
-    metadata: Dict[str, Any] = Field(
-        default_factory=dict,
-        description="Optional metadata (tags, analyst notes).",
-    )
-
-
-class ManualSubmissionRequest(BaseModel):
-    pipeline_ids: List[str] = Field(..., description="Pipelines that should ingest the entries.")
-    entries: List[ManualEntry] = Field(..., description="One or more manual EDL entries.")
-    source: Optional[str] = Field(
-        default="manual",
-        description="Source label recorded with the entries.",
-    )
-    notes: Optional[str] = Field(
-        default=None,
-        description="Optional analyst note for audit trails.",
-    )
-
-
-class ManualSubmissionResult(BaseModel):
-    pipeline_id: str
-    run_id: str
-    job_id: str
-    submission_id: str
-    entry_count: int
-
-
-class ManualSubmissionRejection(BaseModel):
-    pipeline_id: str
-    reason: str
-
-
-class ManualSubmissionResponse(BaseModel):
-    submissions: List[ManualSubmissionResult] = Field(default_factory=list)
-    rejections: List[ManualSubmissionRejection] = Field(default_factory=list)
-    skipped_entries: List[str] = Field(
-        default_factory=list,
-        description="Manual entries that were ignored prior to queuing (empty or duplicate).",
-    )
 
 
 class PipelineCreateRequest(BaseModel):
@@ -250,16 +226,53 @@ class ConfigUsageSummary(BaseModel):
     runs_active: int
 
 
-class PipelineScheduleEntry(BaseModel):
-    pipeline: PipelineResponse
-    config: ProfileConfigResponse
+class ActivePipelineEntry(BaseModel):
+    pipeline_id: str
+    pipeline_name: str
+    profile_config_id: str
+    profile_config_version: Optional[int]
     last_run_id: Optional[str]
     last_run_state: Optional[RunState]
-    last_completed_at: Optional[datetime]
+    last_run_started_at: Optional[datetime]
+    last_run_completed_at: Optional[datetime]
+    is_scheduled: bool
     next_run_at: Optional[datetime]
 
 
-class PipelineScheduleResponse(BaseModel):
+class ActivePipelineListResponse(BaseModel):
     profile_id: str
-    pipelines: List[PipelineScheduleEntry]
+    pipelines: List[ActivePipelineEntry]
+
+
+class PipelineIndicatorSearchResponse(BaseModel):
+    profile_id: str
+    indicator: str
+    pipelines: List[ActivePipelineEntry]
+
+
+class AdminAccountCreateRequest(BaseModel):
+    name: str
+    role: str = Field("operator", description="Admin role: operator or reader.")
+    is_super_admin: bool = Field(
+        default=False,
+        description="When true, grants global visibility. Only super admins may set this.",
+    )
+
+
+class AdminAccountResponse(BaseModel):
+    id: str
+    name: str
+    role: str
+    is_super_admin: bool
+    created_at: datetime
+    updated_at: datetime
+
+
+class AdminAccountBootstrapResponse(AdminAccountResponse):
+    api_key: str
+
+
+class AdminProfileLinkResponse(BaseModel):
+    admin_account_id: str
+    profile_id: str
 

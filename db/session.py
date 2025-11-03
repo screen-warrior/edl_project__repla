@@ -186,6 +186,10 @@ def ensure_schema() -> None:
             logger.info("Adding refresh_interval_minutes column to profile_configs")
             with ENGINE.begin() as conn:
                 conn.execute(text("ALTER TABLE profile_configs ADD COLUMN refresh_interval_minutes INTEGER"))
+        if "rules_yaml" not in columns:
+            logger.info("Adding rules_yaml column to profile_configs")
+            with ENGINE.begin() as conn:
+                conn.execute(text("ALTER TABLE profile_configs ADD COLUMN rules_yaml TEXT"))
 
 
 __all__ = [

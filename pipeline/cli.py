@@ -18,6 +18,7 @@ def main():
     parser.add_argument("--sources", required=True, help="Path to sources.yaml")
     parser.add_argument("--mode", choices=["validate", "augment"], default="validate")
     parser.add_argument("--config", help="Path to augmentor_config.yaml (if mode=augment)")
+    parser.add_argument("--rules", help="Path to rules.yaml for manual assertions and exclusions")
     parser.add_argument("--output", default="test_output_data/validated_output.json")
     parser.add_argument("--timeout", type=int, default=15)
     parser.add_argument("--log-level", default="INFO")
@@ -64,6 +65,14 @@ def main():
         except Exception as e:
             logger.error("Unable to load augmentor config '%s': %s", args.config, e)
             raise
+    rules_cfg = None
+    if args.rules:
+        try:
+            rules_text = Path(args.rules).read_text(encoding="utf-8")
+            rules_cfg = EngineConfig.parse_rules_yaml(rules_text, logger)
+        except Exception as e:
+            logger.error("Unable to load rules file '%s': %s", args.rules, e)
+            raise
 
     from inspect import signature
 
@@ -85,6 +94,8 @@ def main():
         kwargs["proxy"] = args.proxy
         if "use_proxy" in run_pipeline_sig.parameters:
             kwargs["use_proxy"] = args.use_proxy
+        if rules_cfg is not None:
+            kwargs["rules"] = rules_cfg
 
         with log_stage(logger, "pipeline_total"):
             run_pipeline(**kwargs)

@@ -1,0 +1,10 @@
+manual_assertions:
+  - value: "203.0.113.42"
+    type: ipv4
+    metadata:
+      ticket: "INC-12345"
+  - value: "malicious.example.org"
+    type: fqdn
+exclusions:
+  - value: "bad.example.com"
+  - value: "198.51.100.0/24"

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import asyncio
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Union
@@ -12,7 +12,7 @@ import yaml
 
 from pipeline.ingestor import EDLIngestor
 from models.ingestion_model import EDLIngestionService
-from models.schemas import FetchedEntry, IngestedEntry, ValidatedEntry
+from models.schemas import EntryType, FetchedEntry, IngestedEntry, ValidatedEntry
 from models.validation_model import EDLValidator
 from models.augmentation_model import EDL_Augmentor, AugmentedEntry
 from utils.logger import get_logger, log_metric, log_stage
@@ -30,6 +30,7 @@ class PipelineExecutionResult:
     ingested: List[IngestedEntry]
     validated: List[ValidatedEntry]
     augmented: Optional[List[AugmentedEntry]]
+    manual: List[ValidatedEntry] = field(default_factory=list)
 
 
 # ----------------------------------------------------------------------
@@ -70,6 +71,56 @@ class EngineConfig:
         logger.info("Loaded augmentor configuration from inline payload")
         return data
 
+    @staticmethod
+    def parse_rules_yaml(content: Optional[str], logger) -> Dict[str, List[Dict[str, Any]]]:
+        rules: Dict[str, List[Dict[str, Any]]] = {
+            "manual_assertions": [],
+            "exclusions": [],
+        }
+        if not content:
+            return rules
+
+        data = yaml.safe_load(content) or {}
+        if not isinstance(data, dict):
+            raise ValueError("Invalid rules YAML payload")
+
+        manual_entries = []
+        for raw in data.get("manual_assertions", []):
+            if isinstance(raw, str):
+                manual_entries.append({"value": raw})
+            elif isinstance(raw, dict):
+                if "value" not in raw:
+                    raise ValueError("Manual assertion entry missing 'value'")
+                manual_entries.append(
+                    {
+                        "value": str(raw["value"]),
+                        "type": raw.get("type"),
+                        "metadata": dict(raw.get("metadata") or {}),
+                    }
+                )
+            else:
+                raise ValueError("Manual assertion entries must be strings or objects with a 'value'")
+
+        exclusion_entries = []
+        for raw in data.get("exclusions", []):
+            if isinstance(raw, str):
+                exclusion_entries.append({"value": raw})
+            elif isinstance(raw, dict):
+                if "value" not in raw:
+                    raise ValueError("Exclusion entry missing 'value'")
+                exclusion_entries.append({"value": str(raw["value"])})
+            else:
+                raise ValueError("Exclusion entries must be strings or objects with a 'value'")
+
+        rules["manual_assertions"] = manual_entries
+        rules["exclusions"] = exclusion_entries
+        logger.info(
+            "Loaded rules configuration (%d manual assertions, %d exclusions)",
+            len(manual_entries),
+            len(exclusion_entries),
+        )
+        return rules
+
 
 # ----------------------------------------------------------------------
 # Orchestrator
@@ -92,7 +143,7 @@ class Orchestrator:
         use_proxy: bool = False,
         run_id: Optional[str] = None,
         profile_id: Optional[str] = None,
-        manual_entries: Optional[List[Dict[str, Any]]] = None,
+        rules: Optional[Dict[str, List[Dict[str, Any]]]] = None,
     ):
         self.logger = get_logger("engine.orchestrator", log_level, "engine.log")
         self.sources_cfg = [dict(src) for src in sources]
@@ -112,8 +163,25 @@ class Orchestrator:
         self.profile_id = profile_id
         self.run_id = run_id
         self.last_run_id: Optional[str] = run_id
-        self.manual_entries = manual_entries or []
-        self.manual_entries_count: int = 0
+        rules_config = rules or {"manual_assertions": [], "exclusions": []}
+        self.manual_assertions: List[Dict[str, Any]] = []
+        for entry in rules_config.get("manual_assertions", []):
+            value = entry.get("value") if isinstance(entry, dict) else None
+            if value is None:
+                continue
+            manual_entry = {
+                "value": str(value),
+                "entry_type": self._coerce_entry_type(entry.get("type") if isinstance(entry, dict) else None),
+                "metadata": dict(entry.get("metadata") or {}) if isinstance(entry, dict) else {},
+            }
+            self.manual_assertions.append(manual_entry)
+        self.exclusion_values = {
+            self._normalize_value(exclusion.get("value"))
+            for exclusion in rules_config.get("exclusions", [])
+            if isinstance(exclusion, dict) and exclusion.get("value")
+        }
+        self.manual_entries_added: List[ValidatedEntry] = []
+        self.manual_entries_skipped_due_to_exclusion = 0
         if proxy and use_proxy:
             self.logger.info("Proxy enabled for fetch stage: %s", proxy)
         elif use_proxy and not proxy:
@@ -133,6 +201,20 @@ class Orchestrator:
             metadata=metadata,
         )
 
+    @staticmethod
+    def _normalize_value(value: Optional[str]) -> str:
+        return value.strip().lower() if value else ""
+
+    @staticmethod
+    def _coerce_entry_type(raw: Optional[str]) -> EntryType:
+        if not raw:
+            return EntryType.UNKNOWN
+        candidate = str(raw).lower()
+        try:
+            return EntryType(candidate)
+        except ValueError:
+            return EntryType.UNKNOWN
+
     async def run(self) -> PipelineExecutionResult:
         self.logger.info("Starting pipeline run in '%s' mode...", self.mode)
         self.logger.info(
@@ -145,37 +227,16 @@ class Orchestrator:
         with log_stage(self.logger, "fetch"):
             fetched: List[FetchedEntry] = await self.fetcher.run()
 
-        if self.manual_entries:
-            manual_results: List[FetchedEntry] = []
-            for index, item in enumerate(self.manual_entries, start=1):
-                raw_value = str(item.get("value", "")).strip()
-                if not raw_value:
-                    continue
-                metadata = dict(item.get("metadata") or {})
-                metadata.setdefault("source_type", "manual")
-                metadata.setdefault("manual", True)
-                if "submitted_at" in item:
-                    metadata.setdefault("submitted_at", item["submitted_at"])
-                if "submitted_by" in item:
-                    metadata.setdefault("submitted_by", item["submitted_by"])
-                declared_type = item.get("type")
-                if declared_type:
-                    metadata.setdefault("declared_type", declared_type)
-                manual_results.append(
-                    FetchedEntry(
-                        source=item.get("source") or "manual",
-                        raw=raw_value,
-                        line_number=index,
-                        metadata=metadata,
-                    )
-                )
-            if manual_results:
-                fetched.extend(manual_results)
-                self.manual_entries_count = len(manual_results)
-                self.logger.info("Appended %d manual entries to fetched set.", len(manual_results))
-                log_metric(self.logger, "manual_entries_fetched_total", len(manual_results), stage="fetch", source="manual")
-            else:
-                self.logger.debug("Manual submission contained only empty values; nothing appended.")
+        if self.exclusion_values:
+            filtered_fetched = [
+                entry
+                for entry in fetched
+                if self._normalize_value(entry.raw) not in self.exclusion_values
+            ]
+            removed_fetch = len(fetched) - len(filtered_fetched)
+            if removed_fetch:
+                self.logger.info("Exclusion rules removed %d fetched entries", removed_fetch)
+            fetched = filtered_fetched
 
         if not fetched:
             self.logger.warning("No entries fetched from configured sources.")
@@ -198,6 +259,42 @@ class Orchestrator:
         if not validated:
             self.logger.warning("Validation produced no entries.")
 
+        if self.exclusion_values and validated:
+            filtered_validated = [
+                entry
+                for entry in validated
+                if self._normalize_value(entry.normalized) not in self.exclusion_values
+            ]
+            removed_validated = len(validated) - len(filtered_validated)
+            if removed_validated:
+                self.logger.info("Exclusion rules removed %d validated entries", removed_validated)
+            validated = filtered_validated
+
+        manual_validated_entries: List[ValidatedEntry] = []
+        if self.manual_assertions:
+            for entry in self.manual_assertions:
+                raw_value = entry["value"]
+                if self._normalize_value(raw_value) in self.exclusion_values:
+                    self.manual_entries_skipped_due_to_exclusion += 1
+                    self.logger.info("Manual assertion '%s' skipped due to exclusion rule", raw_value)
+                    continue
+                meta = dict(entry.get("metadata") or {})
+                source_label = meta.pop("source", "manual")
+                meta.setdefault("manual", True)
+                manual_validated_entries.append(
+                    ValidatedEntry(
+                        source=source_label,
+                        original=raw_value,
+                        entry_type=entry["entry_type"],
+                        error=None,
+                        normalized=raw_value,
+                        meta=meta,
+                    )
+                )
+            if manual_validated_entries:
+                self.logger.info("Prepared %d manual assertions from rules.yaml", len(manual_validated_entries))
+        self.manual_entries_added = manual_validated_entries
+
         log_metric(self.logger, "engine_validated_total", len(validated), stage="validate")
 
         augmented: Optional[List[AugmentedEntry]] = None
@@ -210,6 +307,9 @@ class Orchestrator:
         else:
             self.logger.info("Validation-only mode complete: %d entries processed", len(validated))
 
+        if manual_validated_entries:
+            validated.extend(manual_validated_entries)
+
         self._transition(RunState.RUNNING, "finalize", 90.0)
 
         return PipelineExecutionResult(
@@ -217,6 +317,7 @@ class Orchestrator:
             ingested=ingested,
             validated=validated,
             augmented=augmented,
+            manual=manual_validated_entries,
         )
 
 
@@ -236,26 +337,21 @@ def run_pipeline(
     profile_id: Optional[str] = None,
     profile_config_id: Optional[str] = None,
     run_id: Optional[str] = None,
-    manual_submission: Optional[Dict[str, Any]] = None,
+    rules: Optional[Dict[str, List[Dict[str, Any]]]] = None,
 ) -> Optional[str]:
     """Run the pipeline synchronously."""
+
+    logger = get_logger("engine.runner", log_level, "engine.log")
 
     metadata = {"sources": [dict(src) for src in sources]}
     if proxy and use_proxy:
         metadata["proxy"] = proxy
     metadata["proxy_enabled"] = use_proxy
-    manual_entries = None
-    manual_summary: Optional[Dict[str, Any]] = None
-    if manual_submission:
-        manual_entries = manual_submission.get("entries") or []
-        manual_summary = {
-            "entry_count": len(manual_entries),
-            "source": manual_submission.get("source"),
-            "notes": manual_submission.get("notes"),
-            "submitted_at": manual_submission.get("submitted_at"),
-            "submitted_by": manual_submission.get("submitted_by"),
+    if rules:
+        metadata["rules_configured"] = {
+            "manual_assertions": len(rules.get("manual_assertions", [])),
+            "exclusions": len(rules.get("exclusions", [])),
         }
-        metadata["manual_submission"] = manual_summary
 
     if persist_to_db and run_id is None:
         raise ValueError("run_id must be provided when persist_to_db is True")
@@ -271,14 +367,13 @@ def run_pipeline(
         use_proxy=use_proxy,
         run_id=run_id,
         profile_id=profile_id,
-        manual_entries=manual_entries,
+        rules=rules,
     )
 
     execution: PipelineExecutionResult
     try:
         execution = asyncio.run(orchestrator.run())
     except Exception as exc:  # noqa: BLE001
-        logger = get_logger("engine.runner", log_level, "engine.log")
         logger.exception("Pipeline execution failed")
         if persist_to_db and run_id:
             update_run_state(
@@ -290,25 +385,57 @@ def run_pipeline(
             )
         raise
 
+    manual_for_output = execution.manual or []
+    if manual_for_output:
+        logger.info("Rules contributed %d manual assertions", len(manual_for_output))
+    if orchestrator.manual_entries_skipped_due_to_exclusion:
+        logger.info(
+            "Rules skipped %d manual assertions via exclusions",
+            orchestrator.manual_entries_skipped_due_to_exclusion,
+        )
+
     out_path = Path(output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
     if execution.augmented is not None and mode == "augment":
-        output_entries: Sequence[Union[AugmentedEntry, ValidatedEntry]] = execution.augmented
+        output_entries: List[Union[AugmentedEntry, ValidatedEntry]] = list(execution.augmented)
+        if manual_for_output:
+            for manual_entry in manual_for_output:
+                output_entries.append(
+                    AugmentedEntry(
+                        **manual_entry.model_dump(),
+                        augmented=manual_entry.normalized,
+                        changes=["manual_assertion"],
+                    )
+                )
     else:
         output_entries = execution.validated
 
     with out_path.open("w", encoding="utf-8") as f:
         json.dump([r.model_dump() for r in output_entries], f, indent=2, ensure_ascii=False)
 
-    logger = get_logger("engine.runner", log_level, "engine.log")
     logger.info("Pipeline results written to %s", out_path)
+
+    rules_summary: Optional[Dict[str, Any]] = None
+    if rules is not None:
+        rules_summary = {
+            "manual_assertions_configured": len(rules.get("manual_assertions", [])),
+            "manual_assertions_applied": len(manual_for_output),
+            "manual_assertions_skipped": orchestrator.manual_entries_skipped_due_to_exclusion,
+            "exclusions_configured": len(rules.get("exclusions", [])),
+        }
 
     if persist_to_db:
         try:
-            finalize_metadata = {"output_path": str(out_path)}
-            if manual_summary:
-                finalize_metadata["manual_submission"] = manual_summary
+            finalize_metadata = {
+                "output_path": str(out_path),
+                "sources": metadata["sources"],
+                "proxy_enabled": metadata["proxy_enabled"],
+            }
+            if proxy and use_proxy:
+                finalize_metadata["proxy"] = proxy
+            if rules_summary:
+                finalize_metadata["rules"] = rules_summary
             finalize_pipeline_run(
                 run_id=run_id,
                 mode=mode,

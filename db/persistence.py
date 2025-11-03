@@ -21,6 +21,8 @@ from db.models import (
     ArtifactStatus,
     ArtifactType,
     AugmentedIndicator,
+    AdminAccount,
+    AdminProfileLink,
     Feed,
     HostedFeed,
     Indicator,
@@ -28,7 +30,6 @@ from db.models import (
     Pipeline,
     PipelineRun,
     PipelineRunEvent,
-    ManualSubmission,
     Profile,
     ProfileConfig,
     RunError,
@@ -55,6 +56,114 @@ def _get_limit(name: str) -> Optional[int]:
         logger.warning("Invalid integer for %s: %s", name, value)
         return None
     return parsed if parsed > 0 else None
+
+
+def create_admin_account(
+    *,
+    name: str,
+    role: str = "operator",
+    is_super_admin: bool = False,
+    key_length: int = 32,
+) -> Tuple[AdminAccount, str]:
+    role_normalized = role.lower()
+    if role_normalized not in {"operator", "reader"}:
+        raise ValueError("Admin role must be 'operator' or 'reader'")
+
+    api_key = generate_api_key(key_length)
+    key_hash = hash_token(api_key)
+    prefix = api_key[:16]
+
+    with session_scope() as session:
+        account = AdminAccount(
+            name=name,
+            role=role_normalized,
+            is_super_admin=is_super_admin,
+            api_key_hash=key_hash,
+            api_key_prefix=prefix,
+        )
+        session.add(account)
+        session.flush()
+        session.refresh(account)
+        return account, api_key
+
+
+def get_admin_account_by_api_key(api_key: str) -> Optional[AdminAccount]:
+    if not api_key:
+        return None
+    prefix = api_key[:16]
+    with session_scope() as session:
+        account = session.exec(
+            select(AdminAccount).where(AdminAccount.api_key_prefix == prefix)
+        ).one_or_none()
+        if account and account.api_key_hash and verify_token(api_key, account.api_key_hash):
+            session.expunge(account)
+            return account
+    return None
+
+
+def link_admin_to_profile(admin_account_id: str, profile_id: str) -> None:
+    with session_scope() as session:
+        admin = session.get(AdminAccount, admin_account_id)
+        if not admin:
+            raise ValueError(f"Admin account {admin_account_id} not found")
+        profile = session.get(Profile, profile_id)
+        if not profile:
+            raise ValueError(f"Profile {profile_id} not found")
+        existing = session.get(AdminProfileLink, (admin_account_id, profile_id))
+        if existing:
+            return
+        link = AdminProfileLink(admin_account_id=admin_account_id, profile_id=profile_id)
+        session.add(link)
+
+
+def unlink_admin_from_profile(admin_account_id: str, profile_id: str) -> None:
+    with session_scope() as session:
+        link = session.get(AdminProfileLink, (admin_account_id, profile_id))
+        if not link:
+            return
+        session.delete(link)
+
+
+def admin_has_profile(admin_account_id: str, profile_id: str) -> bool:
+    with session_scope() as session:
+        return (
+            session.exec(
+                select(AdminProfileLink).where(
+                    AdminProfileLink.admin_account_id == admin_account_id,
+                    AdminProfileLink.profile_id == profile_id,
+                )
+            ).first()
+            is not None
+        )
+
+
+def list_profile_ids_for_admin(admin_account_id: str) -> List[str]:
+    with session_scope() as session:
+        return [
+            profile_id
+            for profile_id, in session.exec(
+                select(AdminProfileLink.profile_id).where(
+                    AdminProfileLink.admin_account_id == admin_account_id,
+                )
+            ).all()
+        ]
+
+
+def get_admin_account(admin_account_id: str) -> Optional[AdminAccount]:
+    with session_scope() as session:
+        account = session.get(AdminAccount, admin_account_id)
+        if not account:
+            return None
+        session.expunge(account)
+        return account
+
+
+def list_admin_accounts() -> List[AdminAccount]:
+    with session_scope() as session:
+        accounts = session.exec(select(AdminAccount).order_by(AdminAccount.created_at)).all()
+        for account in accounts:
+            session.expunge(account)
+        return accounts
 
 
 def generate_profile_api_key(profile_id: str, *, key_length: int = 32) -> str:
@@ -99,38 +208,6 @@ def get_profile_by_api_key(api_key: str) -> Optional[Profile]:
             session.expunge(profile)
             return profile
     return None
-
-
-def record_manual_submission(
-    *,
-    profile_id: str,
-    pipeline_id: str,
-    run_id: Optional[str],
-    submitted_by: Optional[str],
-    source: str,
-    notes: Optional[str],
-    entries: Sequence[Dict[str, Any]],
-) -> ManualSubmission:
-    submission_payload = {
-        "entries": list(entries),
-        "source": source,
-        "notes": notes,
-    }
-    with session_scope() as session:
-        submission = ManualSubmission(
-            profile_id=profile_id,
-            pipeline_id=pipeline_id,
-            run_id=run_id,
-            submitted_by=submitted_by,
-            source=source,
-            notes=notes,
-            entry_count=len(entries),
-            payload=submission_payload,
-        )
-        session.add(submission)
-        session.flush()
-        session.refresh(submission)
-        return submission
 
 
 def _record_run_event(
@@ -210,6 +287,7 @@ def create_profile_config(
     profile_id: str,
     sources_yaml: str,
     augment_yaml: Optional[str] = None,
+    rules_yaml: Optional[str] = None,
     pipeline_settings: Optional[Dict[str, Any]] = None,
     created_by: Optional[str] = None,
     refresh_interval_minutes: Optional[int] = None,
@@ -217,6 +295,7 @@ def create_profile_config(
     payload = {
         "sources": sources_yaml or "",
         "augment": augment_yaml or "",
+        "rules": rules_yaml or "",
         "settings": pipeline_settings or {},
         "refresh_interval_minutes": refresh_interval_minutes,
     }
@@ -239,6 +318,7 @@ def create_profile_config(
             config_hash=config_hash,
             sources_yaml=sources_yaml,
             augment_yaml=augment_yaml,
+            rules_yaml=rules_yaml,
             pipeline_settings=pipeline_settings or {},
             created_by=created_by,
             refresh_interval_minutes=refresh_interval_minutes,
@@ -248,6 +328,55 @@ def create_profile_config(
         session.refresh(profile_config)
         profile.updated_at = datetime.utcnow()
         return profile_config
+
+
+def update_profile_config(
+    *,
+    config_id: str,
+    profile_id: str,
+    sources_yaml: Optional[str] = None,
+    augment_yaml: Optional[str] = None,
+    rules_yaml: Optional[str] = None,
+    pipeline_settings: Optional[Dict[str, Any]] = None,
+    refresh_interval_minutes: Optional[int] = None,
+) -> ProfileConfig:
+    with session_scope() as session:
+        config = session.get(ProfileConfig, config_id)
+        if not config:
+            raise ValueError(f"Profile config {config_id} not found")
+        if config.profile_id != profile_id:
+            raise ValueError("Configuration does not belong to the specified profile")
+
+        if sources_yaml is not None:
+            config.sources_yaml = sources_yaml
+        if augment_yaml is not None:
+            config.augment_yaml = augment_yaml
+        if rules_yaml is not None:
+            config.rules_yaml = rules_yaml
+        if pipeline_settings is not None:
+            config.pipeline_settings = pipeline_settings
+        if refresh_interval_minutes is not None:
+            config.refresh_interval_minutes = refresh_interval_minutes
+
+        payload = {
+            "sources": config.sources_yaml or "",
+            "augment": config.augment_yaml or "",
+            "rules": config.rules_yaml or "",
+            "settings": config.pipeline_settings or {},
+            "refresh_interval_minutes": config.refresh_interval_minutes,
+        }
+        hash_input = json.dumps(payload, sort_keys=True).encode("utf-8")
+        config.config_hash = hashlib.sha256(hash_input).hexdigest()
+        session.add(config)
+        session.flush()
+        session.refresh(config)
+
+        profile = session.get(Profile, profile_id)
+        if profile:
+            profile.updated_at = datetime.utcnow()
+            session.add(profile)
+
+        return config
 
 
 # ---------------------------------------------------------------------------
@@ -288,6 +417,29 @@ def create_pipeline(
             concurrency_limit=limit,
             idempotency_key=idempotency_key,
         )
+        session.add(pipeline)
+        session.flush()
+        session.refresh(pipeline)
+        return pipeline
+
+
+def update_pipeline_config(
+    *,
+    pipeline_id: str,
+    profile_config_id: str,
+) -> Pipeline:
+    with session_scope() as session:
+        pipeline = session.get(Pipeline, pipeline_id)
+        if not pipeline or pipeline.deleted_at:
+            raise ValueError(f"Pipeline {pipeline_id} not found")
+
+        config = session.get(ProfileConfig, profile_config_id)
+        if not config:
+            raise ValueError(f"Profile config {profile_config_id} not found")
+        if config.profile_id != pipeline.profile_id:
+            raise ValueError("Configuration does not belong to the pipeline's profile")
+
+        pipeline.profile_config_id = profile_config_id
         session.add(pipeline)
         session.flush()
         session.refresh(pipeline)
@@ -748,9 +900,19 @@ def _coerce_indicator_type(entry_type: Any) -> IndicatorType:
 
 
 __all__ = [
+    'create_admin_account',
+    'get_admin_account_by_api_key',
+    'link_admin_to_profile',
+    'unlink_admin_from_profile',
+    'admin_has_profile',
+    'list_profile_ids_for_admin',
+    'get_admin_account',
+    'list_admin_accounts',
     'create_profile',
     'create_profile_config',
+    'update_profile_config',
     'create_pipeline',
+    'update_pipeline_config',
     'soft_delete_pipeline',
     'list_config_usage',
     'list_pipelines',
@@ -762,5 +924,4 @@ __all__ = [
     'generate_profile_api_key',
     'revoke_profile_api_key',
     'get_profile_by_api_key',
-    'record_manual_submission',
 ]

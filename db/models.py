@@ -81,6 +81,7 @@ class ProfileConfig(SQLModel, table=True):
         default_factory=dict,
         sa_column=Column(JSON, nullable=False, default=dict),
     )
+    rules_yaml: Optional[str] = Field(default=None, sa_column=Column(Text))
     refresh_interval_minutes: Optional[int] = Field(
         default=None,
         sa_column=Column(Integer, nullable=True),
@@ -229,6 +230,35 @@ class HostedFeed(SQLModel, table=True):
     )
 
 
+class AdminAccount(SQLModel, table=True):
+    __tablename__ = "admin_accounts"
+
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)
+    name: str = Field(nullable=False, index=True)
+    role: str = Field(default="operator", nullable=False, index=True)
+    is_super_admin: bool = Field(default=False, nullable=False, index=True)
+    api_key_hash: Optional[str] = Field(default=None, sa_column=Column(Text, nullable=True))
+    api_key_prefix: Optional[str] = Field(default=None, sa_column=Column(Text, nullable=True, index=True))
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
+    updated_at: datetime = Field(
+        default_factory=datetime.utcnow,
+        nullable=False,
+        sa_column_kwargs={"onupdate": datetime.utcnow},
+    )
+
+
+class AdminProfileLink(SQLModel, table=True):
+    __tablename__ = "admin_profile_links"
+
+    admin_account_id: str = Field(foreign_key="admin_accounts.id", primary_key=True)
+    profile_id: str = Field(foreign_key="profiles.id", primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
+
+    __table_args__ = (
+        Index("ix_admin_profile_links_profile_admin", "profile_id", "admin_account_id"),
+    )
+
+
 class PipelineRunEvent(SQLModel, table=True):
     __tablename__ = "pipeline_run_events"
 
@@ -282,24 +312,6 @@ class RunError(SQLModel, table=True):
     created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
 
 
-class ManualSubmission(SQLModel, table=True):
-    __tablename__ = "manual_submissions"
-
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)
-    profile_id: str = Field(foreign_key="profiles.id", nullable=False, index=True)
-    pipeline_id: str = Field(foreign_key="pipelines.id", nullable=False, index=True)
-    run_id: Optional[str] = Field(default=None, foreign_key="pipeline_runs.id", index=True)
-    submitted_by: Optional[str] = Field(default=None, index=True)
-    source: str = Field(default="manual", nullable=False, index=True)
-    notes: Optional[str] = Field(default=None)
-    entry_count: int = Field(default=0, nullable=False)
-    payload: Dict[str, Any] = Field(
-        default_factory=dict,
-        sa_column=Column(JSON, nullable=False, default=dict),
-    )
-    created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False, index=True)
-
-
 __all__ = [
     "SQLModel",
     "IndicatorType",
@@ -315,7 +327,8 @@ __all__ = [
     "Indicator",
     "AugmentedIndicator",
     "HostedFeed",
+    "AdminAccount",
+    "AdminProfileLink",
     "Artifact",
     "RunError",
-    "ManualSubmission",
 ]

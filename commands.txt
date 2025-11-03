@@ -3,8 +3,10 @@
 ## 1. Admin environment & server start
 # Run in the PowerShell session that will host Uvicorn.
 # Core auth keys
-$env:EDL_API_KEY        = 'super-secret-key'   # primary admin/operator key
-$env:EDL_OPERATOR_KEYS  = 'super-secret-key'   # optional comma-separated operator keys
+# EDL_API_KEY acts as the bootstrap super-admin key. Once you provision managed admin accounts,
+# you can rotate it away.
+$env:EDL_API_KEY        = 'super-secret-key'   # optional bootstrap super-admin key
+$env:EDL_OPERATOR_KEYS  = 'super-secret-key'   # optional comma-separated legacy operator keys
 $env:EDL_READER_KEYS    = ''                   # optional comma-separated read-only keys
 
 # Scheduler defaults (override per environment)
@@ -37,13 +39,34 @@ $env:EDL_MAX_CONCURRENT_RUNS_PER_PROFILE = '3'
 # Launch FastAPI (no reload; adjust port if 8000 is free again)
 uvicorn api.main:app --host 0.0.0.0 --port 8100
 
+## 1b. Provision managed admin accounts (super-admin key required)
+$baseUrl = 'http://localhost:8100'
+$rootHeaders = @{
+    'X-API-Key'    = 'super-secret-key'  # bootstrap super-admin key
+    'Content-Type' = 'application/json'
+}
+
+$adminPayload = @{
+    name  = 'Operations Admin'
+    role  = 'operator'  # or 'reader'
+} | ConvertTo-Json -Depth 3
+
+$adminResponse = Invoke-RestMethod `
+    -Method Post `
+    -Uri "$baseUrl/admin/accounts" `
+    -Headers $rootHeaders `
+    -Body ([Text.Encoding]::UTF8.GetBytes($adminPayload))
+
+$opsAdminId  = $adminResponse.id
+$opsAdminKey = $adminResponse.api_key
+
 ## 2. Create a profile (admin/operator key required)
 # Response returns the tenant's API key once; save both id and api_key.
 Invoke-RestMethod `
     -Method Post `
-    -Uri 'http://localhost:8100/profiles' `
+    -Uri "$baseUrl/profiles" ` # Super admins can append ?owner_admin_id=$opsAdminId to assign ownership when creating on behalf of another admin.
     -Headers @{
-        'X-API-Key'    = 'super-secret-key'
+        'X-API-Key'    = $opsAdminKey
         'Content-Type' = 'application/json'
     } `
     -Body '{"name":"Acme SOC","description":"Tier-1 security operations"}'
@@ -61,10 +84,13 @@ $headers = @{
 ## 4. Create a profile config (augment mode, 2-minute cadence)
 $sources = Get-Content -Raw 'config\sources.yaml'
 $augment = Get-Content -Raw 'config\augmentor_config.yaml'
+$rulesPath = 'config\rules.yaml'
+$rules = if (Test-Path $rulesPath) { Get-Content -Raw $rulesPath } else { "" }
 
 $configPayload = [ordered]@{
     sources_yaml             = [string]$sources
     augment_yaml             = [string]$augment
+    rules_yaml               = [string]$rules
     pipeline_settings        = @{
         mode            = 'augment'
         output_path     = 'test_output_data/augment_output.json'
@@ -84,6 +110,22 @@ $configResponse = Invoke-RestMethod `
 
 $configId = $configResponse.id
 
+## 4b. Update an existing profile config (partial patch)
+$configUpdate = @{
+    refresh_interval_minutes = 5
+    pipeline_settings        = @{
+        mode          = 'augment'
+        persist_to_db = $false
+        timeout       = 20
+    }
+} | ConvertTo-Json -Depth 4
+
+Invoke-RestMethod `
+    -Method Patch `
+    -Uri "$baseUrl/profiles/$profileId/configs/$configId" `
+    -Headers $headers `
+    -Body ([Text.Encoding]::UTF8.GetBytes($configUpdate))
+
 ## 5. Create a pipeline bound to the config
 $pipelinePayload = @{
     profile_id        = $profileId
@@ -102,40 +144,15 @@ $pipelineResponse = Invoke-RestMethod `
 
 $pipelineId = $pipelineResponse.id
 
-## 6. Inject manual EDL entries into one or more pipelines
-# Prepare manual entries (deduplicated/trimmed server-side). Provide one or many pipelines.
-$manualPayload = @{
-    pipeline_ids = @(
-        $pipelineId
-        # 'optional-second-pipeline-id'
-    )
-    source        = 'manual'
-    notes         = 'Analyst override'
-    entries       = @(
-        @{
-            value    = '203.0.113.42'
-            type     = 'ipv4'
-            metadata = @{ ticket = 'INC-12345' }
-        },
-        @{
-            value = 'evil.example.org'
-            type  = 'fqdn'
-        }
-    )
-} | ConvertTo-Json -Depth 6
+## 5b. Point a pipeline at a different config (must already exist)
+# $newConfigId = 'replace-with-existing-config-guid'
+# Invoke-RestMethod `
+#     -Method Patch `
+#     -Uri "$baseUrl/pipelines/$pipelineId/config" `
+#     -Headers $headers `
+#     -Body ([Text.Encoding]::UTF8.GetBytes((@{ profile_config_id = $newConfigId } | ConvertTo-Json)))
 
-$manualResponse = Invoke-RestMethod `
-    -Method Post `
-    -Uri "$baseUrl/pipelines/manual-submissions" `
-    -Headers $headers `
-    -Body ([Text.Encoding]::UTF8.GetBytes($manualPayload))
-
-# Manual submissions response includes run/job IDs per pipeline and any rejections/skipped entries
-$manualResponse.submissions
-$manualResponse.rejections
-$manualResponse.skipped_entries
-
-## 7. Kick off a run immediately
+## 6. Kick off a run immediately
 $runPayload = @{
     pipeline_id  = $pipelineId
     overrides    = @{ mode = 'augment' }  # optional; matches config default
@@ -150,7 +167,7 @@ $runResponse = Invoke-RestMethod `
 
 $runId = $runResponse.run_id
 
-## 8. Monitor runs & jobs
+## 7. Monitor runs & jobs
 # Detailed run status (artifacts, errors, metadata)
 Invoke-RestMethod -Method Get -Uri "$baseUrl/runs/$runId" -Headers $headers
 
@@ -163,11 +180,17 @@ Invoke-RestMethod -Method Get -Uri "$baseUrl/runs?profile_id=$profileId" -Header
 # Inspect background jobs the API is tracking
 Invoke-RestMethod -Method Get -Uri "$baseUrl/jobs?profile_id=$profileId" -Headers $headers
 
-## 9. List configs & pipelines now owned by the profile
+## 8. List configs & pipelines now owned by the profile
 Invoke-RestMethod -Method Get -Uri "$baseUrl/profiles/$profileId/configs" -Headers $headers
 Invoke-RestMethod -Method Get -Uri "$baseUrl/pipelines" -Headers $headers
 
-## 10. Hosted EDL feeds (requires completed run + profile key)
+## 8b. Search for active pipelines hosting a specific indicator
+Invoke-RestMethod `
+    -Method Get `
+    -Uri "$baseUrl/profiles/$profileId/pipelines/search?indicator=example.com" `
+    -Headers $headers
+
+## 9. Hosted EDL feeds (requires completed run + profile key)
 $indicatorTypes = @('ipv4','ipv6','cidr','fqdn','url')
 foreach ($type in $indicatorTypes) {
     Write-Host "`n===== $type feed ====="
@@ -181,7 +204,7 @@ foreach ($type in $indicatorTypes) {
     }
 }
 
-## 11. Optional cleanup / verification
+## 10. Optional cleanup / verification
 # Cancel a run
 # Invoke-RestMethod -Method Post -Uri "$baseUrl/runs/$runId/cancel" -Headers $headers
 

@@ -1,0 +1,78 @@
+# EDL Platform Overview
+
+## What this project does
+- Multi-tenant EDL orchestration service built on FastAPI/SQLModel + SQLite (default).
+- Administrators (operator keys) can bootstrap new profiles and inspect any tenant.
+- Each **profile** receives a unique API key; all pipeline/config/run calls are automatically scoped to that profile (no cross-tenant leakage).
+- Pipelines support scheduled runs, on-demand runs, hosted feeds, and concurrency throttling.
+- Configuration now includes a **rules.yaml** file so analysts can declare persistent manual assertions (always included) and exclusions (filtered before validation/augmentation).
+- Secure per-profile API key storage (hashed + prefix) and structured run metadata for auditability.
+
+## Core workflow
+1. **Admin starts the API** with env vars (`EDL_API_KEY`, `EDL_OPERATOR_KEYS`, scheduler/concurrency settings).
+2. **Admin creates a profile** via `POST /profiles` and hands the tenant its API key.
+3. **Profile key** (or an admin acting as that tenant) creates configs (`sources.yaml`, `augmentor_config.yaml`, optional `rules.yaml`) and pipelines.
+4. **Runs** execute through a job queue, respecting per-pipeline/per-profile concurrency limits, and persist results.
+5. **Hosted feeds** (`/pipelines/{id}/edl/{type}`) stream the latest indicators (API key required).
+6. **Rules** from `rules.yaml` automatically inject manual assertions and exclusions into every run—no ad-hoc endpoints required.
+
+## Installed endpoints (high level)
+- `POST /profiles` (admin) – create tenant, returns API key.
+- `GET /profiles` / `/profiles/{id}` (admin) – inventory or inspect profiles.
+- `POST /profiles/{id}/configs` – store a new config version (sources/augmentor/rules).
+- `POST /pipelines` – create pipeline bound to a config.
+- `DELETE /pipelines/{id}` – soft-delete pipeline.
+- `POST /runs` / `POST /pipelines/{id}/runs` – queue a run.
+- `GET /runs`, `GET /runs/{id}`, `GET /runs/{id}/logs` – inspect run status.
+- `POST /runs/{id}/cancel` – request cancellation.
+- `GET /jobs` – inspect queued/running jobs.
+- `GET /pipelines/{id}/edl/{indicator_type}` – hosted plain-text feed (profile key required).
+
+## Key files
+- `api/main.py` – FastAPI routers, auth guards, job orchestration. `_enqueue_pipeline_run` creates jobs; `_execute_pipeline_job` hydrates config, parses sources/augmentor/rules YAML, and calls `run_pipeline`.
+- `api/schemas.py` – Pydantic DTOs (config creation now accepts `rules_yaml`).
+- `db/models.py` – SQLModel tables (`Profile`, `ProfileConfig` with `rules_yaml`, `Pipeline`, `PipelineRun`, etc.).
+- `db/persistence.py` – Profile/pipeline helpers, config hashing, run creation/finalization, hosted feed updates.
+- `pipeline/engine.py` – Pipeline executor. Applies exclusions before validation/augmentation and appends manual assertions after processing.
+- `pipeline/ingestor.py` – Fetches remote/file feeds (proxy-aware).
+- `utils/security.py` – API key hashing/verification helpers.
+- `commands.txt` – End-to-end CLI flow (env → profile → config including rules → pipeline → runs → hosted feeds).
+
+## Module flow cheat sheet
+- **Authorization** (`api/auth.py`): admin/operator/reader keys vs. profile keys. `_assert_*` helpers enforce scope everywhere.
+- **Profile bootstrap** (`api/main.py:create_profile_endpoint`): admin-only; stores hashed API key prefix+hash.
+- **Run queue** (`api/main.py` + `api/jobs.py`): `_enqueue_pipeline_run` stores overrides, creates `JobRecord`, and spawns `_execute_pipeline_job`. The job reconstructs sources/augmentor/rules, invokes `run_pipeline`, then refreshes hosted feeds.
+- **Rules application** (`pipeline/engine.py`): exclusions filter fetched/validated data; manual assertions bypass validation/augmentation but are appended with metadata and logged (including skipped counts).
+- **Run finalization** (`db/persistence.py:finalize_pipeline_run`): persists indicators/artifacts, updates run metadata snapshot (including rules summary), and updates hosted feeds.
+- **Scheduler** (`api/main.py:_auto_refresh_tick`): wakes on cadence, honours queued/running backpressure, and queues runs via `_enqueue_pipeline_run`.
+
+Use this overview plus inline docstrings to cue Codex when starting a fresh session.
+
+## Command cheat sheet (PowerShell)
+See `commands.txt` for the full workflow. Highlights:
+```powershell
+# Admin env vars
+$env:EDL_API_KEY       = 'super-secret-key'
+$env:EDL_OPERATOR_KEYS = 'super-secret-key'
+
+# Start API
+uvicorn api.main:app --host 0.0.0.0 --port 8100
+
+# Create profile (admin key)
+Invoke-RestMethod -Method Post -Uri 'http://localhost:8100/profiles' -Headers @{
+    'X-API-Key'='super-secret-key'; 'Content-Type'='application/json'
+} -Body '{"name":"Acme SOC","description":"Tier-1 security operations"}'
+
+# Create config (profile key) - load sources/augmentor/rules, then POST /profiles/{id}/configs
+# Create pipeline - POST /pipelines with the new config ID
+# Kick off run - POST /runs (profile key)
+# Monitor - GET /jobs, /runs/{id}, /runs/{id}/logs
+# Hosted feeds - GET /pipelines/{pipeline}/edl/{ipv4|fqdn|...} with profile key
+```
+
+## Things to remember when restarting on a new machine
+- Install dependencies: `pip install -r requirements.txt`.
+- Ensure new shells set the admin/operator keys before starting `uvicorn`.
+- `ensure_schema()` runs on startup to add new columns (e.g., `profile_configs.rules_yaml`, API key fields, etc.).
+- Remove or migrate `edl_pipeline.db` if schema mismatches appear.
+- Update `rules.yaml` (and post a new config version) to change manual assertions or exclusions that should persist across scheduled runs.

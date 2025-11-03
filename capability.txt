@@ -1,0 +1,79 @@
+EDL Platform Capabilities
+=========================
+
+Architecture Overview
+---------------------
+- FastAPI backend delivering a multi-tenant API for managing enrichment/distribution (EDL) pipelines.
+- SQLModel/SQLAlchemy layer backed by SQLite (default) with helper migrations executed by `ensure_schema()`.
+- Task scheduling via a lightweight refresh scheduler that periodically queues pipelines with auto-refresh cadences.
+- Job tracking store for asynchronous pipeline execution, with log streaming from engine output.
+- Strict authentication with per-profile API keys and managed admin accounts scoped to the profiles they own (plus an optional super-admin).
+
+Authentication & Authorization
+------------------------------
+- Managed admin accounts: `POST /admin/accounts` (super-admin only) issues hashed API keys tied to operator/reader roles, with optional super-admin privileges.
+- Profile API keys: `POST /profiles` (admin/operator key) creates a profile and returns a tenant-scoped key (hashed/prefixed at rest).
+- Admin/profile linkage: only linked admins (or super-admins) can access a profile’s pipelines/configs/runs; profile keys see only their tenant’s data.
+- Legacy env keys (`EDL_API_KEY`, `EDL_OPERATOR_KEYS`, `EDL_READER_KEYS`) remain as bootstrap/super-admin fallbacks.
+
+Profile Management
+------------------
+- Create profile: `POST /profiles` (optional `owner_admin_id` query) → returns `ProfileBootstrapResponse` with tenant API key.
+- List profiles: `GET /profiles` (admins only) → summaries filtered to admin’s scope.
+- Retrieve configs:
+  - Create config: `POST /profiles/{profile_id}/configs`.
+  - Patch config: `PATCH /profiles/{profile_id}/configs/{config_id}` for partial updates (sources/augment/rules/pipeline settings/refresh interval).
+  - List configs with usage metrics: `GET /profiles/{profile_id}/configs`.
+- Active pipeline view: `GET /profiles/{profile_id}/pipelines/active` → pipelines currently hosting data, last/next runs, schedule flag.
+- Indicator search: `GET /profiles/{profile_id}/pipelines/search?indicator=value` → find active pipelines containing a specific indicator in latest run output.
+
+Pipeline Lifecycle
+------------------
+- Create pipeline: `POST /pipelines` binding a profile config, with optional concurrency limit and idempotency key.
+- Update pipeline-config binding: `PATCH /pipelines/{pipeline_id}/config` (repoint to existing profile config).
+- Soft delete pipeline: `DELETE /pipelines/{pipeline_id}` → sets `deleted_at` and `is_active=False`.
+- List pipelines:
+  - Global: `GET /pipelines` with optional filters (`profile_id`, `profile_config_id`, `active_only`, paging).
+  - Scoped: `GET /profiles/{profile_id}/pipelines`.
+- Hosted feeds: `GET /pipelines/{pipeline_id}/edl/{indicator_type}` streams EDL artifacts per type (ipv4/ipv6/cidr/fqdn/url); also global feed `GET /edl/{indicator_type}`.
+
+Runs & Operations
+-----------------
+- Launch run: `POST /runs` (operator auth) with overrides (mode, timeout, persist flag, etc.) and optional idempotency key.
+- Cancel run: `POST /runs/{run_id}/cancel`.
+- Run inspection:
+  - List runs: `GET /runs` (filters for state/profile/pipeline).
+  - Run detail: `GET /runs/{run_id}` includes artifacts/errors/metadata snapshot.
+  - Run logs: `GET /runs/{run_id}/logs` streams engine output (supports gzip rotation).
+- Job tracking: `GET /jobs` to view active/background jobs (filtered to scope).
+
+Scheduler & Automation
+----------------------
+- Refresh scheduler activated via `EDL_AUTO_REFRESH_MINUTES`; evaluates pipelines whose configs have `refresh_interval_minutes` set and enqueues runs when due.
+- Runs honor total/per-profile concurrency caps via environment (`EDL_MAX_CONCURRENT_RUNS_TOTAL`, `EDL_MAX_CONCURRENT_RUNS_PER_PROFILE`).
+- Hosted feed updates occur automatically on run completion with artifact registration.
+
+Security Utilities
+------------------
+- API key generation/hashing with `passlib[bcrypt]`; prefixes allow efficient lookup.
+- Run log reader with gzip support; hosted feed streaming ensures profile ownership before delivery.
+- Audit-friendly admin/profile link table (`admin_profile_links`) enabling least-privilege admin delegation.
+
+Logging & Diagnostics
+---------------------
+- Application logs written to `logs/api.log`; engine logs to `logs/engine.log` and accessible via API (per run or EDL feed).
+- Jobs store maintains current state/cancel requests for asynchronous pipeline executions.
+
+Supporting CLI & Configuration
+------------------------------
+- `commands.txt` cheat sheet covers environment setup, admin provisioning, profile/pipeline creation, runs, searches, and hosted feed inspection.
+- Environment variables control DB connection, scheduler cadence, concurrency, and legacy admin keys.
+
+Data Model Snapshot
+-------------------
+- Profiles (`profiles`) hold tenant metadata and hashed API keys.
+- Profile configs (`profile_configs`) store versioned YAML blobs plus refresh cadence.
+- Pipelines (`pipelines`) reference profiles/configs, include concurrency, active flag, and soft-delete timestamp.
+- Runs (`pipeline_runs`) capture execution state, counts, metadata, and link to pipelines/configs.
+- Indicators/artifacts capture run output; hosted feeds table maps indicator types to latest runs per pipeline.
+- Admin accounts (`admin_accounts`) and admin/profile links (`admin_profile_links`) enforce scoped administration.

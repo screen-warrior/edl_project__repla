@@ -1,21 +1,21 @@
 from __future__ import annotations
 
 import os
-from copy import deepcopy
 from datetime import datetime, timedelta
 from threading import Thread
-from typing import Any, Dict, List, Optional, Type, TypeVar
+from typing import Any, Dict, List, Optional, Set, Type, TypeVar
 from uuid import uuid4
 
 import yaml
-from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException, Request, Response, status
+from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException, Query, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
-from sqlalchemy import func
+from sqlalchemy import func, or_
 from sqlmodel import select
 
 from db.models import (
     Artifact,
+    AdminAccount,
     HostedFeed,
     Indicator,
     IndicatorType,
@@ -29,16 +29,23 @@ from db.models import (
 )
 from db.persistence import (
     cancel_pipeline_run,
+    create_admin_account,
     create_pipeline,
     create_pipeline_run,
     create_profile,
     create_profile_config,
+    link_admin_to_profile,
+    unlink_admin_from_profile,
+    list_profile_ids_for_admin,
+    get_admin_account,
+    list_admin_accounts,
+    update_profile_config as persistence_update_profile_config,
+    update_pipeline_config as persistence_update_pipeline_config,
     finalize_pipeline_run,
     generate_profile_api_key,
     list_config_usage,
     list_pipelines,
     record_run_error,
-    record_manual_submission,
     soft_delete_pipeline,
     update_run_state,
 )
@@ -47,7 +54,7 @@ from pipeline.engine import EngineConfig, run_pipeline
 from utils.logger import get_logger
 from utils.log_reader import read_run_log
 
-from .auth import AuthContext, require_profile, require_reader, require_operator
+from .auth import AuthContext, require_profile, require_reader, require_operator, require_super_admin
 from .jobs import JobStore
 from .refresh import RefreshScheduler
 from pydantic import BaseModel, ValidationError
@@ -58,6 +65,7 @@ from .schemas import (
     ProfileSummary,
     ProfileConfigCreateRequest,
     ProfileConfigResponse,
+    ProfileConfigUpdateRequest,
     ConfigUsageSummary,
     PipelineCreateRequest,
     PipelineListResponse,
@@ -70,12 +78,14 @@ from .schemas import (
     ArtifactResponse,
     RunErrorResponse,
     JobStatusResponse,
-    PipelineScheduleEntry,
-    PipelineScheduleResponse,
-    ManualSubmissionRequest,
-    ManualSubmissionResponse,
-    ManualSubmissionResult,
-    ManualSubmissionRejection,
+    ActivePipelineEntry,
+    ActivePipelineListResponse,
+    PipelineIndicatorSearchResponse,
+    PipelineConfigUpdateRequest,
+    AdminAccountCreateRequest,
+    AdminAccountResponse,
+    AdminAccountBootstrapResponse,
+    AdminProfileLinkResponse,
 )
 
 
@@ -120,8 +130,31 @@ HOSTED_TYPES = {
 }
 
 
+def _get_admin_scope(context: AuthContext) -> Optional[Set[str]]:
+    if context.is_super_admin or not context.admin_id:
+        return None
+    scope: Optional[Set[str]] = getattr(context, "_profile_scope", None)
+    if scope is None:
+        scope = set(list_profile_ids_for_admin(context.admin_id))
+        setattr(context, "_profile_scope", scope)
+    return scope
+
+
 def _assert_profile_access(context: AuthContext, profile_id: str) -> None:
+    if not profile_id:
+        return
     if context.profile_id and context.profile_id != profile_id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden for this profile.")
+    if context.profile_id == profile_id:
+        return
+    if context.is_super_admin:
+        return
+    if context.admin_id:
+        scope = _get_admin_scope(context)
+        if scope is not None and profile_id not in scope:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden for this profile.")
+        return
+    if not context.profile_id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden for this profile.")
 
 
@@ -133,8 +166,6 @@ def _assert_pipeline_access(context: AuthContext, pipeline: Pipeline) -> None:
 
 
 def _assert_run_access(context: AuthContext, run: PipelineRun) -> None:
-    if not context.profile_id:
-        return
     if run.profile_id:
         _assert_profile_access(context, run.profile_id)
         return
@@ -179,6 +210,88 @@ def healthcheck() -> Dict[str, str]:
 
 
 # ---------------------------------------------------------------------------
+# Admin management
+# ---------------------------------------------------------------------------
+@app.post(
+    "/admin/accounts",
+    response_model=AdminAccountBootstrapResponse,
+    status_code=status.HTTP_201_CREATED,
+    tags=["admin"],
+)
+async def create_admin_account_endpoint(
+    request: Request,
+    context: AuthContext = Depends(require_super_admin),
+) -> AdminAccountBootstrapResponse:
+    body = await _safe_json(request)
+    payload = _extract_payload(body, AdminAccountCreateRequest)
+    role = (payload.role or "operator").strip().lower()
+    if role not in {"operator", "reader"}:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Role must be 'operator' or 'reader'.",
+        )
+    account, api_key = create_admin_account(
+        name=payload.name,
+        role=role,
+        is_super_admin=bool(payload.is_super_admin),
+    )
+    base = _serialize_admin_account(account)
+    return AdminAccountBootstrapResponse(**base.model_dump(), api_key=api_key)
+
+
+@app.get(
+    "/admin/accounts",
+    response_model=List[AdminAccountResponse],
+    tags=["admin"],
+)
+def list_admin_accounts_endpoint(
+    context: AuthContext = Depends(require_super_admin),
+) -> List[AdminAccountResponse]:
+    accounts = list_admin_accounts()
+    return [_serialize_admin_account(account) for account in accounts]
+
+
+@app.post(
+    "/admin/accounts/{admin_id}/profiles/{profile_id}",
+    response_model=AdminProfileLinkResponse,
+    status_code=status.HTTP_200_OK,
+    tags=["admin"],
+)
+def link_admin_profile_endpoint(
+    admin_id: str,
+    profile_id: str,
+    context: AuthContext = Depends(require_super_admin),
+) -> AdminProfileLinkResponse:
+    admin = get_admin_account(admin_id)
+    if not admin:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Admin account not found.")
+    session = get_session()
+    try:
+        _ensure_profile_exists(session, profile_id)
+    finally:
+        session.close()
+    link_admin_to_profile(admin_id, profile_id)
+    return AdminProfileLinkResponse(admin_account_id=admin_id, profile_id=profile_id)
+
+
+@app.delete(
+    "/admin/accounts/{admin_id}/profiles/{profile_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    tags=["admin"],
+)
+def unlink_admin_profile_endpoint(
+    admin_id: str,
+    profile_id: str,
+    context: AuthContext = Depends(require_super_admin),
+) -> Response:
+    admin = get_admin_account(admin_id)
+    if not admin:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Admin account not found.")
+    unlink_admin_from_profile(admin_id, profile_id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+# ---------------------------------------------------------------------------
 # Profile management
 # ---------------------------------------------------------------------------
 @app.post(
@@ -189,6 +302,7 @@ def healthcheck() -> Dict[str, str]:
 )
 async def create_profile_endpoint(
     request: Request,
+    owner_admin_id: Optional[str] = None,
     context: AuthContext = Depends(require_operator),
 ) -> ProfileBootstrapResponse:
     if context.profile_id is not None:
@@ -197,6 +311,30 @@ async def create_profile_endpoint(
     payload = _extract_payload(body, ProfileCreateRequest)
     profile = create_profile(name=payload.name, description=payload.description)
     api_key = generate_profile_api_key(profile.id)
+
+    assigned_admin_id: Optional[str] = None
+    if owner_admin_id:
+        if not context.is_super_admin:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Only super admins may assign profile ownership.",
+            )
+        owner = get_admin_account(owner_admin_id)
+        if not owner:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Admin account not found.",
+            )
+        assigned_admin_id = owner.id
+    elif context.admin_id and not context.is_super_admin:
+        assigned_admin_id = context.admin_id
+
+    if assigned_admin_id:
+        try:
+            link_admin_to_profile(assigned_admin_id, profile.id)
+        except ValueError as exc:  # pragma: no cover - defensive guard
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
     serialized = _serialize_profile(profile)
     return ProfileBootstrapResponse(**serialized.model_dump(), api_key=api_key)
 
@@ -205,9 +343,14 @@ async def create_profile_endpoint(
 def list_profiles_endpoint(context: AuthContext = Depends(require_reader)) -> List[ProfileSummary]:
     if context.profile_id is not None:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin API key required.")
+    scope = _get_admin_scope(context)
     session = get_session()
     try:
         profiles = session.exec(select(Profile)).all()
+        if scope is not None:
+            profiles = [profile for profile in profiles if profile.id in scope]
+        if scope is not None and not profiles:
+            return []
         results: List[ProfileSummary] = []
         for profile in profiles:
             latest_version = session.exec(
@@ -258,8 +401,54 @@ async def create_profile_config_endpoint(
             profile_id=profile_id,
             sources_yaml=payload.sources_yaml,
             augment_yaml=payload.augment_yaml,
+            rules_yaml=payload.rules_yaml,
             pipeline_settings=payload.pipeline_settings,
             created_by=payload.created_by or context.api_key,
+            refresh_interval_minutes=payload.refresh_interval_minutes,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+
+    return _serialize_profile_config(config)
+
+
+@app.patch(
+    "/profiles/{profile_id}/configs/{config_id}",
+    response_model=ProfileConfigResponse,
+    tags=["profiles"],
+)
+async def update_profile_config_endpoint(
+    profile_id: str,
+    config_id: str,
+    request: Request,
+    context: AuthContext = Depends(require_operator),
+) -> ProfileConfigResponse:
+    _assert_profile_access(context, profile_id)
+    body = await _safe_json(request)
+    payload = _extract_payload(body, ProfileConfigUpdateRequest)
+
+    if not any(
+        [
+            payload.sources_yaml is not None,
+            payload.augment_yaml is not None,
+            payload.rules_yaml is not None,
+            payload.pipeline_settings is not None,
+            payload.refresh_interval_minutes is not None,
+        ]
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="At least one field must be provided to update the configuration.",
+        )
+
+    try:
+        config = persistence_update_profile_config(
+            config_id=config_id,
+            profile_id=profile_id,
+            sources_yaml=payload.sources_yaml,
+            augment_yaml=payload.augment_yaml,
+            rules_yaml=payload.rules_yaml,
+            pipeline_settings=payload.pipeline_settings,
             refresh_interval_minutes=payload.refresh_interval_minutes,
         )
     except ValueError as exc:
@@ -302,25 +491,29 @@ def list_profile_configs_endpoint(
 
 
 @app.get(
-    "/profiles/{profile_id}/schedule",
-    response_model=PipelineScheduleResponse,
-    tags=["profiles"],
+    "/profiles/{profile_id}/pipelines/active",
+    response_model=ActivePipelineListResponse,
+    tags=["pipelines"],
 )
-def get_profile_schedule(
+def list_active_pipelines(
     profile_id: str,
     context: AuthContext = Depends(require_reader),
-) -> PipelineScheduleResponse:
+) -> ActivePipelineListResponse:
     _assert_profile_access(context, profile_id)
     session = get_session()
     try:
         pipelines = session.exec(
             select(Pipeline)
-            .where(Pipeline.profile_id == profile_id, Pipeline.deleted_at.is_(None))
+            .where(
+                Pipeline.profile_id == profile_id,
+                Pipeline.deleted_at.is_(None),
+                Pipeline.is_active.is_(True),
+            )
             .order_by(Pipeline.created_at)
         ).all()
         if not pipelines:
             _ensure_profile_exists(session, profile_id)
-            return PipelineScheduleResponse(profile_id=profile_id, pipelines=[])
+            return ActivePipelineListResponse(profile_id=profile_id, pipelines=[])
 
         pipeline_ids = [pipeline.id for pipeline in pipelines]
         config_ids = {pipeline.profile_config_id for pipeline in pipelines if pipeline.profile_config_id}
@@ -343,7 +536,7 @@ def get_profile_schedule(
                 if run.pipeline_id not in last_runs:
                     last_runs[run.pipeline_id] = run
 
-        schedule_entries: List[PipelineScheduleEntry] = []
+        active_entries: List[ActivePipelineEntry] = []
         for pipeline in pipelines:
             config = configs.get(pipeline.profile_config_id)
             if not config:
@@ -361,21 +554,157 @@ def get_profile_schedule(
 
             interval = config.refresh_interval_minutes
             next_run_at = None
-            if interval and interval > 0 and reference:
+            is_scheduled = bool(interval and interval > 0)
+            if is_scheduled and reference:
                 next_run_at = reference + timedelta(minutes=interval)
 
-            schedule_entries.append(
-                PipelineScheduleEntry(
-                    pipeline=_serialize_pipeline(pipeline),
-                    config=_serialize_profile_config(config),
+            active_entries.append(
+                ActivePipelineEntry(
+                    pipeline_id=pipeline.id,
+                    pipeline_name=pipeline.name,
+                    profile_config_id=pipeline.profile_config_id,
+                    profile_config_version=config.version,
                     last_run_id=last_run.id if last_run else None,
                     last_run_state=last_run.state if last_run else None,
-                    last_completed_at=last_run.completed_at if last_run else None,
+                    last_run_started_at=last_run.started_at if last_run else None,
+                    last_run_completed_at=last_run.completed_at if last_run else None,
+                    is_scheduled=is_scheduled,
                     next_run_at=next_run_at,
                 )
             )
 
-        return PipelineScheduleResponse(profile_id=profile_id, pipelines=schedule_entries)
+        return ActivePipelineListResponse(profile_id=profile_id, pipelines=active_entries)
+    finally:
+        session.close()
+
+
+@app.get(
+    "/profiles/{profile_id}/pipelines/search",
+    response_model=PipelineIndicatorSearchResponse,
+    tags=["pipelines"],
+)
+def search_pipelines_by_indicator(
+    profile_id: str,
+    indicator: str = Query(
+        ...,
+        min_length=1,
+        description="Indicator value (domain, IP, URL, etc.) to locate within hosted EDLs.",
+    ),
+    context: AuthContext = Depends(require_reader),
+) -> PipelineIndicatorSearchResponse:
+    _assert_profile_access(context, profile_id)
+    raw_value = indicator.strip()
+    if not raw_value:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Indicator value must be a non-empty string.",
+        )
+
+    normalized_value = raw_value.lower()
+
+    session = get_session()
+    try:
+        pipelines = session.exec(
+            select(Pipeline)
+            .where(
+                Pipeline.profile_id == profile_id,
+                Pipeline.deleted_at.is_(None),
+                Pipeline.is_active.is_(True),
+            )
+            .order_by(Pipeline.created_at)
+        ).all()
+
+        if not pipelines:
+            _ensure_profile_exists(session, profile_id)
+            return PipelineIndicatorSearchResponse(profile_id=profile_id, indicator=raw_value, pipelines=[])
+
+        pipeline_ids = [pipeline.id for pipeline in pipelines]
+        config_ids = {pipeline.profile_config_id for pipeline in pipelines if pipeline.profile_config_id}
+
+        configs = {}
+        if config_ids:
+            configs = {
+                cfg.id: cfg
+                for cfg in session.exec(select(ProfileConfig).where(ProfileConfig.id.in_(config_ids))).all()
+            }
+
+        last_runs: Dict[str, PipelineRun] = {}
+        if pipeline_ids:
+            runs = session.exec(
+                select(PipelineRun)
+                .where(PipelineRun.pipeline_id.in_(pipeline_ids))
+                .order_by(PipelineRun.pipeline_id, PipelineRun.queued_at.desc())
+            ).all()
+            for run in runs:
+                if run.pipeline_id not in last_runs:
+                    last_runs[run.pipeline_id] = run
+
+        if not last_runs:
+            return PipelineIndicatorSearchResponse(profile_id=profile_id, indicator=raw_value, pipelines=[])
+
+        run_ids = [run.id for run in last_runs.values()]
+        indicator_run_ids: set[str] = set()
+        if run_ids:
+            indicator_run_ids = set(
+                session.exec(
+                    select(Indicator.run_id).where(
+                        Indicator.run_id.in_(run_ids),
+                        Indicator.is_valid.is_(True),
+                        or_(
+                            func.lower(Indicator.normalized) == normalized_value,
+                            func.lower(Indicator.original) == normalized_value,
+                        ),
+                    )
+                ).all()
+            )
+
+        matches: List[ActivePipelineEntry] = []
+        for pipeline in pipelines:
+            last_run = last_runs.get(pipeline.id)
+            if not last_run or last_run.id not in indicator_run_ids:
+                continue
+
+            config = configs.get(pipeline.profile_config_id)
+            if not config:
+                api_logger.warning(
+                    "Pipeline %s references missing config %s", pipeline.id, pipeline.profile_config_id
+                )
+                continue
+
+            interval = config.refresh_interval_minutes
+            is_scheduled = bool(interval and interval > 0)
+
+            reference = (
+                last_run.completed_at
+                or last_run.started_at
+                or last_run.queued_at
+                or pipeline.updated_at
+                or pipeline.created_at
+            )
+            next_run_at = None
+            if is_scheduled and reference:
+                next_run_at = reference + timedelta(minutes=interval)
+
+            matches.append(
+                ActivePipelineEntry(
+                    pipeline_id=pipeline.id,
+                    pipeline_name=pipeline.name,
+                    profile_config_id=pipeline.profile_config_id,
+                    profile_config_version=config.version,
+                    last_run_id=last_run.id,
+                    last_run_state=last_run.state,
+                    last_run_started_at=last_run.started_at,
+                    last_run_completed_at=last_run.completed_at,
+                    is_scheduled=is_scheduled,
+                    next_run_at=next_run_at,
+                )
+            )
+
+        return PipelineIndicatorSearchResponse(
+            profile_id=profile_id,
+            indicator=raw_value,
+            pipelines=matches,
+        )
     finally:
         session.close()
 
@@ -409,144 +738,37 @@ async def create_pipeline_endpoint(
     return _serialize_pipeline(pipeline)
 
 
-@app.post(
-    "/pipelines/manual-submissions",
-    response_model=ManualSubmissionResponse,
-    status_code=status.HTTP_202_ACCEPTED,
+@app.patch(
+    "/pipelines/{pipeline_id}/config",
+    response_model=PipelineResponse,
     tags=["pipelines"],
 )
-def submit_manual_entries_endpoint(
-    payload: ManualSubmissionRequest,
-    background_tasks: BackgroundTasks,
+async def update_pipeline_config_endpoint(
+    pipeline_id: str,
+    request: Request,
     context: AuthContext = Depends(require_operator),
-) -> ManualSubmissionResponse:
-    if not payload.pipeline_ids:
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="At least one pipeline_id is required.")
-    if not payload.entries:
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="At least one manual entry is required.")
+) -> PipelineResponse:
+    session = get_session()
+    try:
+        pipeline = session.get(Pipeline, pipeline_id)
+        if not pipeline or pipeline.deleted_at:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Pipeline not found")
+        _assert_pipeline_access(context, pipeline)
+    finally:
+        session.close()
 
-    manual_source = (payload.source or "manual").strip() or "manual"
-    notes = payload.notes.strip() if payload.notes else None
+    body = await _safe_json(request)
+    payload = _extract_payload(body, PipelineConfigUpdateRequest)
 
-    seen_entries: set[tuple[str, Optional[str]]] = set()
-    normalized_entries: List[Dict[str, Any]] = []
-    skipped_entries: List[str] = []
-
-    for entry in payload.entries:
-        value = entry.value.strip()
-        if not value:
-            skipped_entries.append(entry.value)
-            continue
-        entry_type = entry.type.value if entry.type else None
-        key = (value.lower(), entry_type)
-        if key in seen_entries:
-            skipped_entries.append(entry.value)
-            continue
-        seen_entries.add(key)
-        metadata = dict(entry.metadata or {})
-        metadata.setdefault("manual", True)
-        normalized_entries.append(
-            {
-                "value": value,
-                "type": entry_type,
-                "metadata": metadata,
-            }
+    try:
+        updated = persistence_update_pipeline_config(
+            pipeline_id=pipeline_id,
+            profile_config_id=payload.profile_config_id,
         )
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
 
-    if not normalized_entries:
-        raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="All manual entries were empty or duplicate.",
-        )
-
-    unique_pipeline_ids: List[str] = list(dict.fromkeys(payload.pipeline_ids))
-    submissions: List[ManualSubmissionResult] = []
-    rejections: List[ManualSubmissionRejection] = []
-    submitted_at = datetime.utcnow().isoformat()
-
-    for pipeline_id in unique_pipeline_ids:
-        session = get_session()
-        try:
-            pipeline_db = session.get(Pipeline, pipeline_id)
-            if not pipeline_db or pipeline_db.deleted_at:
-                rejections.append(ManualSubmissionRejection(pipeline_id=pipeline_id, reason="Pipeline not found or deleted."))
-                continue
-            if not pipeline_db.is_active:
-                rejections.append(ManualSubmissionRejection(pipeline_id=pipeline_id, reason="Pipeline is inactive."))
-                continue
-            config_db = session.get(ProfileConfig, pipeline_db.profile_config_id)
-            if not config_db:
-                rejections.append(ManualSubmissionRejection(pipeline_id=pipeline_id, reason="Pipeline configuration missing."))
-                continue
-            session.expunge(pipeline_db)
-            session.expunge(config_db)
-        finally:
-            session.close()
-
-        pipeline = pipeline_db
-        config = config_db
-
-        try:
-            _assert_pipeline_access(context, pipeline)  # type: ignore[arg-type]
-        except HTTPException as exc:  # forbidden
-            rejections.append(ManualSubmissionRejection(pipeline_id=pipeline_id, reason=exc.detail))
-            continue
-
-        manual_payload = {
-            "entries": [entry.copy() for entry in normalized_entries],
-            "source": manual_source,
-            "notes": notes,
-            "submitted_at": submitted_at,
-            "submitted_by": context.api_key,
-        }
-        manual_metadata_summary = {
-            "manual_submission": {
-                "entry_count": len(normalized_entries),
-                "source": manual_source,
-                "notes": notes,
-                "submitted_at": submitted_at,
-                "submitted_by": context.api_key,
-            }
-        }
-
-        response = _enqueue_pipeline_run(
-            pipeline=pipeline,  # type: ignore[arg-type]
-            config=config,  # type: ignore[arg-type]
-            overrides={},
-            requested_by=context.api_key,
-            idempotency_key=None,
-            background_tasks=background_tasks,
-            extra_metadata=manual_metadata_summary,
-            job_request_extra={"manual_submission": manual_payload},
-        )
-
-        submission_record = record_manual_submission(
-            profile_id=pipeline.profile_id,
-            pipeline_id=pipeline.id,
-            run_id=response.run_id,
-            submitted_by=context.api_key,
-            source=manual_source,
-            notes=notes,
-            entries=manual_payload["entries"],
-        )
-
-        submissions.append(
-            ManualSubmissionResult(
-                pipeline_id=pipeline.id,
-                run_id=response.run_id,
-                job_id=response.job_id,
-                submission_id=submission_record.id,
-                entry_count=submission_record.entry_count,
-            )
-        )
-
-    if not submissions:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Manual submission failed for all pipelines.",
-        )
-
-    return ManualSubmissionResponse(submissions=submissions, rejections=rejections, skipped_entries=skipped_entries)
+    return _serialize_pipeline(updated)
 
 
 @app.delete(
@@ -584,12 +806,21 @@ def list_pipelines_endpoint(
     offset: int = 0,
     context: AuthContext = Depends(require_reader),
 ) -> PipelineListResponse:
+    scope = _get_admin_scope(context)
     if context.profile_id:
         if profile_id and profile_id != context.profile_id:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden for this profile.")
         profile_id = context.profile_id
+    elif scope is not None:
+        if profile_id and profile_id not in scope:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden for this profile.")
+
+    if scope is not None and not scope and profile_id is None:
+        return PipelineListResponse(pipelines=[])
 
     pipelines = list_pipelines(profile_id=profile_id, profile_config_id=profile_config_id)
+    if scope is not None and profile_id is None:
+        pipelines = [p for p in pipelines if p.profile_id in scope]
     if active_only:
         pipelines = [p for p in pipelines if p.is_active]
     if offset:
@@ -716,10 +947,17 @@ def list_runs_endpoint(
     offset: int = 0,
     context: AuthContext = Depends(require_reader),
 ) -> RunListResponse:
+    scope = _get_admin_scope(context)
     if context.profile_id:
         if profile_id and profile_id != context.profile_id:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden for this profile.")
         profile_id = context.profile_id
+    elif scope is not None:
+        if profile_id and profile_id not in scope:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden for this profile.")
+
+    if scope is not None and not scope and profile_id is None:
+        return RunListResponse(runs=[])
 
     session = get_session()
     try:
@@ -734,6 +972,8 @@ def list_runs_endpoint(
             query = query.where(PipelineRun.state == state)
         if profile_id:
             query = query.where(PipelineRun.profile_id == profile_id)
+        elif scope:
+            query = query.where(PipelineRun.profile_id.in_(scope))
         if pipeline_id:
             query = query.where(PipelineRun.pipeline_id == pipeline_id)
         query = query.order_by(PipelineRun.queued_at.desc())
@@ -791,10 +1031,17 @@ def list_jobs_endpoint(
     offset: int = 0,
     context: AuthContext = Depends(require_reader),
 ) -> List[JobStatusResponse]:
+    scope = _get_admin_scope(context)
     if context.profile_id:
         if profile_id and profile_id != context.profile_id:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden for this profile.")
         profile_id = context.profile_id
+    elif scope is not None:
+        if profile_id and profile_id not in scope:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden for this profile.")
+
+    if scope is not None and not scope and profile_id is None:
+        return []
 
     responses: List[JobStatusResponse] = []
     runs_cache: Dict[str, PipelineRunSummary] = {}
@@ -802,6 +1049,8 @@ def list_jobs_endpoint(
         if pipeline_id and record.pipeline_id != pipeline_id:
             continue
         if profile_id and record.profile_id != profile_id:
+            continue
+        if scope is not None and record.profile_id not in scope:
             continue
         summary = None
         if record.run_id:
@@ -969,14 +1218,13 @@ def _execute_pipeline_job(job_id: str) -> None:
                 raise RuntimeError("Pipeline configuration not found")
             sources_yaml = config.sources_yaml
             augment_yaml = config.augment_yaml
+            rules_yaml = config.rules_yaml
             pipeline_settings = dict(config.pipeline_settings or {})
         finally:
             session.close()
 
         overrides = record.request.get("overrides") or {}
         pipeline_settings.update(overrides)
-        manual_submission = record.request.get("manual_submission") if record.request else None
-        manual_payload = deepcopy(manual_submission) if manual_submission else None
 
         if _is_cancelled():
             cancel_pipeline_run(record.run_id, cancelled_by="system", reason="Cancelled before fetch")
@@ -985,6 +1233,7 @@ def _execute_pipeline_job(job_id: str) -> None:
 
         sources = EngineConfig.parse_sources_yaml(sources_yaml, api_logger)
         augmentor_cfg = EngineConfig.parse_augmentor_yaml(augment_yaml, api_logger)
+        rules_cfg = EngineConfig.parse_rules_yaml(rules_yaml, api_logger)
 
         mode = pipeline_settings.get("mode", "validate")
         timeout = int(pipeline_settings.get("timeout", 15))
@@ -1007,7 +1256,7 @@ def _execute_pipeline_job(job_id: str) -> None:
             profile_id=pipeline.profile_id,
             profile_config_id=pipeline.profile_config_id,
             run_id=record.run_id,
-            manual_submission=manual_payload,
+            rules=rules_cfg,
         )
 
         _update_hosted_feeds(record.run_id, pipeline_id=pipeline.id)
@@ -1128,8 +1377,6 @@ def _enqueue_pipeline_run(
     requested_by: Optional[str],
     idempotency_key: Optional[str],
     background_tasks: Optional[BackgroundTasks],
-    extra_metadata: Optional[Dict[str, Any]] = None,
-    job_request_extra: Optional[Dict[str, Any]] = None,
 ) -> RunSubmissionResponse:
     settings = dict(config.pipeline_settings or {})
     settings.update(overrides)
@@ -1141,8 +1388,6 @@ def _enqueue_pipeline_run(
     }
     if requested_by:
         metadata["requested_by"] = requested_by
-    if extra_metadata:
-        metadata.update(extra_metadata)
 
     run_id = create_pipeline_run(
         pipeline_id=pipeline.id,
@@ -1159,8 +1404,6 @@ def _enqueue_pipeline_run(
         "profile_id": pipeline.profile_id,
         "profile_config_id": pipeline.profile_config_id,
     }
-    if job_request_extra:
-        job_request_payload.update(job_request_extra)
     job_store.create_job(
         job_id=job_id,
         request=job_request_payload,
@@ -1246,6 +1489,18 @@ def _serialize_profile_config(config: ProfileConfig) -> ProfileConfigResponse:
         created_by=config.created_by,
         pipeline_settings=config.pipeline_settings,
         refresh_interval_minutes=config.refresh_interval_minutes,
+        has_rules=bool(config.rules_yaml),
+    )
+
+
+def _serialize_admin_account(account: AdminAccount) -> AdminAccountResponse:
+    return AdminAccountResponse(
+        id=account.id,
+        name=account.name,
+        role=account.role,
+        is_super_admin=account.is_super_admin,
+        created_at=account.created_at,
+        updated_at=account.updated_at,
     )
 
 
