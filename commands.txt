@@ -60,6 +60,21 @@ $adminResponse = Invoke-RestMethod `
 $opsAdminId  = $adminResponse.id
 $opsAdminKey = $adminResponse.api_key
 
+## 1c. (Optional) Use the Python CLI helper
+# A convenience script lives in tools/api_cli.py. It wraps all endpoints and handles JSON encoding automatically.
+# Example: create a profile config using YAML files.
+#   python tools/api_cli.py create-config ^
+#       --base-url http://localhost:8100 ^
+#       --api-key <profile API key> ^
+#       --profile-id <profile_id> ^
+#       --sources config/sources.yaml ^
+#       --augment config/augmentor_config.yaml ^
+#       --rules config/rules.yaml ^
+#       --cfg-output test_output_data/sample.json ^
+#       --refresh 5 ^
+#       --created-by "CLI demo"
+# Run `python tools/api_cli.py -h` or append `-h` to any sub-command for full usage.
+
 ## 2. Create a profile (admin/operator key required)
 # Response returns the tenant's API key once; save both id and api_key.
 Invoke-RestMethod `

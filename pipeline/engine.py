@@ -6,7 +6,7 @@ import json
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Union
+from typing import Any, Dict, List, Optional, Sequence, Set, Union
 
 import yaml
 
@@ -19,6 +19,8 @@ from utils.logger import get_logger, log_metric, log_stage
 from utils.config_loader import load_config
 from db.models import RunState
 from db.persistence import finalize_pipeline_run, update_run_state
+
+SUPPORTED_HOSTING_TYPES = {"url", "fqdn", "ipv4", "ipv6", "cidr"}
 
 
 # ----------------------------------------------------------------------
@@ -37,6 +39,45 @@ class PipelineExecutionResult:
 # Config Manager
 # ----------------------------------------------------------------------
 class EngineConfig:
+    @staticmethod
+    def _parse_hosting_types(value: Optional[Any]) -> Union[str, List[str]]:
+        if value is None:
+            raise ValueError("Rules configuration missing required 'hosting_types' field")
+
+        if isinstance(value, str):
+            normalized = value.strip().lower()
+            if normalized == "all":
+                return "all"
+            if normalized in SUPPORTED_HOSTING_TYPES:
+                return [normalized]
+            raise ValueError(
+                f"Unsupported hosting type '{value}'. Expected 'all' or one of {sorted(SUPPORTED_HOSTING_TYPES)}."
+            )
+
+        if isinstance(value, list):
+            collected: List[str] = []
+            for item in value:
+                if not isinstance(item, str):
+                    raise ValueError("hosting_types list entries must be strings")
+                normalized = item.strip().lower()
+                if normalized == "all":
+                    if len(value) > 1:
+                        raise ValueError("hosting_types cannot combine 'all' with specific entries")
+                    return "all"
+                if normalized not in SUPPORTED_HOSTING_TYPES:
+                    raise ValueError(
+                        f"Unsupported hosting type '{item}'. Expected one of {sorted(SUPPORTED_HOSTING_TYPES)}."
+                    )
+                if normalized not in collected:
+                    collected.append(normalized)
+            if not collected:
+                raise ValueError("hosting_types cannot be an empty list")
+            return sorted(collected)
+
+        raise ValueError(
+            "hosting_types must be a string ('all' or a single type) or a list of indicator type strings"
+        )
+
     @staticmethod
     def load_sources(path: str, logger) -> List[Dict[str, str]]:
         cfg = load_config(path, logger)
@@ -72,12 +113,14 @@ class EngineConfig:
         return data
 
     @staticmethod
-    def parse_rules_yaml(content: Optional[str], logger) -> Dict[str, List[Dict[str, Any]]]:
-        rules: Dict[str, List[Dict[str, Any]]] = {
+    def parse_rules_yaml(content: Optional[str], logger) -> Dict[str, Any]:
+        rules: Dict[str, Any] = {
             "manual_assertions": [],
             "exclusions": [],
+            "hosting_types": "all",
         }
         if not content:
+            logger.info("Loaded rules configuration (hosting_types=all, manual=0, exclusions=0)")
             return rules
 
         data = yaml.safe_load(content) or {}
@@ -114,10 +157,13 @@ class EngineConfig:
 
         rules["manual_assertions"] = manual_entries
         rules["exclusions"] = exclusion_entries
+        hosting_value = EngineConfig._parse_hosting_types(data.get("hosting_types"))
+        rules["hosting_types"] = hosting_value
         logger.info(
-            "Loaded rules configuration (%d manual assertions, %d exclusions)",
+            "Loaded rules configuration (%d manual assertions, %d exclusions, hosting_types=%s)",
             len(manual_entries),
             len(exclusion_entries),
+            "all" if hosting_value == "all" else ",".join(hosting_value),
         )
         return rules
 
@@ -143,7 +189,7 @@ class Orchestrator:
         use_proxy: bool = False,
         run_id: Optional[str] = None,
         profile_id: Optional[str] = None,
-        rules: Optional[Dict[str, List[Dict[str, Any]]]] = None,
+        rules: Optional[Dict[str, Any]] = None,
     ):
         self.logger = get_logger("engine.orchestrator", log_level, "engine.log")
         self.sources_cfg = [dict(src) for src in sources]
@@ -163,7 +209,38 @@ class Orchestrator:
         self.profile_id = profile_id
         self.run_id = run_id
         self.last_run_id: Optional[str] = run_id
-        rules_config = rules or {"manual_assertions": [], "exclusions": []}
+        rules_config: Dict[str, Any] = rules or {
+            "manual_assertions": [],
+            "exclusions": [],
+            "hosting_types": "all",
+        }
+        hosting_rule = rules_config.get("hosting_types")
+        if hosting_rule is None:
+            if rules is None:
+                hosting_rule = "all"
+                rules_config["hosting_types"] = "all"
+            else:
+                raise ValueError("Rules configuration missing required 'hosting_types'")
+        if isinstance(hosting_rule, str) and hosting_rule == "all":
+            self.allowed_hosting_types: Optional[Set[str]] = None
+            self.hosting_types_summary: Union[str, List[str]] = "all"
+        elif isinstance(hosting_rule, list):
+            normalized = {str(item).strip().lower() for item in hosting_rule if isinstance(item, str)}
+            if not normalized:
+                raise ValueError("hosting_types cannot be empty")
+            invalid = normalized - SUPPORTED_HOSTING_TYPES
+            if invalid:
+                raise ValueError(
+                    f"Unsupported hosting types: {sorted(invalid)}. Expected subset of {sorted(SUPPORTED_HOSTING_TYPES)}."
+                )
+            self.allowed_hosting_types = normalized
+            ordered = sorted(normalized)
+            self.hosting_types_summary = ordered
+            rules_config["hosting_types"] = ordered
+        else:
+            raise ValueError(
+                "hosting_types must be 'all' or a list of strings referencing supported indicator types"
+            )
         self.manual_assertions: List[Dict[str, Any]] = []
         for entry in rules_config.get("manual_assertions", []):
             value = entry.get("value") if isinstance(entry, dict) else None
@@ -337,7 +414,7 @@ def run_pipeline(
     profile_id: Optional[str] = None,
     profile_config_id: Optional[str] = None,
     run_id: Optional[str] = None,
-    rules: Optional[Dict[str, List[Dict[str, Any]]]] = None,
+    rules: Optional[Dict[str, Any]] = None,
 ) -> Optional[str]:
     """Run the pipeline synchronously."""
 
@@ -351,6 +428,7 @@ def run_pipeline(
         metadata["rules_configured"] = {
             "manual_assertions": len(rules.get("manual_assertions", [])),
             "exclusions": len(rules.get("exclusions", [])),
+            "hosting_types": rules.get("hosting_types", "all"),
         }
 
     if persist_to_db and run_id is None:
@@ -423,6 +501,7 @@ def run_pipeline(
             "manual_assertions_applied": len(manual_for_output),
             "manual_assertions_skipped": orchestrator.manual_entries_skipped_due_to_exclusion,
             "exclusions_configured": len(rules.get("exclusions", [])),
+            "hosting_types": orchestrator.hosting_types_summary,
         }
 
     if persist_to_db:
@@ -431,6 +510,7 @@ def run_pipeline(
                 "output_path": str(out_path),
                 "sources": metadata["sources"],
                 "proxy_enabled": metadata["proxy_enabled"],
+                "hosting_types": orchestrator.hosting_types_summary,
             }
             if proxy and use_proxy:
                 finalize_metadata["proxy"] = proxy

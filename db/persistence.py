@@ -139,14 +139,11 @@ def admin_has_profile(admin_account_id: str, profile_id: str) -> bool:
 
 def list_profile_ids_for_admin(admin_account_id: str) -> List[str]:
     with session_scope() as session:
-        return [
-            profile_id
-            for profile_id, in session.exec(
-                select(AdminProfileLink.profile_id).where(
-                    AdminProfileLink.admin_account_id == admin_account_id,
-                )
-            ).all()
-        ]
+        return session.exec(
+            select(AdminProfileLink.profile_id).where(
+                AdminProfileLink.admin_account_id == admin_account_id,
+            )
+        ).all()
 
 
 def get_admin_account(admin_account_id: str) -> Optional[AdminAccount]:
@@ -735,6 +732,32 @@ def finalize_pipeline_run(
         metadata_snapshot.update(metadata)
 
     source_lookup = {src.get("name"): src for src in sources if src.get("name")}
+    hosting_meta = metadata_snapshot.get("hosting_types")
+    default_allowed_indicator_types = {
+        IndicatorType.IPV4,
+        IndicatorType.IPV6,
+        IndicatorType.CIDR,
+        IndicatorType.FQDN,
+        IndicatorType.URL,
+    }
+    if hosting_meta is None or hosting_meta == "all":
+        allowed_indicator_types = default_allowed_indicator_types
+    else:
+        hosting_values = hosting_meta if isinstance(hosting_meta, list) else [hosting_meta]
+        allowed_indicator_types = {
+            IndicatorType(str(value).lower())
+            for value in hosting_values
+            if isinstance(value, str)
+            and str(value).lower() in {
+                IndicatorType.IPV4.value,
+                IndicatorType.IPV6.value,
+                IndicatorType.CIDR.value,
+                IndicatorType.FQDN.value,
+                IndicatorType.URL.value,
+            }
+        }
+        if not allowed_indicator_types:
+            allowed_indicator_types = default_allowed_indicator_types
 
     with session_scope() as session:
         if run_id:
@@ -859,6 +882,8 @@ def finalize_pipeline_run(
         }
 
         for indicator_type, artifact_type in type_to_artifact.items():
+            if indicator_type not in allowed_indicator_types:
+                continue
             if type_breakdown.get(indicator_type.value):
                 location = f"/pipelines/{pipeline.id}/edl/{indicator_type.value}"
                 artifact = existing_artifacts.get(artifact_type)

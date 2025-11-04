@@ -1,3 +1,6 @@
+hosting_types:
+  - ipv4
+  - url
 manual_assertions:
   - value: "203.0.113.42"
     type: ipv4

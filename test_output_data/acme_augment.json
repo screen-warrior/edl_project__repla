@@ -1,0 +1,739 @@
+[
+  {
+    "source": "local/test/file",
+    "original": "8.8.8.8",
+    "entry_type": "ipv4",
+    "error": null,
+    "normalized": "8.8.8.8",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "8.8.8.8",
+      "line_number": 1,
+      "kind": "ipv4"
+    },
+    "augmented": "8.8.8.8",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "1.1.1.1",
+    "entry_type": "ipv4",
+    "error": null,
+    "normalized": "1.1.1.1",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "1.1.1.1",
+      "line_number": 2,
+      "kind": "ipv4"
+    },
+    "augmented": "1.1.1.1",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "192.168.1.1",
+    "entry_type": "ipv4",
+    "error": null,
+    "normalized": "192.168.1.1",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "192.168.1.1",
+      "line_number": 3,
+      "kind": "ipv4"
+    },
+    "augmented": "192.168.1.1",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "10.0.0.1",
+    "entry_type": "ipv4",
+    "error": null,
+    "normalized": "10.0.0.1",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "10.0.0.1",
+      "line_number": 4,
+      "kind": "ipv4"
+    },
+    "augmented": "10.0.0.1",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "172.16.0.5",
+    "entry_type": "ipv4",
+    "error": null,
+    "normalized": "172.16.0.5",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "172.16.0.5",
+      "line_number": 5,
+      "kind": "ipv4"
+    },
+    "augmented": "172.16.0.5",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "203.0.113.15",
+    "entry_type": "ipv4",
+    "error": null,
+    "normalized": "203.0.113.15",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "203.0.113.15",
+      "line_number": 6,
+      "kind": "ipv4"
+    },
+    "augmented": "203.0.113.15",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "198.51.100.42",
+    "entry_type": "ipv4",
+    "error": null,
+    "normalized": "198.51.100.42",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "198.51.100.42",
+      "line_number": 7,
+      "kind": "ipv4"
+    },
+    "augmented": "198.51.100.42",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "255.255.255.255",
+    "entry_type": "ipv4",
+    "error": null,
+    "normalized": "255.255.255.255",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "255.255.255.255",
+      "line_number": 8,
+      "kind": "ipv4"
+    },
+    "augmented": "255.255.255.255",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "0.0.0.0",
+    "entry_type": "ipv4",
+    "error": null,
+    "normalized": "0.0.0.0",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "0.0.0.0",
+      "line_number": 9,
+      "kind": "ipv4"
+    },
+    "augmented": "0.0.0.0",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "123.45.67.89",
+    "entry_type": "ipv4",
+    "error": null,
+    "normalized": "123.45.67.89",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "123.45.67.89",
+      "line_number": 10,
+      "kind": "ipv4"
+    },
+    "augmented": "123.45.67.89",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "300.10.10.1",
+    "entry_type": "unknown",
+    "error": {
+      "code": "ip_invalid",
+      "message": "Invalid IPv4 address",
+      "hint": "IPv4 must have 4 octets 0-255 (e.g., 203.0.113.10)"
+    },
+    "normalized": "300.10.10.1",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "300.10.10.1",
+      "line_number": 11
+    },
+    "augmented": "300.10.10.1",
+    "changes": [
+      "invalid_pass_through"
+    ]
+  },
+  {
+    "source": "local/test/file",
+    "original": "256.256.256.256",
+    "entry_type": "unknown",
+    "error": {
+      "code": "ip_invalid",
+      "message": "Invalid IPv4 address",
+      "hint": "IPv4 must have 4 octets 0-255 (e.g., 203.0.113.10)"
+    },
+    "normalized": "256.256.256.256",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "256.256.256.256",
+      "line_number": 12
+    },
+    "augmented": "256.256.256.256",
+    "changes": [
+      "invalid_pass_through"
+    ]
+  },
+  {
+    "source": "local/test/file",
+    "original": "192.168.1",
+    "entry_type": "unknown",
+    "error": {
+      "code": "ip_invalid",
+      "message": "Invalid IPv4 address",
+      "hint": "IPv4 must have 4 octets 0-255 (e.g., 203.0.113.10)"
+    },
+    "normalized": "192.168.1",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "192.168.1",
+      "line_number": 13
+    },
+    "augmented": "192.168.1",
+    "changes": [
+      "invalid_pass_through"
+    ]
+  },
+  {
+    "source": "local/test/file",
+    "original": "10.0.0.999",
+    "entry_type": "unknown",
+    "error": {
+      "code": "ip_invalid",
+      "message": "Invalid IPv4 address",
+      "hint": "IPv4 must have 4 octets 0-255 (e.g., 203.0.113.10)"
+    },
+    "normalized": "10.0.0.999",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "10.0.0.999",
+      "line_number": 14
+    },
+    "augmented": "10.0.0.999",
+    "changes": [
+      "invalid_pass_through"
+    ]
+  },
+  {
+    "source": "local/test/file",
+    "original": "172.16.0.0.1",
+    "entry_type": "unknown",
+    "error": {
+      "code": "ip_invalid",
+      "message": "Invalid IPv4 address",
+      "hint": "IPv4 must have 4 octets 0-255 (e.g., 203.0.113.10)"
+    },
+    "normalized": "172.16.0.0.1",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "172.16.0.0.1",
+      "line_number": 15
+    },
+    "augmented": "172.16.0.0.1",
+    "changes": [
+      "invalid_pass_through"
+    ]
+  },
+  {
+    "source": "local/test/file",
+    "original": "2001:4860:4860::8888",
+    "entry_type": "ipv6",
+    "error": null,
+    "normalized": "2001:4860:4860::8888",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "2001:4860:4860::8888",
+      "line_number": 16,
+      "kind": "ipv6",
+      "zone": null
+    },
+    "augmented": "2001:4860:4860::8888",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "2001:db8::1",
+    "entry_type": "ipv6",
+    "error": null,
+    "normalized": "2001:db8::1",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "2001:db8::1",
+      "line_number": 17,
+      "kind": "ipv6",
+      "zone": null
+    },
+    "augmented": "2001:db8::1",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "::1",
+    "entry_type": "ipv6",
+    "error": null,
+    "normalized": "::1",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "::1",
+      "line_number": 18,
+      "kind": "ipv6",
+      "zone": null
+    },
+    "augmented": "::1",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "fe80::1%lo0",
+    "entry_type": "ipv6",
+    "error": null,
+    "normalized": "fe80::1%lo0",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "fe80::1%lo0",
+      "line_number": 19,
+      "kind": "ipv6",
+      "zone": "lo0"
+    },
+    "augmented": "fe80::1%lo0",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "::ffff:192.0.2.128",
+    "entry_type": "ipv6",
+    "error": null,
+    "normalized": "::ffff:192.0.2.128",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "::ffff:192.0.2.128",
+      "line_number": 20,
+      "kind": "ipv6",
+      "zone": null
+    },
+    "augmented": "::ffff:192.0.2.128",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "2001:0db8:85a3::8a2e:0370:7334",
+    "entry_type": "ipv6",
+    "error": null,
+    "normalized": "2001:0db8:85a3::8a2e:0370:7334",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "2001:0db8:85a3::8a2e:0370:7334",
+      "line_number": 21,
+      "kind": "ipv6",
+      "zone": null
+    },
+    "augmented": "2001:0db8:85a3::8a2e:0370:7334",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "2001:db8::12345",
+    "entry_type": "unknown",
+    "error": {
+      "code": "fqdn_idna",
+      "message": "Invalid Unicode/Punycode FQDN",
+      "hint": "Check Unicode characters, hyphens, and label lengths"
+    },
+    "normalized": "2001:db8::12345",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "2001:db8::12345",
+      "line_number": 22
+    },
+    "augmented": "2001:db8::12345",
+    "changes": [
+      "invalid_pass_through"
+    ]
+  },
+  {
+    "source": "local/test/file",
+    "original": "1234:5678:90ab:cdef:ghij::1",
+    "entry_type": "unknown",
+    "error": {
+      "code": "fqdn_idna",
+      "message": "Invalid Unicode/Punycode FQDN",
+      "hint": "Check Unicode characters, hyphens, and label lengths"
+    },
+    "normalized": "1234:5678:90ab:cdef:ghij::1",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "1234:5678:90ab:cdef:ghij::1",
+      "line_number": 23
+    },
+    "augmented": "1234:5678:90ab:cdef:ghij::1",
+    "changes": [
+      "invalid_pass_through"
+    ]
+  },
+  {
+    "source": "local/test/file",
+    "original": "2001:::1",
+    "entry_type": "unknown",
+    "error": {
+      "code": "fqdn_idna",
+      "message": "Invalid Unicode/Punycode FQDN",
+      "hint": "Check Unicode characters, hyphens, and label lengths"
+    },
+    "normalized": "2001:::1",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "2001:::1",
+      "line_number": 24
+    },
+    "augmented": "2001:::1",
+    "changes": [
+      "invalid_pass_through"
+    ]
+  },
+  {
+    "source": "local/test/file",
+    "original": "abcd",
+    "entry_type": "unknown",
+    "error": {
+      "code": "fqdn_idna",
+      "message": "Invalid Unicode/Punycode FQDN",
+      "hint": "Check Unicode characters, hyphens, and label lengths"
+    },
+    "normalized": "abcd",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "abcd",
+      "line_number": 25
+    },
+    "augmented": "abcd",
+    "changes": [
+      "invalid_pass_through"
+    ]
+  },
+  {
+    "source": "local/test/file",
+    "original": "192.168.0.0/16",
+    "entry_type": "cidr",
+    "error": null,
+    "normalized": "192.168.0.0/16",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "192.168.0.0/16",
+      "line_number": 26,
+      "kind": "cidr",
+      "version": 4,
+      "network": "192.168.0.0",
+      "prefixlen": 16
+    },
+    "augmented": "192.168.0.0/16",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "10.0.0.0/8",
+    "entry_type": "cidr",
+    "error": null,
+    "normalized": "10.0.0.0/8",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "10.0.0.0/8",
+      "line_number": 27,
+      "kind": "cidr",
+      "version": 4,
+      "network": "10.0.0.0",
+      "prefixlen": 8
+    },
+    "augmented": "10.0.0.0/8",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "172.16.0.0/12",
+    "entry_type": "cidr",
+    "error": null,
+    "normalized": "172.16.0.0/12",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "172.16.0.0/12",
+      "line_number": 28,
+      "kind": "cidr",
+      "version": 4,
+      "network": "172.16.0.0",
+      "prefixlen": 12
+    },
+    "augmented": "172.16.0.0/12",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "8.8.8.0/24",
+    "entry_type": "cidr",
+    "error": null,
+    "normalized": "8.8.8.0/24",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "8.8.8.0/24",
+      "line_number": 29,
+      "kind": "cidr",
+      "version": 4,
+      "network": "8.8.8.0",
+      "prefixlen": 24
+    },
+    "augmented": "8.8.8.0/24",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "2001:db8::/32",
+    "entry_type": "cidr",
+    "error": null,
+    "normalized": "2001:db8::/32",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "2001:db8::/32",
+      "line_number": 30,
+      "kind": "cidr",
+      "version": 6,
+      "network": "2001:db8::",
+      "prefixlen": 32
+    },
+    "augmented": "2001:db8::/32",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "2400:cb00::/32",
+    "entry_type": "cidr",
+    "error": null,
+    "normalized": "2400:cb00::/32",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "2400:cb00::/32",
+      "line_number": 31,
+      "kind": "cidr",
+      "version": 6,
+      "network": "2400:cb00::",
+      "prefixlen": 32
+    },
+    "augmented": "2400:cb00::/32",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "203.0.113.0/30",
+    "entry_type": "cidr",
+    "error": null,
+    "normalized": "203.0.113.0/30",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "203.0.113.0/30",
+      "line_number": 32,
+      "kind": "cidr",
+      "version": 4,
+      "network": "203.0.113.0",
+      "prefixlen": 30
+    },
+    "augmented": "203.0.113.0/30",
+    "changes": []
+  },
+  {
+    "source": "local/test/file",
+    "original": "34.157.240.0.0/21",
+    "entry_type": "unknown",
+    "error": {
+      "code": "cidr_invalid",
+      "message": "Invalid CIDR notation",
+      "hint": "Ensure address and prefix length are correct (e.g., 192.0.2.0/24)"
+    },
+    "normalized": "34.157.240.0.0/21",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "34.157.240.0.0/21",
+      "line_number": 34
+    },
+    "augmented": "34.157.240.0.0/21",
+    "changes": [
+      "invalid_pass_through"
+    ]
+  },
+  {
+    "source": "local/test/file",
+    "original": "192.168.0.1/33",
+    "entry_type": "unknown",
+    "error": {
+      "code": "cidr_invalid",
+      "message": "Invalid CIDR notation",
+      "hint": "Ensure address and prefix length are correct (e.g., 192.0.2.0/24)"
+    },
+    "normalized": "192.168.0.1/33",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "192.168.0.1/33",
+      "line_number": 35
+    },
+    "augmented": "192.168.0.1/33",
+    "changes": [
+      "invalid_pass_through"
+    ]
+  },
+  {
+    "source": "local/test/file",
+    "original": "10.0.0.0/-1",
+    "entry_type": "unknown",
+    "error": {
+      "code": "fqdn_path",
+      "message": "FQDN contains a path but no scheme",
+      "hint": "Use http(s):// if this is a URL, or remove the path for a plain FQDN"
+    },
+    "normalized": "10.0.0.0/-1",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "10.0.0.0/-1",
+      "line_number": 36
+    },
+    "augmented": "10.0.0.0/-1",
+    "changes": [
+      "invalid_pass_through"
+    ]
+  },
+  {
+    "source": "local/test/file",
+    "original": "2001:db8::/129",
+    "entry_type": "unknown",
+    "error": {
+      "code": "cidr_invalid",
+      "message": "Invalid CIDR notation",
+      "hint": "Ensure address and prefix length are correct (e.g., 192.0.2.0/24)"
+    },
+    "normalized": "2001:db8::/129",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "2001:db8::/129",
+      "line_number": 37
+    },
+    "augmented": "2001:db8::/129",
+    "changes": [
+      "invalid_pass_through"
+    ]
+  },
+  {
+    "source": "local/test/file",
+    "original": "8.8.8.8/foobar",
+    "entry_type": "unknown",
+    "error": {
+      "code": "fqdn_path",
+      "message": "FQDN contains a path but no scheme",
+      "hint": "Use http(s):// if this is a URL, or remove the path for a plain FQDN"
+    },
+    "normalized": "8.8.8.8/foobar",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "8.8.8.8/foobar",
+      "line_number": 38
+    },
+    "augmented": "8.8.8.8/foobar",
+    "changes": [
+      "invalid_pass_through"
+    ]
+  },
+  {
+    "source": "local/test/file",
+    "original": "网站.中国",
+    "entry_type": "fqdn",
+    "error": null,
+    "normalized": "网站.中国",
+    "meta": {
+      "source_type": "file",
+      "path": "C:\\Users\\verma\\OneDrive\\Desktop\\My-Scripts\\edl_project_repla\\test_data\\sample_data",
+      "raw": "网站.中国",
+      "line_number": 39,
+      "kind": "fqdn",
+      "host": "网站.中国",
+      "port": null,
+      "trailing_slash": false
+    },
+    "augmented": "网站.中国",
+    "changes": []
+  },
+  {
+    "source": "manual",
+    "original": "203.0.113.42",
+    "entry_type": "ipv4",
+    "error": null,
+    "normalized": "203.0.113.42",
+    "meta": {
+      "ticket": "INC-12345",
+      "manual": true
+    },
+    "augmented": "203.0.113.42",
+    "changes": [
+      "manual_assertion"
+    ]
+  },
+  {
+    "source": "manual",
+    "original": "malicious.example.org",
+    "entry_type": "fqdn",
+    "error": null,
+    "normalized": "malicious.example.org",
+    "meta": {
+      "manual": true
+    },
+    "augmented": "malicious.example.org",
+    "changes": [
+      "manual_assertion"
+    ]
+  }
+]

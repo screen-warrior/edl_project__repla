@@ -1,1 +1,97 @@
-shivangi is tati
+#### create a super admin account###########
+
+python tools/api_cli.py create-admin `
+  --base-url http://localhost:8100 `
+  --api-key super-secret-key `
+  --name "Ops Super Admin" `
+  --role operator `
+  --super-admin
+
+######### admin accounts below #######
+
+# Admin 1
+python tools/api_cli.py create-admin `
+  --base-url http://localhost:8100 `
+  --api-key BGG5n3mEbO53gaC9-E69UE6zcdoZ-VYsvY3NBQXHxw4 `
+  --name "Tenant Ops Admin 1" `
+  --role operator | Out-String
+
+# Admin 2
+python tools/api_cli.py create-admin `
+  --base-url http://localhost:8100 `
+  --api-key BGG5n3mEbO53gaC9-E69UE6zcdoZ-VYsvY3NBQXHxw4 `
+  --name "Tenant Ops Admin 2" `
+  --role operator | Out-String
+
+
+####### creating profiles for admins #####
+
+# Profile for Tenant Ops Admin 1
+python tools/api_cli.py create-profile `
+  --base-url http://localhost:8100 `
+  --api-key ml81mcein_2nrAk_3mbCcs4z2ecqlL9CfpkZqpnNVoo `
+  --name "Acme SOC" `
+  --description "Primary tenant profile for Admin 1" | Out-String
+
+# Profile for Tenant Ops Admin 2
+python tools/api_cli.py create-profile `
+  --base-url http://localhost:8100 `
+  --api-key _haJ0iW5HaUYyvNOY1yIEnAq8_Opw6nqH0b9BGayT2k `
+  --name "Beta SOC" `
+  --description "Primary tenant profile for Admin 2" | Out-String
+
+
+### creating configs #########
+python tools/api_cli.py create-config `
+  --base-url http://localhost:8100 `
+  --api-key=CAhhEmnH1Cs-yWOJq5uWfSEYJ5AZQBNTQH6uxsFIBeI `
+  --profile-id 5ae98e67-aa70-4822-8426-bb30a54813fc `
+  --sources config/sources.yaml `
+  --augment config/augmentor_config.yaml `
+  --rules config/rules.yaml `
+  --cfg-output test_output_data/acme_augment.json `
+  --cfg-mode augment `
+  --cfg-timeout 15 `
+  --cfg-log-level INFO `
+  --refresh 2 `
+  --created-by "Ops Admin 1" | Out-String
+
+ for admin 2 below ####
+python tools/api_cli.py create-config `
+  --base-url http://localhost:8100 `
+  --api-key=BSX-69SSWsmQV6IPaP32IMzHv2yEEbISPOUy1f6FQ-I `
+  --profile-id c1a76299-4acc-4d49-84b1-59d7d0404902 `
+  --sources config/sources.yaml `
+  --augment config/augmentor_config.yaml `
+  --rules config/rules_2.yaml `
+  --cfg-output test_output_data/beta_augment_rules2.json `
+  --cfg-mode augment `
+  --cfg-timeout 15 `
+  --cfg-log-level INFO `
+  --refresh 2 `
+  --created-by "Ops Admin 2" | Out-String
+
+
+### created pipelines for both profiles #########
+python tools/api_cli.py create-pipeline `
+  --base-url http://localhost:8000 `
+  --api-key CAhhEmnH1Cs-yWOJq5uWfSEYJ5AZQBNTQH6uxsFIBeI `
+  --profile-id 5ae98e67-aa70-4822-8426-bb30a54813fc `
+  --config-id 2f9139c2-38e2-4f3a-8c7c-3e8ab6fbc27f `
+  --name "beta-augment-pipeline" `
+  --description "Runs augment mode on the sample feed" `
+  --concurrency 1 `
+  --created-by "beta-ops"
+
+
+##### now lets kick off run #########
+python tools/api_cli.py submit-run `
+  --base-url http://localhost:8000 `
+  --api-key CAhhEmnH1Cs-yWOJq5uWfSEYJ5AZQBNTQH6uxsFIBeI `
+  --pipeline-id 18d8b6f5-7243-4d54-8516-433f1b8f82d0 `
+  --requested-by "beta-ops" `
+  --run-mode augment `
+  --run-timeout 900 `
+  --run-log-level INFO `
+  --run-persist true
+

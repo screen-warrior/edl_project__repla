@@ -1114,7 +1114,6 @@ async def cancel_run_endpoint(
 def serve_edl(
     indicator_type: str,
     pipeline_id: Optional[str] = None,
-    context: AuthContext = Depends(require_reader),
 ) -> StreamingResponse:
     indicator_key = indicator_type.lower()
     if indicator_key not in HOSTED_TYPES:
@@ -1131,7 +1130,10 @@ def serve_edl(
         run = session.get(PipelineRun, run_id)
         if not run:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Run not found")
-        _assert_run_access(context, run)
+        if pipeline_id:
+            pipeline = session.get(Pipeline, pipeline_id)
+            if not pipeline or pipeline.deleted_at:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Pipeline not found")
     finally:
         session.close()
 
@@ -1174,9 +1176,8 @@ def serve_edl(
 def serve_pipeline_edl(
     pipeline_id: str,
     indicator_type: str,
-    context: AuthContext = Depends(require_reader),
 ) -> StreamingResponse:
-    return serve_edl(indicator_type, pipeline_id=pipeline_id, context=context)
+    return serve_edl(indicator_type, pipeline_id=pipeline_id)
 
 
 
@@ -1304,12 +1305,30 @@ def _update_hosted_feeds(run_id: str, pipeline_id: str) -> None:
         run = session.get(PipelineRun, run_id)
         if not run:
             return
+        metadata_snapshot = run.metadata_snapshot or {}
+        hosting_meta = metadata_snapshot.get("hosting_types")
+        if hosting_meta is None or hosting_meta == "all":
+            allowed_indicator_types = set(HOSTED_TYPES.values())
+        else:
+            if isinstance(hosting_meta, list):
+                hosting_values = hosting_meta
+            else:
+                hosting_values = [hosting_meta]
+            allowed_indicator_types = {
+                HOSTED_TYPES.get(str(item).lower())
+                for item in hosting_values
+                if isinstance(item, str) and HOSTED_TYPES.get(str(item).lower())
+            }
+            if not allowed_indicator_types:
+                allowed_indicator_types = set(HOSTED_TYPES.values())
         counts = session.exec(
             select(Indicator.entry_type, func.count()).where(Indicator.run_id == run.id, Indicator.is_valid == True).group_by(Indicator.entry_type)  # noqa: E712
         ).all()
         count_map = {entry_type.value: total for entry_type, total in counts}
 
         for key, indicator_enum in HOSTED_TYPES.items():
+            if indicator_enum not in allowed_indicator_types:
+                continue
             if not count_map.get(key):
                 continue
             target_pipeline_id = pipeline_id or run.pipeline_id

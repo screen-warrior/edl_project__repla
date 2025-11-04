@@ -37,10 +37,38 @@ class RedactFilter(logging.Filter):
 # ----------------------------------------------------------------------
 # Log rotation with gzip compression
 # ----------------------------------------------------------------------
-def _rotator(source, dest):
-    with open(source, "rb") as sf, gzip.open(dest + ".gz", "wb") as df:
+def _rotator(source: str, dest: str) -> None:
+    """Compress rotated logs and keep Windows happy when files are locked."""
+
+    base_path = Path(source)
+    rotated_path = Path(dest)
+    gzip_path = Path(f"{dest}.gz")
+
+    try:
+        # Prefer atomic rename so the handler can reopen the base file immediately.
+        base_path.replace(rotated_path)
+    except OSError:
+        # Fall back to copy + manual cleanup if the rename fails (e.g., cross-device).
+        with base_path.open("rb") as sf, rotated_path.open("wb") as df:
+            shutil.copyfileobj(sf, df)
+        try:
+            base_path.unlink()
+        except PermissionError:
+            # As a last resort truncate so the handler starts fresh.
+            with base_path.open("w"):
+                pass
+
+    with rotated_path.open("rb") as sf, gzip.open(gzip_path, "wb") as df:
         shutil.copyfileobj(sf, df)
-    Path(source).unlink()
+
+    # Remove the uncompressed rotated copy; ignore if something else already did it.
+    try:
+        rotated_path.unlink()
+    except PermissionError:
+        logging.getLogger(__name__).warning(
+            "Unable to remove rotated log %s due to file lock; stale copy remains",
+            rotated_path,
+        )
 
 
 def _namer(name):
