@@ -1,0 +1,146 @@
+# ---------------------------------------------------------------------------
+# Environment setup (run in PowerShell before invoking the API)
+# ---------------------------------------------------------------------------
+# Export the admin/operator keys the API process expects.
+$env:EDL_API_KEY       = 'super-secret-key'
+$env:EDL_OPERATOR_KEYS = 'super-secret-key'
+$env:EDL_READER_KEYS   = ''
+
+# ---------------------------------------------------------------------------
+# Admin + super admin provisioning (PowerShell REST examples)
+# ---------------------------------------------------------------------------
+# Create a super admin account (set is_super_admin = $true).
+Invoke-RestMethod `
+  -Method Post `
+  -Uri 'http://localhost:8000/admin/accounts' `
+  -Headers @{
+      'X-API-Key'    = 'super-secret-key'    # admin/operator key
+      'Content-Type' = 'application/json'
+  } `
+  -Body (@{
+      name           = 'Ops Super Admin'
+      role           = 'operator'
+      is_super_admin = $true
+  } | ConvertTo-Json)
+
+# Create a regular admin/operator (flip the flag or omit it).
+Invoke-RestMethod `
+  -Method Post `
+  -Uri 'http://localhost:8000/admin/accounts' `
+  -Headers @{
+      'X-API-Key'    = 'super-secret-key'
+      'Content-Type' = 'application/json'
+  } `
+  -Body (@{
+      name           = 'Ops Tenant Admin'
+      role           = 'operator'
+      is_super_admin = $false
+  } | ConvertTo-Json)
+
+# ---------------------------------------------------------------------------
+# Profile bootstrap (admin key required)
+# ---------------------------------------------------------------------------
+Invoke-RestMethod `
+  -Method Post `
+  -Uri 'http://localhost:8000/profiles' `
+  -Headers @{
+      'X-API-Key'    = 'super-secret-key'
+      'Content-Type' = 'application/json'
+  } `
+  -Body '{"name":"Acme SOC","description":"Tier-1 security operations"}'
+
+# Response includes:
+#   id      -> profile UUID (store as $profileId)
+#   api_key -> tenant API key (store securely as $profileKey)
+
+# ---------------------------------------------------------------------------
+# Config creation (PowerShell REST)
+# ---------------------------------------------------------------------------
+$configBody = @{
+    sources_yaml              = Get-Content 'config/sources.yaml' -Raw
+    augment_yaml              = Get-Content 'config/augmentor_config.yaml' -Raw
+    rules_yaml                = Get-Content 'config/rules.yaml' -Raw
+    pipeline_settings         = @{
+        mode          = 'augment'
+        output_path   = 'test_output_data/sample.json'
+        persist_to_db = $true
+        timeout       = 900
+        log_level     = 'INFO'
+    }
+    refresh_interval_minutes  = 5
+    created_by                = 'beta-ops'
+} | ConvertTo-Json -Depth 5
+
+$configResp = Invoke-RestMethod `
+  -Method Post `
+  -Uri "http://localhost:8000/profiles/$profileId/configs" `
+  -Headers @{
+      'X-API-Key'    = $profileKey
+      'Content-Type' = 'application/json'
+  } `
+  -Body $configBody
+
+$configId = $configResp.id
+
+# ---------------------------------------------------------------------------
+# Pipeline creation (PowerShell REST)
+# ---------------------------------------------------------------------------
+$pipelineBody = @{
+    profile_id         = $profileId
+    profile_config_id  = $configId
+    name               = 'beta-augment-pipeline'
+    description        = 'Runs augment mode on the sample feed'
+    concurrency_limit  = 1
+    created_by         = 'beta-ops'
+} | ConvertTo-Json -Depth 3
+
+$pipelineResp = Invoke-RestMethod `
+  -Method Post `
+  -Uri 'http://localhost:8000/pipelines' `
+  -Headers @{
+      'X-API-Key'    = $profileKey
+      'Content-Type' = 'application/json'
+  } `
+  -Body $pipelineBody
+
+$pipelineId = $pipelineResp.id
+
+# ---------------------------------------------------------------------------
+# Kick off a pipeline run (PowerShell REST)
+# ---------------------------------------------------------------------------
+$runBody = @{
+    pipeline_id  = $pipelineId
+    overrides    = @{
+        mode          = 'augment'
+        timeout       = 900
+        log_level     = 'INFO'
+        persist_to_db = $true
+    }
+    requested_by = 'beta-ops'
+} | ConvertTo-Json -Depth 3
+
+$runResp = Invoke-RestMethod `
+  -Method Post `
+  -Uri 'http://localhost:8000/runs' `
+  -Headers @{
+      'X-API-Key'    = $profileKey
+      'Content-Type' = 'application/json'
+  } `
+  -Body $runBody
+
+$runId = $runResp.run_id
+$jobId = $runResp.job_id
+
+# Retrieve run logs (optional limit parameter)
+Invoke-RestMethod `
+  -Method Get `
+  -Uri "http://localhost:8000/runs/$runId/logs?limit=200" `
+  -Headers @{ 'X-API-Key' = $profileKey }
+
+# ---------------------------------------------------------------------------
+# Discover pipelines containing a specific EDL indicator
+# ---------------------------------------------------------------------------
+Invoke-RestMethod `
+  -Method Get `
+  -Uri "http://localhost:8000/profiles/$profileId/pipelines/search?indicator=203.0.113.10" `
+  -Headers @{ 'X-API-Key' = $profileKey }

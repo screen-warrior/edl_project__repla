@@ -26,12 +26,17 @@ from typing import Any, Dict, Optional
 
 import requests
 
+PROXY_URL = "http://proxy-nsp.wellsfargo.com:8080"
+
 
 class ApiClient:
     def __init__(self, base_url: str, api_key: Optional[str], timeout: int = 30) -> None:
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
         self.timeout = timeout
+        self._proxies: Optional[Dict[str, str]] = (
+            {"http": PROXY_URL, "https": PROXY_URL} if PROXY_URL else None
+        )
 
     def _headers(self) -> Dict[str, str]:
         headers = {"Accept": "application/json"}
@@ -61,6 +66,7 @@ class ApiClient:
             data=data,
             headers=req_headers,
             timeout=self.timeout,
+            proxies=self._proxies,
         )
         return response
 

@@ -11,3 +11,53 @@
 2025-11-04 11:39:04,803 | INFO | engine.runner | run_id=9fa7017c-9ed2-41b9-8eaf-d25965d7e033 | engine.py:468 | Rules contributed 2 manual assertions
 2025-11-04 11:39:04,809 | INFO | engine.runner | run_id=9fa7017c-9ed2-41b9-8eaf-d25965d7e033 | engine.py:495 | Pipeline results written to test_output_data\acme_augment.json
 2025-11-04 11:39:04,876 | INFO | engine.runner | run_id=9fa7017c-9ed2-41b9-8eaf-d25965d7e033 | engine.py:495 | Pipeline results written to test_output_data\beta_augment_rules2.json
+2025-11-04 13:11:09,131 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | engine.py:296 | Starting pipeline run in 'augment' mode...
+2025-11-04 13:11:09,135 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | engine.py:297 | Pipeline persistence flag is ENABLED
+2025-11-04 13:11:09,147 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:164 | Stage 'fetch' completed in 0.00s
+2025-11-04 13:11:09,147 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | engine.py:315 | Exclusion rules removed 1 fetched entries
+2025-11-04 13:11:09,147 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:144 | METRIC | engine_fetch_total=39 stage=fetch
+2025-11-04 13:11:09,159 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:164 | Stage 'ingest' completed in 0.00s
+2025-11-04 13:11:09,159 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:144 | METRIC | engine_ingested_total=38 stage=ingest
+2025-11-04 13:11:09,188 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:164 | Stage 'validate' completed in 0.02s
+2025-11-04 13:11:09,188 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | engine.py:372 | Prepared 2 manual assertions from rules.yaml
+2025-11-04 13:11:09,190 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:144 | METRIC | engine_validated_total=38 stage=validate
+2025-11-04 13:11:09,199 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | engine.py:296 | Starting pipeline run in 'augment' mode...
+2025-11-04 13:11:09,201 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | engine.py:297 | Pipeline persistence flag is ENABLED
+2025-11-04 13:11:09,207 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | engine.py:383 | Augmentation complete: 38 entries processed
+2025-11-04 13:11:09,207 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:164 | Stage 'augment' completed in 0.01s
+2025-11-04 13:11:09,229 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:164 | Stage 'fetch' completed in 0.00s
+2025-11-04 13:11:09,229 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:144 | METRIC | engine_fetch_total=40 stage=fetch
+2025-11-04 13:11:09,238 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:164 | Stage 'ingest' completed in 0.00s
+2025-11-04 13:11:09,238 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:144 | METRIC | engine_ingested_total=39 stage=ingest
+2025-11-04 13:11:09,256 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:164 | Stage 'validate' completed in 0.01s
+2025-11-04 13:11:09,256 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:144 | METRIC | engine_validated_total=39 stage=validate
+2025-11-04 13:11:09,256 | INFO | engine.runner | run_id=b607abdd-b1ce-4164-8951-515a296ac604 | engine.py:468 | Rules contributed 2 manual assertions
+2025-11-04 13:11:09,261 | INFO | engine.runner | run_id=b607abdd-b1ce-4164-8951-515a296ac604 | engine.py:495 | Pipeline results written to test_output_data\acme_augment.json
+2025-11-04 13:11:09,274 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | engine.py:383 | Augmentation complete: 39 entries processed
+2025-11-04 13:11:09,274 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:164 | Stage 'augment' completed in 0.01s
+2025-11-04 13:11:09,365 | INFO | engine.runner | run_id=b607abdd-b1ce-4164-8951-515a296ac604 | engine.py:495 | Pipeline results written to test_output_data\beta_augment_rules2.json
+2025-11-04 13:16:09,214 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | engine.py:296 | Starting pipeline run in 'augment' mode...
+2025-11-04 13:16:09,218 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | engine.py:297 | Pipeline persistence flag is ENABLED
+2025-11-04 13:16:09,232 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | engine.py:296 | Starting pipeline run in 'augment' mode...
+2025-11-04 13:16:09,232 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | engine.py:297 | Pipeline persistence flag is ENABLED
+2025-11-04 13:16:09,238 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:164 | Stage 'fetch' completed in 0.01s
+2025-11-04 13:16:09,240 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | engine.py:315 | Exclusion rules removed 1 fetched entries
+2025-11-04 13:16:09,240 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:144 | METRIC | engine_fetch_total=39 stage=fetch
+2025-11-04 13:16:09,248 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:164 | Stage 'fetch' completed in 0.01s
+2025-11-04 13:16:09,249 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:144 | METRIC | engine_fetch_total=40 stage=fetch
+2025-11-04 13:16:09,255 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:164 | Stage 'ingest' completed in 0.00s
+2025-11-04 13:16:09,257 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:144 | METRIC | engine_ingested_total=38 stage=ingest
+2025-11-04 13:16:09,266 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:164 | Stage 'ingest' completed in 0.00s
+2025-11-04 13:16:09,266 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:144 | METRIC | engine_ingested_total=39 stage=ingest
+2025-11-04 13:16:09,281 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:164 | Stage 'validate' completed in 0.01s
+2025-11-04 13:16:09,281 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:144 | METRIC | engine_validated_total=39 stage=validate
+2025-11-04 13:16:09,292 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:164 | Stage 'validate' completed in 0.01s
+2025-11-04 13:16:09,292 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | engine.py:372 | Prepared 2 manual assertions from rules.yaml
+2025-11-04 13:16:09,294 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:144 | METRIC | engine_validated_total=38 stage=validate
+2025-11-04 13:16:09,296 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | engine.py:383 | Augmentation complete: 39 entries processed
+2025-11-04 13:16:09,299 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:164 | Stage 'augment' completed in 0.00s
+2025-11-04 13:16:09,302 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | engine.py:383 | Augmentation complete: 38 entries processed
+2025-11-04 13:16:09,302 | INFO | engine.orchestrator | run_id=829e5008-2e0f-46cc-bbac-e24c2c22f0fa | logger.py:164 | Stage 'augment' completed in 0.00s
+2025-11-04 13:16:09,310 | INFO | engine.runner | run_id=b607abdd-b1ce-4164-8951-515a296ac604 | engine.py:468 | Rules contributed 2 manual assertions
+2025-11-04 13:16:09,312 | INFO | engine.runner | run_id=b607abdd-b1ce-4164-8951-515a296ac604 | engine.py:495 | Pipeline results written to test_output_data\acme_augment.json
+2025-11-04 13:16:09,374 | INFO | engine.runner | run_id=b607abdd-b1ce-4164-8951-515a296ac604 | engine.py:495 | Pipeline results written to test_output_data\beta_augment_rules2.json

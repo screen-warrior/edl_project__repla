@@ -32,3 +32,19 @@
 2025-11-04 11:39:04,558 | INFO | api.app | run_id=7977684f-bfda-4331-a332-306b9e707a51 | engine.py:102 | Loaded 1 sources from inline payload
 2025-11-04 11:39:04,564 | INFO | api.app | run_id=7977684f-bfda-4331-a332-306b9e707a51 | engine.py:112 | Loaded augmentor configuration from inline payload
 2025-11-04 11:39:04,567 | INFO | api.app | run_id=7977684f-bfda-4331-a332-306b9e707a51 | engine.py:123 | Loaded rules configuration (hosting_types=all, manual=0, exclusions=0)
+2025-11-04 13:11:09,052 | INFO | api.app | run_id=e3d6f19b-b5d3-435f-a566-2873d44783fb | main.py:1665 | Scheduler queuing pipeline 434074f7-7f72-4408-bcad-dfdc310c60e1 for refresh (due 2025-11-04T16:41:04.809422)
+2025-11-04 13:11:09,093 | INFO | api.app | run_id=e3d6f19b-b5d3-435f-a566-2873d44783fb | main.py:1665 | Scheduler queuing pipeline 9f9eadea-2c41-4e72-a840-c821c9f9778a for refresh (due 2025-11-04T16:41:04.878432)
+2025-11-04 13:11:09,114 | INFO | api.app | run_id=e3d6f19b-b5d3-435f-a566-2873d44783fb | engine.py:102 | Loaded 1 sources from inline payload
+2025-11-04 13:11:09,114 | INFO | api.app | run_id=e3d6f19b-b5d3-435f-a566-2873d44783fb | engine.py:112 | Loaded augmentor configuration from inline payload
+2025-11-04 13:11:09,114 | INFO | api.app | run_id=e3d6f19b-b5d3-435f-a566-2873d44783fb | engine.py:162 | Loaded rules configuration (2 manual assertions, 2 exclusions, hosting_types=ipv4,url)
+2025-11-04 13:11:09,182 | INFO | api.app | run_id=e3d6f19b-b5d3-435f-a566-2873d44783fb | engine.py:102 | Loaded 1 sources from inline payload
+2025-11-04 13:11:09,186 | INFO | api.app | run_id=e3d6f19b-b5d3-435f-a566-2873d44783fb | engine.py:112 | Loaded augmentor configuration from inline payload
+2025-11-04 13:11:09,188 | INFO | api.app | run_id=e3d6f19b-b5d3-435f-a566-2873d44783fb | engine.py:123 | Loaded rules configuration (hosting_types=all, manual=0, exclusions=0)
+2025-11-04 13:16:09,141 | INFO | api.app | run_id=e3d6f19b-b5d3-435f-a566-2873d44783fb | main.py:1665 | Scheduler queuing pipeline 434074f7-7f72-4408-bcad-dfdc310c60e1 for refresh (due 2025-11-04T18:13:09.270118)
+2025-11-04 13:16:09,175 | INFO | api.app | run_id=e3d6f19b-b5d3-435f-a566-2873d44783fb | main.py:1665 | Scheduler queuing pipeline 9f9eadea-2c41-4e72-a840-c821c9f9778a for refresh (due 2025-11-04T18:13:09.368588)
+2025-11-04 13:16:09,192 | INFO | api.app | run_id=e3d6f19b-b5d3-435f-a566-2873d44783fb | engine.py:102 | Loaded 1 sources from inline payload
+2025-11-04 13:16:09,198 | INFO | api.app | run_id=e3d6f19b-b5d3-435f-a566-2873d44783fb | engine.py:112 | Loaded augmentor configuration from inline payload
+2025-11-04 13:16:09,201 | INFO | api.app | run_id=e3d6f19b-b5d3-435f-a566-2873d44783fb | engine.py:162 | Loaded rules configuration (2 manual assertions, 2 exclusions, hosting_types=ipv4,url)
+2025-11-04 13:16:09,218 | INFO | api.app | run_id=e3d6f19b-b5d3-435f-a566-2873d44783fb | engine.py:102 | Loaded 1 sources from inline payload
+2025-11-04 13:16:09,222 | INFO | api.app | run_id=e3d6f19b-b5d3-435f-a566-2873d44783fb | engine.py:112 | Loaded augmentor configuration from inline payload
+2025-11-04 13:16:09,224 | INFO | api.app | run_id=e3d6f19b-b5d3-435f-a566-2873d44783fb | engine.py:123 | Loaded rules configuration (hosting_types=all, manual=0, exclusions=0)
